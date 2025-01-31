@@ -1,50 +1,61 @@
-# React + TypeScript + Vite
+# 💼 Cotizaciones PWA
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 🎯 Objetivo
 
-Currently, two official plugins are available:
+Una aplicación web progresiva (PWA) diseñada para gestionar cotizaciones de manera eficiente y profesional. Permite crear, editar y dar seguimiento a cotizaciones de servicios o productos, con una interfaz intuitiva y accesible desde cualquier dispositivo.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✨ Características Principales
 
-## Expanding the ESLint configuration
+- 📱 Diseño responsive y PWA instalable
+- 💾 Funciona offline
+- 🔄 Sincronización automática
+- 📊 Gestión completa de cotizaciones
+- 🔐 Sistema de autenticación seguro
+- 📨 Exportación de cotizaciones a PDF
+- 💰 Cálculos automáticos de precios y descuentos
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## 🛠️ Tecnologías Utilizadas
 
-- Configure the top-level `parserOptions` property like this:
+- ⚛️ React + TypeScript
+- 🚀 Vite
+- 🎨 Tailwind CSS
+- 🔥 Railway (Base de datos)
+- ☁️ Vercel (Despliegue)
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## 🚀 Instalación y Uso
+
+1. Clona el repositorio:
+
+```bash
+git clone https://github.com/bcastilloarce/CotizacionesPWA.git
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+1. Instala las dependencias:
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+```bash
+cd CotizacionesPWA
+npm install
 ```
+
+1. Inicia el servidor de desarrollo:
+
+```bash
+npm run dev
+```
+
+## 🔧 Variables de Entorno
+
+Crea un archivo `.env` en la raíz del proyecto con las siguientes variables:
+
+```env
+VITE_API_URL=tu_url_api
+VITE_DATABASE_URL=tu_url_database
+```
+
+## 📱 PWA
+
+La aplicación es instalable como PWA en dispositivos móviles y escritorio, ofreciendo:
+
+- ⚡ Acceso rápido desde la pantalla de inicio
+- 📶 Funcionamiento offline
+- 🔄 Actualizaciones automáticas

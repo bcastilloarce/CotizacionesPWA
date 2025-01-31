@@ -1,0 +1,87 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String       @id @default(cuid())
+  email         String       @unique
+  name          String
+  password      String
+  role          Role        @default(USER)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  quotations    Quotation[]
+}
+
+model Client {
+  id          String       @id @default(cuid())
+  name        String
+  email       String?
+  phone       String?
+  address     String?
+  rut         String?      @unique
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  quotations  Quotation[]
+}
+
+model Quotation {
+  id          String       @id @default(cuid())
+  number      Int         @default(autoincrement())
+  date        DateTime    @default(now())
+  status      Status      @default(PENDING)
+  total       Float
+  tax         Float       @default(0)
+  discount    Float       @default(0)
+  notes       String?
+  validUntil  DateTime?
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  clientId    String
+  userId      String
+  items       QuotationItem[]
+  client      Client      @relation(fields: [clientId], references: [id])
+  user        User        @relation(fields: [userId], references: [id])
+}
+
+model Product {
+  id          String          @id @default(cuid())
+  code        String         @unique
+  name        String
+  description String?
+  price       Float
+  stock       Int           @default(0)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  items       QuotationItem[]
+}
+
+model QuotationItem {
+  id          String       @id @default(cuid())
+  quantity    Int
+  price       Float
+  discount    Float       @default(0)
+  quotationId String
+  productId   String
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  quotation   Quotation   @relation(fields: [quotationId], references: [id])
+  product     Product     @relation(fields: [productId], references: [id])
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum Status {
+  PENDING
+  APPROVED
+  REJECTED
+  EXPIRED
+}

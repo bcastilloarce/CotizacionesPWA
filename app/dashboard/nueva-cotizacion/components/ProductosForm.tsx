@@ -1,10 +1,11 @@
 'use client';
 
 import { useFormContext } from 'react-hook-form';
-import type { Quote, Product } from '@prisma/client';
+import type { Product } from '@prisma/client';
+import type { QuoteFormData } from '@/lib/validations/quote';
 
 export default function ProductosForm() {
-	const { register, watch, setValue, formState: { errors } } = useFormContext<Quote>();
+	const { register, watch, setValue, formState: { errors } } = useFormContext<QuoteFormData>();
 	const products = watch('products') || [];
 
 	const calculateSubtotal = (quantity: number, unitPrice: number) => {

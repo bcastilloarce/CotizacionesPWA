@@ -1,7 +1,7 @@
 {
-    "name": "PWA Next.js",
-    "short_name": "pwa-nextjs",
-    "theme_color": "#35155D",
+    "name": "Cotizaciones PWA",
+    "short_name": "Cotizaciones",
+    "theme_color": "#000000",
     "background_color": "#ffffff",
     "display": "standalone",
     "orientation": "portrait",

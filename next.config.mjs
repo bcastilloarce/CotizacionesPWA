@@ -1,22 +1,23 @@
-import withPWA from 'next-pwa';
+import NextPWA from 'next-pwa';
 
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-  reactStrictMode: true,
-  images: {
-    domains: ['localhost'],
-  },
-  swcMinify: true,            // Enable SWC minification for improved performance
-  compiler: {
-    removeConsole: process.env.NODE_ENV !== 'development'       // Remove console.log in production
-  }
-};
-
-const pwaConfig = withPWA({
+const withPWA = NextPWA({
   dest: 'public',
   register: true,
   skipWaiting: true,
   disable: process.env.NODE_ENV === 'development',
 });
 
-export default pwaConfig(nextConfig);
+const nextConfig = {
+  reactStrictMode: true,
+  images: {
+    domains: ['localhost'],
+  },
+  swcMinify: true,
+  compiler: {
+    removeConsole: process.env.NODE_ENV !== 'development'
+  }
+};
+
+
+export default withPWA(nextConfig);

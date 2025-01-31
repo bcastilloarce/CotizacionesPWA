@@ -1,38 +1,34 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
-
-const inter = Inter({ subsets: ["latin"] });
+import type { Metadata, Viewport } from 'next';
+import './globals.css';
 
 export const metadata: Metadata = {
-  title: "PWA NextJS",
-  description: "It's a simple progressive web application made with NextJS",
-  generator: "Next.js",
-  manifest: "/manifest.json",
-  keywords: ["nextjs", "next14", "pwa", "next-pwa"],
-  themeColor: [{ media: "(prefers-color-scheme: dark)", color: "#fff" }],
-  authors: [
-    {
-      name: "bcastilloarce",
-      url: "https://www.linkedin.com/in/bcastilloarce/",
-    },
-  ],
-  viewport:
-    "minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover",
+  title: 'Cotizaciones PWA',
+  description: 'Sistema de cotizaciones para Repuestos Oyarce',
+  manifest: '/manifest.json',
   icons: [
-    { rel: "apple-touch-icon", url: "icons/icon.png" },
-    { rel: "icon", url: "icons/icon.png" },
+    { rel: 'apple-touch-icon', url: 'icons/icon.png' },
+    { rel: 'icon', url: 'icons/icon.png' },
   ],
+};
+
+export const viewport: Viewport = {
+  themeColor: '#000000',
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  viewportFit: 'cover',
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html lang="es">
+      <body>{children}</body>
     </html>
   );
 }
+

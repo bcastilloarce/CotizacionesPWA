@@ -1,10 +1,10 @@
 'use client';
 
 import { useFormContext } from 'react-hook-form';
-import type { Quote } from '@prisma/client';
+import type { QuoteFormData } from '@/lib/validations/quote';
 
 export default function ClienteForm() {
-	const { register, formState: { errors } } = useFormContext<Quote>();
+	const { register, formState: { errors } } = useFormContext<QuoteFormData>();
 
 	return (
 		<div className="grid grid-cols-1 md:grid-cols-2 gap-6">

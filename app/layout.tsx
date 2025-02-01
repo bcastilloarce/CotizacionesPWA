@@ -7,10 +7,16 @@ export const metadata: Metadata = {
   title: 'Cotizaciones PWA',
   description: 'Sistema de cotizaciones para Repuestos Oyarce',
   manifest: '/manifest.json',
-  icons: [
-    { rel: 'apple-touch-icon', url: 'icons/icon.png' },
-    { rel: 'icon', url: 'icons/icon.png' },
-  ],
+  icons: {
+    icon: '/icons/icon.png',          // Standard icon for all platforms
+    apple: '/icons/icon.png',         // iOS/macOS specific
+    shortcut: '/icons/icon.png',      // Shortcut icon for browsers
+    other: {
+      rel: 'apple-touch-icon-precomposed',
+      url: '/icons/icon.png',
+    },
+  },
+  themeColor: '#000000',
 };
 
 export const viewport: Viewport = {

@@ -39,66 +39,70 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center bg-gray-50">
-      <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-lg">
+    <main className="min-h-screen flex flex-col items-center justify-center bg-[#F2F2F7] dark:bg-[#1C1C1E] px-4 py-8">
+      <div className="w-full max-w-md p-6 space-y-6 bg-white dark:bg-[#2C2C2E] rounded-2xl shadow-lg">
         <div className="flex flex-col items-center">
           <Image
             src="/images/logo.png"
             alt="Repuestos Oyarce Logo"
-            width={200}
-            height={60}
+            width={180}
+            height={54}
             priority
-            className="mb-8"
+            className="mb-6"
           />
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">
+          <h1 className="text-2xl font-semibold text-[#1C1C1E] dark:text-white mb-2">
             Repuestos Oyarce
           </h1>
-          <p className="text-gray-600 text-center mb-8">
-            Acceso privado al sistema de generación de cotizaciones
+          <p className="text-[#8E8E93] text-center text-base mb-6">
+            Acceso privado al sistema de cotizaciones
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-5">
           <div>
-          <label htmlFor="username" className="block text-sm font-medium text-gray-700">
-            Usuario
-          </label>
-          <input
-            id="username"
-            name="username"
-            type="text"
-            required
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-          />
+            <label htmlFor="username" className="block text-sm font-medium text-[#1C1C1E] dark:text-white mb-2">
+              Usuario
+            </label>
+            <input
+              id="username"
+              name="username"
+              type="text"
+              required
+              className="w-full px-4 py-3 text-base text-[#1C1C1E] dark:text-white bg-[#F2F2F7] dark:bg-[#3A3A3C] border border-[#E5E5EA] dark:border-[#3A3A3C] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#007AFF] focus:border-transparent placeholder-[#8E8E93]"
+              placeholder="Ingrese su usuario"
+            />
           </div>
 
           <div>
-          <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-            Contraseña
-          </label>
-          <input
-            id="password"
-            name="password"
-            type="password"
-            required
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-          />
+            <label htmlFor="password" className="block text-sm font-medium text-[#1C1C1E] dark:text-white mb-2">
+              Contraseña
+            </label>
+            <input
+              id="password"
+              name="password"
+              type="password"
+              required
+              className="w-full px-4 py-3 text-base text-[#1C1C1E] dark:text-white bg-[#F2F2F7] dark:bg-[#3A3A3C] border border-[#E5E5EA] dark:border-[#3A3A3C] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#007AFF] focus:border-transparent placeholder-[#8E8E93]"
+              placeholder="Ingrese su contraseña"
+            />
           </div>
 
           {error && (
-          <p className="text-red-500 text-sm text-center">{error}</p>
+            <p className="text-[#FF3B30] text-sm text-center py-2 px-4 bg-[#FF3B30]/10 rounded-lg">
+              {error}
+            </p>
           )}
 
           <button
-          type="submit"
-          disabled={isLoading}
-          className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
+            type="submit"
+            disabled={isLoading}
+            className="w-full flex justify-center py-3 px-4 text-base font-medium text-white bg-[#007AFF] hover:bg-[#0071E3] rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#007AFF] disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
           >
-          {isLoading ? 'Accediendo...' : 'Acceder'}
+            {isLoading ? 'Accediendo...' : 'Acceder'}
           </button>
         </form>
-        </div>
-      </main>
-      );
-    }
+      </div>
+    </main>
+  );
+}
 

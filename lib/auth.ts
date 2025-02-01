@@ -2,6 +2,7 @@ import { AuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { PrismaClient } from '@prisma/client';
 import { compare } from 'bcrypt';
+import type { RequestInternal } from 'next-auth';
 
 const prisma = new PrismaClient();
 
@@ -13,7 +14,10 @@ export const authOptions: AuthOptions = {
 				email: { label: 'Email', type: 'email' },
 				password: { label: 'Password', type: 'password' }
 			},
-			async authorize(credentials) {
+			async authorize(
+				credentials: Record<"email" | "password", string> | undefined,
+				req: Pick<RequestInternal, "body" | "query" | "headers" | "method">
+			) {
 				if (!credentials?.email || !credentials?.password) {
 					return null;
 				}
@@ -40,7 +44,7 @@ export const authOptions: AuthOptions = {
 				return {
 					id: user.id,
 					email: user.email,
-					name: user.name,
+					name: user.name || 'Usuario', // Ensure name is always a string
 				};
 			}
 		})
@@ -48,6 +52,7 @@ export const authOptions: AuthOptions = {
 	session: {
 		strategy: 'jwt'
 	},
+	secret: process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET,
 	pages: {
 		signIn: '/login'
 	},

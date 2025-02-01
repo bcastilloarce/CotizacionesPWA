@@ -4,8 +4,12 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Quote } from '@prisma/client';
 
+interface EnhancedQuote extends Quote {
+	formattedNumber?: string;
+}
+
 export default function HistorialPage() {
-	const [quotes, setQuotes] = useState<Quote[]>([]);
+	const [quotes, setQuotes] = useState<EnhancedQuote[]>([]);
 	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
@@ -46,9 +50,16 @@ export default function HistorialPage() {
 								<div className="px-4 py-4 sm:px-6">
 									<div className="flex items-center justify-between">
 										<div className="flex flex-col">
-											<p className="text-sm font-medium text-blue-600 truncate">
-												{quote.client}
-											</p>
+											<div className="flex items-center gap-2">
+												{quote.formattedNumber && (
+													<span className="text-sm font-medium text-gray-500">
+														{quote.formattedNumber}
+													</span>
+												)}
+												<p className="text-sm font-medium text-blue-600 truncate">
+													{quote.client}
+												</p>
+											</div>
 											<p className="mt-1 text-sm text-gray-500">
 												{quote.brand} {quote.model}
 											</p>

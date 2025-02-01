@@ -1,10 +1,10 @@
 import { NextResponse } from 'next/server';
-import { generateQuotePDF } from '@/lib/pdf/generator';
+import { generatePDF } from '@/utils/pdfGenerator';
 
 export async function POST(req: Request) {
 	try {
 		const data = await req.json();
-		const pdfBuffer = await generateQuotePDF(data);
+		const pdfBuffer: Buffer = await generatePDF(data);
 
 		return new NextResponse(pdfBuffer, {
 			headers: {

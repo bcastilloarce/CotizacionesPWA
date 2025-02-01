@@ -1,4 +1,5 @@
 import { jsPDF } from 'jspdf';
+import { getNextQuoteNumber } from '@/utils/quoteNumbering';
 
 interface PDFProduct {
 	name: string;
@@ -14,19 +15,22 @@ interface QuoteData {
 	year?: string;
 	licensePlate?: string;
 	duration: string;
-	untilStockLasts?: boolean;
+	untilStockLasts: boolean;  // Changed from optional to required
 	availability?: string;
 	products: Array<PDFProduct>;
 	totalWithTax: number;
 }
 
+// Update image paths
+const LOGO_PATH = '/public/images/logo.png';
+const FIRMA_PATH = '/public/images/firma.png';
 
-export const generatePDF = async (data: QuoteData) => {
+export const generatePDF = async (data: QuoteData): Promise<Buffer> => {
 	const doc = new jsPDF();
 	let yPosition = 20; // Starting position
 
 	// Add logo at the top (926x272 units as specified)
-	doc.addImage('/images/logo.png', 'PNG', (doc.internal.pageSize.width - 926/5)/2, yPosition, 926/5, 272/5);
+	doc.addImage(LOGO_PATH, 'PNG', (doc.internal.pageSize.width - 926/5)/2, yPosition, 926/5, 272/5);
 	yPosition += (272/5) + 40; // Logo height + 40 units spacing
 
 	// Add title
@@ -136,7 +140,7 @@ export const generatePDF = async (data: QuoteData) => {
 	}
 
 	// Add signature at the bottom
-	doc.addImage('/images/firma.png', 'PNG',
+	doc.addImage(FIRMA_PATH, 'PNG',
 		(doc.internal.pageSize.width - 110)/2,
 		doc.internal.pageSize.height - 50,
 		110,
@@ -152,12 +156,37 @@ export const generatePDF = async (data: QuoteData) => {
 		{ align: 'right' }
 	);
 
-	// Generate filename
-	const sanitizedClientName = data.client
-		.toLowerCase()
-		.replace(/[^a-z0-9]/g, '_');
-	const quoteNumber = String(Date.now()).slice(-3).padStart(3, '0');
+	// Return the PDF as a Buffer instead of saving
+	return Buffer.from(doc.output('arraybuffer'));
+};
 
-	// Save the PDF
-	doc.save(`N${quoteNumber}_${sanitizedClientName}.pdf`);
+const splitText = (text: string, maxWidth: number, doc: jsPDF): string[] => {
+	const words = text.split(' ');
+	const lines: string[] = [];
+	let currentLine = words[0];
+
+	for (let i = 1; i < words.length; i++) {
+		const word = words[i];
+		const width = doc.getTextWidth(currentLine + ' ' + word);
+
+		if (width < maxWidth) {
+			currentLine += ' ' + word;
+		} else {
+			lines.push(currentLine);
+			currentLine = word;
+		}
+	}
+	lines.push(currentLine);
+	return lines;
+};
+
+const generateFileName = async (clientName: string): Promise<string> => {
+	const sanitizedName = clientName
+		.toLowerCase()
+		.replace(/[^a-z0-9]/g, '_')
+		.replace(/_+/g, '_');
+
+	// Get next sequence number
+	const nextNum = await getNextQuoteNumber();
+	return `N${nextNum.toString().padStart(3, '0')}_${sanitizedName}.pdf`;
 };

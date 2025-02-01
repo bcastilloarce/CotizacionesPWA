@@ -8,7 +8,8 @@ Este documento especifica el formato y elementos de los PDFs de cotización gene
 
 El PDF se compone de los siguientes elementos en orden descendente:
 
-1. Logo corporativo
+1. Logo
+     - Imagen de logo
 2. Título "Cotización" (subrayado)
 3. Tabla de datos del cliente
    - Información básica y detalles del vehículo
@@ -17,7 +18,7 @@ El PDF se compone de los siguientes elementos en orden descendente:
 5. Total con IVA
 6. Disponibilidad (cuando aplica)
 7. Firma
-   - Imagen de firma
+      - Imagen de firma
 
 ## Espaciados Entre Elementos
 

@@ -1,20 +1,54 @@
 'use client';
 
-import { useFormContext } from 'react-hook-form';
+import { useFormContext, Controller } from 'react-hook-form';
+import { useEffect, useState } from 'react';
 import type { QuoteFormData } from '@/lib/validations/quote';
+import { Switch } from '@headlessui/react';
+
+interface CarBrand {
+	marca: string;
+	modelo: string[];
+}
 
 export default function VehiculoForm() {
-	const { register, formState: { errors } } = useFormContext<QuoteFormData>();
+	const { register, control, watch, setValue, formState: { errors } } = useFormContext<QuoteFormData>();
+	const [brands, setBrands] = useState<CarBrand[]>([]);
+	const [models, setModels] = useState<string[]>([]);
+	const selectedBrand = watch('brand');
+	const [years] = useState(() => {
+		const currentYear = 2025;
+		return Array.from({ length: 31 }, (_, i) => currentYear - i);
+	});
+
+	useEffect(() => {
+		// Load brands and models from JSON
+		fetch('/MarcasJSON/marcasymodelos.json')
+			.then(res => res.json())
+			.then(data => setBrands(data.marcasymodelos));
+	}, []);
+
+	useEffect(() => {
+		// Update models when brand changes
+		const brandData = brands.find(b => b.marca === selectedBrand);
+		setModels(brandData?.modelo || []);
+		setValue('model', ''); // Reset model when brand changes
+	}, [selectedBrand, brands, setValue]);
 
 	return (
 		<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 			<div>
 				<label className="block mb-2">Marca *</label>
-				<input
+				<select
 					{...register('brand')}
 					className="w-full p-2 border rounded"
-					placeholder="Marca del vehículo"
-				/>
+				>
+					<option value="">Seleccione una marca</option>
+					{brands.map(brand => (
+						<option key={brand.marca} value={brand.marca}>
+							{brand.marca}
+						</option>
+					))}
+				</select>
 				{errors.brand && (
 					<p className="text-red-500 text-sm mt-1">{errors.brand.message}</p>
 				)}
@@ -22,11 +56,18 @@ export default function VehiculoForm() {
 
 			<div>
 				<label className="block mb-2">Modelo *</label>
-				<input
+				<select
 					{...register('model')}
 					className="w-full p-2 border rounded"
-					placeholder="Modelo del vehículo"
-				/>
+					disabled={!selectedBrand}
+				>
+					<option value="">Seleccione un modelo</option>
+					{models.map(model => (
+						<option key={model} value={model}>
+							{model}
+						</option>
+					))}
+				</select>
 				{errors.model && (
 					<p className="text-red-500 text-sm mt-1">{errors.model.message}</p>
 				)}
@@ -34,20 +75,71 @@ export default function VehiculoForm() {
 
 			<div>
 				<label className="block mb-2">Año</label>
-				<input
-					type="number"
-					{...register('year', { valueAsNumber: true })}
+				<select
+					{...register('year')}
 					className="w-full p-2 border rounded"
-					placeholder="Año del vehículo"
-				/>
+				>
+					<option value="">Seleccione un año</option>
+					{years.map(year => (
+						<option key={year} value={year}>
+							{year}
+						</option>
+					))}
+				</select>
 			</div>
 
 			<div>
 				<label className="block mb-2">Patente</label>
 				<input
-					{...register('licensePlate')}
-					className="w-full p-2 border rounded"
+					{...register('licensePlate', {
+						setValueAs: (value: string) => value.toUpperCase(),
+						pattern: /^[A-Z0-9]*$/
+					})}
+					className="w-full p-2 border rounded uppercase"
 					placeholder="Patente del vehículo"
+					onInput={(e) => {
+						const input = e.currentTarget;
+						input.value = input.value.replace(/[^A-Za-z0-9]/g, '').toUpperCase();
+					}}
+				/>
+			</div>
+
+			<div>
+				<label className="block mb-2">Duración</label>
+				<select
+					{...register('duration')}
+					className="w-full p-2 border rounded"
+					defaultValue="1 día"
+				>
+					{Array.from({ length: 30 }, (_, i) => i + 1).map(num => (
+						<option key={num} value={`${num} día${num > 1 ? 's' : ''}`}>
+							{num} día{num > 1 ? 's' : ''}
+						</option>
+					))}
+				</select>
+			</div>
+
+			<div className="flex items-center space-x-4">
+				<label className="block">Hasta agotar stock</label>
+				<Controller
+					name="untilStockLasts"
+					control={control}
+					defaultValue={true}
+					render={({ field: { value, onChange } }) => (
+						<Switch
+							checked={value}
+							onChange={onChange}
+							className={`${
+								value ? 'bg-blue-600' : 'bg-gray-200'
+							} relative inline-flex h-6 w-11 items-center rounded-full transition-colors`}
+						>
+							<span
+								className={`${
+									value ? 'translate-x-6' : 'translate-x-1'
+								} inline-block h-4 w-4 transform rounded-full bg-white transition-transform`}
+							/>
+						</Switch>
+					)}
 				/>
 			</div>
 		</div>

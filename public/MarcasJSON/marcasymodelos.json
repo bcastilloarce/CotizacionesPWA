@@ -1,0 +1,1464 @@
+{
+  "marcasymodelos": [
+    {
+      "marca": "Acura",
+      "modelo": [
+        "Varios",
+        "ILX",
+        "MDX",
+        "NSX",
+        "RDX",
+        "TLX",
+        "2025 MDX"
+      ]
+    },
+    {
+      "marca": "Alfa Romeo",
+      "modelo": [
+        "Varios",
+        "4C",
+        "Giulia",
+        "Giulietta",
+        "Stelvio"
+      ]
+    },
+    {
+      "marca": "Aston Martin",
+      "modelo": [
+        "Varios",
+        "DB11",
+        "DBS",
+        "DBX",
+        "Vantage"
+      ]
+    },
+    {
+      "marca": "Audi",
+      "modelo": [
+        "Varios",
+        "A1",
+        "A3",
+        "A4",
+        "A5",
+        "A6",
+        "A7",
+        "A8",
+        "Q2",
+        "Q3",
+        "Q4",
+        "Q5",
+        "Q7",
+        "Q8",
+        "R8",
+        "RS Q3",
+        "RS Q8",
+        "RS3",
+        "RS4",
+        "RS5",
+        "RS6",
+        "RS7",
+        "S3",
+        "e-tron"
+      ]
+    },
+    {
+      "marca": "BAW",
+      "modelo": [
+        "Varios",
+        "BJ2020",
+        "BJ212",
+        "BJ40",
+        "BJ80"
+      ]
+    },
+    {
+      "marca": "BMW",
+      "modelo": [
+        "Varios",
+        "1 Series",
+        "2 Series",
+        "3 Series",
+        "4 Series",
+        "5 Series",
+        "6 Series",
+        "7 Series",
+        "8 Series",
+        "M2",
+        "M3",
+        "M4",
+        "M5",
+        "M6",
+        "M8",
+        "X1",
+        "X2",
+        "X3",
+        "X4",
+        "i3",
+        "i4",
+        "i7",
+        "i8",
+        "iX"
+      ]
+    },
+    {
+      "marca": "BYD",
+      "modelo": [
+        "Dolphin",
+        "E6",
+        "Han",
+        "Qin",
+        "Seal",
+        "Song",
+        "Tang",
+        "Yuan"
+      ]
+    },
+    {
+      "marca": "Baic",
+      "modelo": [
+        "Varios",
+        "X25",
+        "X35",
+        "X55",
+        "X65"
+      ]
+    },
+    {
+      "marca": "Bentley",
+      "modelo": [
+        "Varios",
+        "Bentayga",
+        "Continental GT",
+        "Flying Spur",
+        "Mulsanne"
+      ]
+    },
+    {
+      "marca": "Brilliance",
+      "modelo": [
+        "Varios",
+        "H230",
+        "H530",
+        "V3",
+        "V5"
+      ]
+    },
+    {
+      "marca": "Bugatti",
+      "modelo": [
+        "Varios",
+        "Centodieci",
+        "Chiron",
+        "Divo",
+        "Veyron"
+      ]
+    },
+    {
+      "marca": "Buick",
+      "modelo": [
+        "Varios",
+        "Enclave",
+        "Encore",
+        "Envision",
+        "LaCrosse"
+      ]
+    },
+    {
+      "marca": "Cadillac",
+      "modelo": [
+        "ATS",
+        "CT4",
+        "CT5",
+        "Escalade",
+        "XT4",
+        "XT5",
+        "XT6"
+      ]
+    },
+    {
+      "marca": "Changan",
+      "modelo": [
+        "CS35",
+        "CS55",
+        "CS75",
+        "CS85",
+        "CS95",
+        "Eado",
+        "Hunter",
+        "Linmax",
+        "Raeton",
+        "UNI-K",
+        "UNI-T"
+      ]
+    },
+    {
+      "marca": "Chery",
+      "modelo": [
+        "Varios",
+        "Arrizo",
+        "Fulwin",
+        "QQ",
+        "Tiggo",
+        "Tiggo 2",
+        "Tiggo 3",
+        "Tiggo 4",
+        "Tiggo 5",
+        "Tiggo 5x",
+        "Tiggo 6",
+        "Tiggo 7",
+        "Tiggo 7 Pro",
+        "Tiggo 8",
+        "Tiggo 8 Pro"
+      ]
+    },
+    {
+      "marca": "Chevrolet",
+      "modelo": [
+        "Varios",
+        "Aveo",
+        "Blazer",
+        "Camaro",
+        "Camaro 2023",
+        "Captiva",
+        "Captiva 2.2",
+        "Cavalier",
+        "Cheyenne",
+        "Colorado",
+        "Corsa",
+        "Corvette",
+        "Cruze",
+        "Cruze 1.8",
+        "D-Max",
+        "Dmax 2014",
+        "Equinox",
+        "Joy",
+        "Montana",
+        "N300",
+        "Onix",
+        "Orlando",
+        "S10",
+        "Sail"
+      ]
+    },
+    {
+      "marca": "Chrysler",
+      "modelo": [
+        "Varios",
+        "300",
+        "Pacifica",
+        "Town & Country",
+        "Voyager"
+      ]
+    },
+    {
+      "marca": "Citroen",
+      "modelo": [
+        "C3",
+        "C4",
+        "C4 Cactus",
+        "C5",
+        "C5 X",
+        "C6",
+        "Jumper",
+        "Jumpy",
+        "SpaceTourer"
+      ]
+    },
+    {
+      "marca": "Cupra",
+      "modelo": [
+        "Varios",
+        "Ateca",
+        "Born",
+        "Formentor",
+        "Leon"
+      ]
+    },
+    {
+      "marca": "DFM",
+      "modelo": [
+        "Varios",
+        "370",
+        "580",
+        "AX7",
+        "DFA",
+        "DFM Mini",
+        "Dongfeng"
+      ]
+    },
+    {
+      "marca": "Daewoo",
+      "modelo": [
+        "Varios",
+        "Lanos",
+        "Leganza",
+        "Matiz",
+        "Nubira"
+      ]
+    },
+    {
+      "marca": "Daihatsu",
+      "modelo": [
+        "Charade",
+        "Mira",
+        "Rocky",
+        "Sirion",
+        "Terios",
+        "Xenia",
+        "YRV"
+      ]
+    },
+    {
+      "marca": "Datsun",
+      "modelo": [
+        "Varios",
+        "GO",
+        "GO+",
+        "on-DO",
+        "redi-GO"
+      ]
+    },
+    {
+      "marca": "Dodge",
+      "modelo": [
+        "Varios",
+        "Challenger",
+        "Charger",
+        "Dart",
+        "Durango",
+        "Journey",
+        "Magnum",
+        "Neon",
+        "Nitro",
+        "RAM",
+        "Spirit",
+        "Stratus",
+        "Viper"
+      ]
+    },
+    {
+      "marca": "Dongfeng",
+      "modelo": [
+        "D90",
+        "Fengshen",
+        "Fengshen AX7",
+        "Glory",
+        "Rich 6",
+        "Rich 8",
+        "S50",
+        "T5",
+        "T7"
+      ]
+    },
+    {
+      "marca": "FAW",
+      "modelo": [
+        "Varios",
+        "Besturn B30",
+        "Besturn X40",
+        "Vita",
+        "Xiali N5"
+      ]
+    },
+    {
+      "marca": "Ferrari",
+      "modelo": [
+        "Varios",
+        "F8 Tributo",
+        "Portofino",
+        "Roma",
+        "SF90 Stradale"
+      ]
+    },
+    {
+      "marca": "Fiat",
+      "modelo": [
+        "Varios",
+        "124 Spider",
+        "500",
+        "500L",
+        "500X",
+        "Argo",
+        "Bravo",
+        "Cronos",
+        "Doblo",
+        "Ducato",
+        "Fiorino",
+        "Freemont",
+        "Idea",
+        "Linea",
+        "Mobi",
+        "Palio",
+        "Punto",
+        "Qubo",
+        "Siena",
+        "Stilo",
+        "Strada",
+        "Tipo",
+        "Toro",
+        "Uno"
+      ]
+    },
+    {
+      "marca": "Ford",
+      "modelo": [
+        "Varios",
+        "Bronco",
+        "EcoSport",
+        "Edge",
+        "Escape",
+        "Expedition",
+        "F-150",
+        "Fiesta",
+        "Focus",
+        "Fusion",
+        "Galaxy",
+        "Ka",
+        "Kuga",
+        "Maverick",
+        "Mondeo",
+        "Mustang",
+        "Puma",
+        "Ranger",
+        "Raptor",
+        "Taurus",
+        "Territory",
+        "Transit"
+      ]
+    },
+    {
+      "marca": "Foton",
+      "modelo": [
+        "Varios",
+        "Auman",
+        "Aumark",
+        "Gratour",
+        "Sauvana",
+        "Toano",
+        "Tunland"
+      ]
+    },
+    {
+      "marca": "Freightliner",
+      "modelo": [
+        "Varios",
+        "Cascadia",
+        "Columbia",
+        "M2",
+        "Sprinter"
+      ]
+    },
+    {
+      "marca": "GAC",
+      "modelo": [
+        "Varios",
+        "GA8",
+        "GS3",
+        "GS4",
+        "GS8"
+      ]
+    },
+    {
+      "marca": "GMC",
+      "modelo": [
+        "Acadia",
+        "Canyon",
+        "Hummer",
+        "Sierra",
+        "Terrain",
+        "Yukon"
+      ]
+    },
+    {
+      "marca": "Geely",
+      "modelo": [
+        "Coolray",
+        "Emgrand",
+        "Geometry A",
+        "Geometry C",
+        "Icon",
+        "NL-3",
+        "Panda",
+        "Preface",
+        "SC7",
+        "SX11",
+        "SX12"
+      ]
+    },
+    {
+      "marca": "Genesis",
+      "modelo": [
+        "Varios",
+        "G70",
+        "G80",
+        "G90",
+        "GV80"
+      ]
+    },
+    {
+      "marca": "Great Wall",
+      "modelo": [
+        "Varios",
+        "C30",
+        "C50",
+        "Coolbear",
+        "Deer",
+        "H3",
+        "H5",
+        "H6",
+        "Hover",
+        "M4",
+        "Poer",
+        "Safe",
+        "Safe 2.2",
+        "Steed",
+        "Voleex",
+        "Wingle",
+        "Wingle 5",
+        "Wingle 6",
+        "Wingle 7"
+      ]
+    },
+    {
+      "marca": "Great Wall",
+      "modelo": [
+        "Varios",
+        "Deer",
+        "Haval H6",
+        "Hover",
+        "Wingle"
+      ]
+    },
+    {
+      "marca": "Haima",
+      "modelo": [
+        "Varios",
+        "7X",
+        "8S",
+        "M6",
+        "S5"
+      ]
+    },
+    {
+      "marca": "Haval",
+      "modelo": [
+        "F7",
+        "H2",
+        "H4",
+        "H5",
+        "H6",
+        "H7",
+        "H8",
+        "H9",
+        "HB01",
+        "Jolion"
+      ]
+    },
+    {
+      "marca": "Hino",
+      "modelo": [
+        "Varios",
+        "300 Series",
+        "500 Series",
+        "700 Series",
+        "Ranger"
+      ]
+    },
+    {
+      "marca": "Honda",
+      "modelo": [
+        "Varios",
+        "Accord",
+        "BR-V",
+        "CR-V",
+        "City",
+        "Civic",
+        "Element",
+        "Fit",
+        "HR-V",
+        "Insight",
+        "Jazz",
+        "Legend",
+        "N-Box",
+        "NSX",
+        "Odyssey",
+        "Passport",
+        "Pilot",
+        "Prelude",
+        "Ridgeline",
+        "S2000",
+        "S660",
+        "Stream",
+        "Type R",
+        "Vezel"
+      ]
+    },
+    {
+      "marca": "Hummer",
+      "modelo": [
+        "Varios",
+        "EV",
+        "H1",
+        "H2",
+        "H3"
+      ]
+    },
+    {
+      "marca": "Hyundai",
+      "modelo": [
+        "Varios",
+        "Accent",
+        "Accent 2023",
+        "Bayon",
+        "Elantra",
+        "Genesis",
+        "Grand i10",
+        "IX20",
+        "IX35",
+        "IX55",
+        "Ioniq",
+        "Kona",
+        "Matrix",
+        "Palisade",
+        "Santa Fe",
+        "Sonata",
+        "Staria",
+        "Terracan",
+        "Tucson",
+        "i10",
+        "i20",
+        "i30",
+        "i40",
+        "i800"
+      ]
+    },
+    {
+      "marca": "Infiniti",
+      "modelo": [
+        "Varios",
+        "Q50",
+        "Q60",
+        "QX50",
+        "QX80"
+      ]
+    },
+    {
+      "marca": "Isuzu",
+      "modelo": [
+        "D-Max",
+        "MU-X",
+        "NKR",
+        "NLR",
+        "NPR",
+        "NPS",
+        "NQR",
+        "Reward"
+      ]
+    },
+    {
+      "marca": "Iveco",
+      "modelo": [
+        "Varios",
+        "Daily",
+        "Eurocargo",
+        "S-Way",
+        "Stralis"
+      ]
+    },
+    {
+      "marca": "JAC",
+      "modelo": [
+        "E10X",
+        "J3",
+        "J4",
+        "J5",
+        "J7",
+        "S2",
+        "S3",
+        "S5",
+        "S7",
+        "T6",
+        "T8"
+      ]
+    },
+    {
+      "marca": "JMC",
+      "modelo": [
+        "Varios",
+        "Boarding",
+        "Teshun",
+        "Vigus",
+        "Yuhu"
+      ]
+    },
+    {
+      "marca": "Jaguar",
+      "modelo": [
+        "Varios",
+        "F-PACE",
+        "I-PACE",
+        "XE",
+        "XF"
+      ]
+    },
+    {
+      "marca": "Jeep",
+      "modelo": [
+        "Cherokee",
+        "Compass",
+        "Gladiator",
+        "Grand Cherokee",
+        "Patriot",
+        "Renegade",
+        "Wagoneer",
+        "Wrangler"
+      ]
+    },
+    {
+      "marca": "Jetour",
+      "modelo": [
+        "Varios",
+        "Dashing",
+        "X70",
+        "X90",
+        "X95"
+      ]
+    },
+    {
+      "marca": "Kia",
+      "modelo": [
+        "Varios",
+        "Cadenza",
+        "Carnival",
+        "Cerato",
+        "Forte",
+        "K5",
+        "K7",
+        "K8",
+        "K9",
+        "Mohave",
+        "Morning",
+        "Niro",
+        "Opirus",
+        "Optima",
+        "Pegas",
+        "Picanto",
+        "Pregio",
+        "Pride",
+        "ProCeed",
+        "Rio",
+        "Seltos",
+        "Sonet",
+        "Soul",
+        "Sportage"
+      ]
+    },
+    {
+      "marca": "Land Rover",
+      "modelo": [
+        "Discovery",
+        "Discovery Sport",
+        "Evoque",
+        "Freelander",
+        "Range Rover",
+        "Range Rover Sport",
+        "Range Rover Velar"
+      ]
+    },
+    {
+      "marca": "Lexus",
+      "modelo": [
+        "CT",
+        "ES",
+        "GS",
+        "IS",
+        "LC",
+        "LS",
+        "LX",
+        "NX",
+        "RC",
+        "RX",
+        "UX"
+      ]
+    },
+    {
+      "marca": "Lexus",
+      "modelo": [
+        "Varios",
+        "ES",
+        "LS",
+        "NX",
+        "RX"
+      ]
+    },
+    {
+      "marca": "Lifan",
+      "modelo": [
+        "Varios",
+        "Breez",
+        "Smily",
+        "Solano",
+        "X60"
+      ]
+    },
+    {
+      "marca": "Lotus",
+      "modelo": [
+        "Varios",
+        "Elise",
+        "Emira",
+        "Evora",
+        "Exige"
+      ]
+    },
+    {
+      "marca": "MG",
+      "modelo": [
+        "Varios",
+        "3",
+        "350",
+        "5",
+        "6",
+        "GS",
+        "GS6",
+        "GS8",
+        "MG3",
+        "MG4",
+        "MG5",
+        "MG6",
+        "MG7",
+        "MG8",
+        "Marvel R",
+        "ZS",
+        "ZS EV"
+      ]
+    },
+    {
+      "marca": "MINI",
+      "modelo": [
+        "Clubman",
+        "Convertible",
+        "Cooper",
+        "Cooper S",
+        "Countryman",
+        "Electric",
+        "JCW",
+        "One",
+        "Paceman",
+        "Roadster"
+      ]
+    },
+    {
+      "marca": "Mahindra",
+      "modelo": [
+        "Varios",
+        "Bolero",
+        "KUV100",
+        "Pik Up",
+        "Scorpio",
+        "Thar",
+        "XUV300",
+        "XUV500",
+        "XUV700"
+      ]
+    },
+    {
+      "marca": "Mahindra",
+      "modelo": [
+        "Varios",
+        "Bolero",
+        "Scorpio",
+        "Thar",
+        "XUV500"
+      ]
+    },
+    {
+      "marca": "Maruti",
+      "modelo": [
+        "Alto",
+        "Baleno",
+        "Celerio",
+        "Ciaz",
+        "Dzire",
+        "Ertiga",
+        "Ignis",
+        "S-Cross",
+        "S-Presso",
+        "Swift",
+        "Vitara",
+        "Wagon R",
+        "XL6"
+      ]
+    },
+    {
+      "marca": "Maruti",
+      "modelo": [
+        "Varios",
+        "Baleno",
+        "Dzire",
+        "Swift",
+        "Vitara"
+      ]
+    },
+    {
+      "marca": "Maserati",
+      "modelo": [
+        "Varios",
+        "Ghibli",
+        "Levante",
+        "MC20",
+        "Quattroporte"
+      ]
+    },
+    {
+      "marca": "Mazda",
+      "modelo": [
+        "Varios",
+        "2",
+        "3",
+        "323",
+        "5",
+        "6",
+        "626",
+        "929",
+        "Atenza",
+        "BT-50",
+        "CX-3",
+        "CX-30",
+        "CX-4",
+        "CX-5",
+        "CX-60",
+        "CX-7",
+        "CX-8",
+        "CX-9",
+        "Demio",
+        "MX-3",
+        "MX-5",
+        "MX-6",
+        "Protege"
+      ]
+    },
+    {
+      "marca": "McLaren",
+      "modelo": [
+        "Varios",
+        "720S",
+        "765LT",
+        "Artura",
+        "GT"
+      ]
+    },
+    {
+      "marca": "Mercedes-Benz",
+      "modelo": [
+        "Varios",
+        "A-Class",
+        "AMG GT",
+        "B-Class",
+        "C-Class",
+        "CLA",
+        "CLS",
+        "E-Class",
+        "EQA",
+        "EQB",
+        "EQC",
+        "EQE",
+        "EQS",
+        "G-Class",
+        "GLA",
+        "GLB",
+        "GLC",
+        "GLE",
+        "GLK",
+        "GLS",
+        "GT",
+        "GTS",
+        "ML-Class",
+        "Sprinter"
+      ]
+    },
+    {
+      "marca": "Mitsubishi",
+      "modelo": [
+        "Varios",
+        "4P10",
+        "ASX",
+        "Canter",
+        "Delica",
+        "Diamante",
+        "Eclipse Cross",
+        "Endeavor",
+        "Evolution",
+        "Expander",
+        "FTO",
+        "Fuso",
+        "Galant",
+        "L200",
+        "Lancer",
+        "Mirage",
+        "Montero",
+        "Outlander",
+        "Outlander PHEV",
+        "Pajero",
+        "Pajero Sport",
+        "Rosa",
+        "i-MiEV"
+      ]
+    },
+    {
+      "marca": "Nissan",
+      "modelo": [
+        "Varios",
+        "Altima",
+        "Armada",
+        "Frontier",
+        "GT-R",
+        "Juke",
+        "Kicks",
+        "Leaf",
+        "Maxima",
+        "Micra",
+        "Murano",
+        "NP300",
+        "NV200",
+        "NV350",
+        "Note",
+        "Pathfinder",
+        "Primera",
+        "Pulsar",
+        "Qashqai",
+        "Quest",
+        "RD28",
+        "Rogue",
+        "Sentra"
+      ]
+    },
+    {
+      "marca": "Opel",
+      "modelo": [
+        "Astra",
+        "Corsa",
+        "Crossland",
+        "Grandland",
+        "Insignia",
+        "Karl",
+        "Mokka",
+        "Vectra",
+        "Zafira"
+      ]
+    },
+    {
+      "marca": "Pagani",
+      "modelo": [
+        "Varios",
+        "Huayra",
+        "Huayra R",
+        "Utopia",
+        "Zonda"
+      ]
+    },
+    {
+      "marca": "Perodua",
+      "modelo": [
+        "Varios",
+        "Aruz",
+        "Axia",
+        "Bezza",
+        "Myvi"
+      ]
+    },
+    {
+      "marca": "Peugeot",
+      "modelo": [
+        "Varios",
+        "106",
+        "108",
+        "2008",
+        "206",
+        "207",
+        "208",
+        "3008",
+        "308",
+        "308 2023",
+        "405",
+        "406",
+        "407",
+        "408",
+        "5008",
+        "508",
+        "607",
+        "806",
+        "807",
+        "Expert",
+        "iOn"
+      ]
+    },
+    {
+      "marca": "Piaggio",
+      "modelo": [
+        "Varios",
+        "Ape",
+        "Beverly",
+        "MP3",
+        "Porter"
+      ]
+    },
+    {
+      "marca": "Pontiac",
+      "modelo": [
+        "Varios",
+        "Firebird",
+        "GTO",
+        "Grand Prix",
+        "Trans Am"
+      ]
+    },
+    {
+      "marca": "Porsche",
+      "modelo": [
+        "Varios",
+        "911",
+        "Cayenne",
+        "Panamera",
+        "Taycan"
+      ]
+    },
+    {
+      "marca": "Proton",
+      "modelo": [
+        "Varios",
+        "Exora",
+        "Persona",
+        "Saga",
+        "X70"
+      ]
+    },
+    {
+      "marca": "Ram",
+      "modelo": [
+        "1500",
+        "2500",
+        "3500",
+        "4500",
+        "ProMaster",
+        "Rebel",
+        "TRX"
+      ]
+    },
+    {
+      "marca": "Renault",
+      "modelo": [
+        "Varios",
+        "Alaskan",
+        "Captur",
+        "Clio",
+        "Duster",
+        "Fluence",
+        "Kadjar",
+        "Kangoo",
+        "Koleos",
+        "Laguna",
+        "Latitude",
+        "Logan",
+        "Megane",
+        "Modus",
+        "Sandero",
+        "Scenic",
+        "Symbol",
+        "Talisman",
+        "Twingo",
+        "Zoe"
+      ]
+    },
+    {
+      "marca": "Roewe",
+      "modelo": [
+        "Varios",
+        "RX5",
+        "RX8",
+        "ei6",
+        "i6"
+      ]
+    },
+    {
+      "marca": "Rolls-Royce",
+      "modelo": [
+        "Varios",
+        "Cullinan",
+        "Ghost",
+        "Phantom",
+        "Wraith"
+      ]
+    },
+    {
+      "marca": "SEAT",
+      "modelo": [
+        "Arona",
+        "Ateca",
+        "Ibiza",
+        "Leon",
+        "Tarraco",
+        "Toledo"
+      ]
+    },
+    {
+      "marca": "Saic Motor",
+      "modelo": [
+        "Varios",
+        "MG ZS",
+        "MG6",
+        "Roewe RX5",
+        "Roewe i5"
+      ]
+    },
+    {
+      "marca": "Scania",
+      "modelo": [
+        "Varios",
+        "G Series",
+        "P Series",
+        "R Series",
+        "S Series"
+      ]
+    },
+    {
+      "marca": "Shelby",
+      "modelo": [
+        "Varios",
+        "Cobra",
+        "GT350",
+        "GT500",
+        "Super Snake"
+      ]
+    },
+    {
+      "marca": "Skoda",
+      "modelo": [
+        "Fabia",
+        "Kamiq",
+        "Karoq",
+        "Kodiaq",
+        "Octavia",
+        "Rapid",
+        "Roomster",
+        "Scout",
+        "Superb",
+        "Yeti"
+      ]
+    },
+    {
+      "marca": "Smart",
+      "modelo": [
+        "Varios",
+        "EQ ForTwo",
+        "ForFour",
+        "ForTwo",
+        "Roadster"
+      ]
+    },
+    {
+      "marca": "SsangYong",
+      "modelo": [
+        "Varios",
+        "Korando",
+        "Musso",
+        "Rexton",
+        "Tivoli"
+      ]
+    },
+    {
+      "marca": "Subaru",
+      "modelo": [
+        "Varios",
+        "Ascent",
+        "BRZ",
+        "Crosstrek",
+        "Forester",
+        "Impreza",
+        "Legacy",
+        "Levorg",
+        "Outback",
+        "STI"
+      ]
+    },
+    {
+      "marca": "Suzuki",
+      "modelo": [
+        "Varios",
+        "APV",
+        "Alto",
+        "Baleno",
+        "Celerio",
+        "Ciaz",
+        "Dzire",
+        "Ertiga",
+        "Grand Vitara",
+        "Ignis",
+        "Jimny",
+        "Kizashi",
+        "Maruti",
+        "SX4",
+        "SX4 S-Cross",
+        "Swift",
+        "Vitara",
+        "Wagon R",
+        "XL6"
+      ]
+    },
+    {
+      "marca": "Tata Motors",
+      "modelo": [
+        "Varios",
+        "Altroz",
+        "Harrier",
+        "Nexon",
+        "Safari"
+      ]
+    },
+    {
+      "marca": "Togg",
+      "modelo": [
+        "Varios",
+        "B-SUV",
+        "C-Crossover",
+        "C-SUV",
+        "Sedan"
+      ]
+    },
+    {
+      "marca": "Toyota",
+      "modelo": [
+        "Varios",
+        "4Runner",
+        "86",
+        "Alphard",
+        "Avalon",
+        "C-HR",
+        "Camry",
+        "Celica",
+        "Century",
+        "Corolla",
+        "Corolla Cross",
+        "Crown",
+        "FJ Cruiser",
+        "Fortuner",
+        "GR Supra",
+        "GR86",
+        "Highlander",
+        "Hilux",
+        "Land Cruiser",
+        "Land Cruiser Prado",
+        "Mirai",
+        "Prius",
+        "RAV4"
+      ]
+    },
+    {
+      "marca": "UAZ",
+      "modelo": [
+        "Varios",
+        "Hunter",
+        "Patriot",
+        "Pickup",
+        "Profi"
+      ]
+    },
+    {
+      "marca": "Varios",
+      "modelo": [
+        "Varios"
+      ]
+    },
+    {
+      "marca": "Volkswagen",
+      "modelo": [
+        "Varios",
+        "Amarok",
+        "Arteon",
+        "Atlas",
+        "Beetle",
+        "Bora",
+        "CC",
+        "Caddy",
+        "California",
+        "Constellation",
+        "Crafter",
+        "Golf",
+        "ID.3",
+        "ID.4",
+        "ID.5",
+        "ID.6",
+        "Jetta",
+        "Passat",
+        "Polo",
+        "Scirocco",
+        "Sharan",
+        "T-Cross",
+        "T-Roc"
+      ]
+    },
+    {
+      "marca": "Volvo",
+      "modelo": [
+        "C30",
+        "C40",
+        "C60",
+        "C70",
+        "S40",
+        "S60",
+        "S70",
+        "S80",
+        "S90",
+        "V40",
+        "V50",
+        "V60",
+        "V70",
+        "V90",
+        "XC40",
+        "XC60",
+        "XC70",
+        "XC90"
+      ]
+    },
+    {
+      "marca": "Vortex",
+      "modelo": [
+        "Varios",
+        "Corda",
+        "Costa",
+        "Estina",
+        "Tingo"
+      ]
+    },
+    {
+      "marca": "Western Star",
+      "modelo": [
+        "Varios",
+        "4700",
+        "4900",
+        "5700",
+        "6900"
+      ]
+    },
+    {
+      "marca": "ZNA",
+      "modelo": [
+        "Varios",
+        "Admiral",
+        "Grand Tiger",
+        "Rich",
+        "Tunland"
+      ]
+    },
+    {
+      "marca": "Zotye",
+      "modelo": [
+        "Varios",
+        "SR9",
+        "T600",
+        "T700",
+        "Z300"
+      ]
+    }
+  ]
+}

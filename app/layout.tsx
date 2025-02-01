@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import { Providers } from './providers';
-
+import { ThemeToggle } from '@/components/ui/theme-toggle';
 
 export const metadata: Metadata = {
   title: 'Cotizaciones PWA',
@@ -28,14 +28,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="es">
-      <body>
+    <html lang="es" suppressHydrationWarning>
+      <body className="min-h-screen bg-background text-foreground">
         <Providers>
           {children}
+          <ThemeToggle />
         </Providers>
       </body>
     </html>
   );
 }
-
-

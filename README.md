@@ -1,11 +1,13 @@
 # 💼 Cotizaciones PWA
 
 ## 🎯 Objetivo | Target
+
 🇪🇸 Aplicación web progresiva para gestionar cotizaciones de manera eficiente y profesional.
 
 🇬🇧 Progressive web application for efficient and professional quote management.
 
 ## 🛠️ Tecnologías | Technologies
+
 - ⚛️ React + TypeScript
 - 📱 Next.js
 - 🎨 Tailwind CSS
@@ -28,6 +30,7 @@ npm run dev
 ```
 
 ## 🔧 Variables de Entorno | Environment Variables
+
 ```env
 # Auth Configuration
 NEXTAUTH_URL=your_auth_url
@@ -46,4 +49,3 @@ KV_REST_API_READ_ONLY_TOKEN=your_read_only_token
 AUTH_USERNAME=your_username
 AUTH_PASSWORD=your_password
 ```
-

@@ -1,5 +1,7 @@
 import { jsPDF } from 'jspdf';
 import { getNextQuoteNumber } from '@/utils/quoteNumbering';
+import fs from 'fs';
+import path from 'path';
 
 interface PDFProduct {
 	name: string;
@@ -21,16 +23,25 @@ interface QuoteData {
 	totalWithTax: number;
 }
 
-// Update image paths
-const LOGO_PATH = '/public/images/logo.png';
-const FIRMA_PATH = '/public/images/firma.png';
+// Update image paths to be relative to project root
+const LOGO_PATH = path.join(process.cwd(), 'public', 'images', 'logo.png');
+const FIRMA_PATH = path.join(process.cwd(), 'public', 'images', 'firma.png');
+
+const getBase64Image = (filePath: string): string => {
+	const imageBuffer = fs.readFileSync(filePath);
+	return `data:image/png;base64,${imageBuffer.toString('base64')}`;
+};
 
 export const generatePDF = async (data: QuoteData): Promise<Buffer> => {
 	const doc = new jsPDF();
 	let yPosition = 20; // Starting position
 
+	// Load and add images using base64
+	const logoBase64 = getBase64Image(LOGO_PATH);
+	const firmaBase64 = getBase64Image(FIRMA_PATH);
+
 	// Add logo at the top (926x272 units as specified)
-	doc.addImage(LOGO_PATH, 'PNG', (doc.internal.pageSize.width - 926/5)/2, yPosition, 926/5, 272/5);
+	doc.addImage(logoBase64, 'PNG', (doc.internal.pageSize.width - 926/5)/2, yPosition, 926/5, 272/5);
 	yPosition += (272/5) + 40; // Logo height + 40 units spacing
 
 	// Add title
@@ -140,7 +151,7 @@ export const generatePDF = async (data: QuoteData): Promise<Buffer> => {
 	}
 
 	// Add signature at the bottom
-	doc.addImage(FIRMA_PATH, 'PNG',
+	doc.addImage(firmaBase64, 'PNG',
 		(doc.internal.pageSize.width - 110)/2,
 		doc.internal.pageSize.height - 50,
 		110,

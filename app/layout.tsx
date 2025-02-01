@@ -1,5 +1,11 @@
-import type { Metadata, Viewport } from 'next';
+import { Metadata, Viewport } from 'next';
+import { Inter } from 'next/font/google';
+import { getServerSession } from 'next-auth';
+import { SessionProvider } from 'next-auth/react';
 import './globals.css';
+import { authOptions } from '@/lib/auth';
+
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'Cotizaciones PWA',
@@ -20,14 +26,20 @@ export const viewport: Viewport = {
   viewportFit: 'cover',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const session = await getServerSession(authOptions);
+
   return (
-    <html lang="es">
-      <body>{children}</body>
+    <html lang="es" className={inter.className}>
+      <body>
+        <SessionProvider session={session}>
+          {children}
+        </SessionProvider>
+      </body>
     </html>
   );
 }

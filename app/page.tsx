@@ -1,21 +1,54 @@
-import Image from "next/image";
+'use client';
+
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
+import Image from 'next/image';
 
 export default function Home() {
+  const router = useRouter();
+  const { data: session, status } = useSession();
+
+  useEffect(() => {
+    if (session) {
+      router.push('/dashboard');
+    }
+  }, [session, router]);
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="relative z-[-1] flex gap-6 place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-        |
-        <h1 className="text-lg font-medium">PWA with Next.js</h1>
-        |
-        <p className="opacity-80">bcastilloarce</p>
+    <main className="min-h-screen flex flex-col items-center justify-center bg-gray-50">
+      <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-lg">
+        <div className="flex flex-col items-center">
+          <Image
+            src="/images/logo.png"
+            alt="Repuestos Oyarce Logo"
+            width={200}
+            height={60}
+            priority
+            className="mb-8"
+          />
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">
+            Sistema de Cotizaciones
+          </h1>
+          <p className="text-gray-600 text-center mb-8">
+            Gestione sus cotizaciones de manera eficiente
+          </p>
+        </div>
+
+        <div className="space-y-4">
+          <button
+            onClick={() => router.push('/login')}
+            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+          >
+            Iniciar Sesión
+          </button>
+          <button
+            onClick={() => router.push('/register')}
+            className="w-full flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+          >
+            Registrarse
+          </button>
+        </div>
       </div>
     </main>
   );

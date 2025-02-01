@@ -3,11 +3,58 @@
 import { useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import { useForm, FormProvider } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { quoteSchema, type QuoteFormData } from '@/lib/validations/quote';
+import ClienteForm from './nueva-cotizacion/components/ClienteForm';
+import VehiculoForm from './nueva-cotizacion/components/VehiculoForm';
+import ProductosForm from './nueva-cotizacion/components/ProductosForm';
+import PDFPreview from './nueva-cotizacion/components/PDFPreview';
 
 export default function Dashboard() {
 	const { data: session, status } = useSession();
 	const router = useRouter();
-	const [activeTab, setActiveTab] = useState('new'); // 'new' or 'history'
+	const [activeTab, setActiveTab] = useState('new');
+	const [isSubmitting, setIsSubmitting] = useState(false);
+	const [previewQuote, setPreviewQuote] = useState<QuoteFormData | null>(null);
+
+	const methods = useForm<QuoteFormData>({
+		resolver: zodResolver(quoteSchema),
+		defaultValues: {
+			untilStockLasts: false,
+			products: [],
+			totalWithTax: 0,
+		},
+	});
+
+	const onSubmit = async (data: QuoteFormData) => {
+		try {
+			setIsSubmitting(true);
+			const response = await fetch('/api/quotes', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(data),
+			});
+
+			if (!response.ok) {
+				throw new Error('Error al crear la cotización');
+			}
+
+			const quote = await response.json();
+			router.push(`/dashboard/cotizaciones/${quote.id}`);
+		} catch (error) {
+			console.error('Error:', error);
+		} finally {
+			setIsSubmitting(false);
+		}
+	};
+
+	const handlePreview = () => {
+		const data = methods.getValues();
+		setPreviewQuote(data);
+	};
 
 	if (status === 'loading') {
 		return (
@@ -62,15 +109,43 @@ export default function Dashboard() {
 						<h2 className="text-lg font-semibold text-[#1C1C1E] dark:text-white mb-6">
 							Nueva Cotización
 						</h2>
-						{/* Add your quote form here */}
-						<p className="text-[#8E8E93]">Formulario de cotización en desarrollo...</p>
+						<FormProvider {...methods}>
+							<form onSubmit={methods.handleSubmit(onSubmit)} className="space-y-8">
+								<ClienteForm />
+								<VehiculoForm />
+								<ProductosForm />
+
+								<div className="flex justify-end space-x-4">
+									<button
+										type="button"
+										onClick={handlePreview}
+										className="bg-gray-500 text-white px-6 py-2 rounded hover:bg-gray-600"
+									>
+										Vista Previa
+									</button>
+									<button
+										type="submit"
+										disabled={isSubmitting}
+										className="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 disabled:opacity-50"
+									>
+										{isSubmitting ? 'Guardando...' : 'Guardar Cotización'}
+									</button>
+								</div>
+							</form>
+						</FormProvider>
+
+						{previewQuote && (
+							<div className="mt-8">
+								<h2 className="text-xl font-semibold mb-4">Vista Previa</h2>
+								<PDFPreview quote={previewQuote} />
+							</div>
+						)}
 					</div>
 				) : (
 					<div className="bg-white dark:bg-[#2C2C2E] rounded-2xl shadow p-6">
 						<h2 className="text-lg font-semibold text-[#1C1C1E] dark:text-white mb-6">
 							Historial de Cotizaciones
 						</h2>
-						{/* Add your quotes history here */}
 						<p className="text-[#8E8E93]">Historial de cotizaciones en desarrollo...</p>
 					</div>
 				)}

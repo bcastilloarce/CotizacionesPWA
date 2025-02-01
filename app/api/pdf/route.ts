@@ -3,15 +3,14 @@ import { generateQuotePDF } from '@/lib/pdf/generator';
 
 export async function POST(req: Request) {
 	try {
-		const quote = await req.json();
-		const pdfDoc = await generateQuotePDF(quote);
-		const pdfBytes = await (pdfDoc as any).save();
+		const data = await req.json();
+		const pdfBuffer = await generateQuotePDF(data);
 
-		return new NextResponse(pdfBytes, {
+		return new NextResponse(pdfBuffer, {
 			headers: {
 				'Content-Type': 'application/pdf',
-				'Content-Disposition': `attachment; filename="cotizacion-${quote.id}.pdf"`,
-			},
+				'Content-Disposition': `attachment; filename="cotizacion.pdf"`
+			}
 		});
 	} catch (error) {
 		console.error('Error generating PDF:', error);

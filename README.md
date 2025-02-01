@@ -1,61 +1,49 @@
 # 💼 Cotizaciones PWA
 
-## 🎯 Objetivo
+## 🎯 Objetivo | Target
+🇪🇸 Aplicación web progresiva para gestionar cotizaciones de manera eficiente y profesional.
 
-Una aplicación web progresiva (PWA) diseñada para gestionar cotizaciones de manera eficiente y profesional. Permite crear, editar y dar seguimiento a cotizaciones de servicios o productos, con una interfaz intuitiva y accesible desde cualquier dispositivo.
+🇬🇧 Progressive web application for efficient and professional quote management.
 
-## ✨ Características Principales
-
-- 📱 Diseño responsive y PWA instalable
-- 💾 Funciona offline
-- 🔄 Sincronización automática
-- 📊 Gestión completa de cotizaciones
-- 🔐 Sistema de autenticación seguro
-- 📨 Exportación de cotizaciones a PDF
-- 💰 Cálculos automáticos de precios y descuentos
-
-## 🛠️ Tecnologías Utilizadas
-
+## 🛠️ Tecnologías | Technologies
 - ⚛️ React + TypeScript
-- 🚀 Vite
+- 📱 Next.js
 - 🎨 Tailwind CSS
-- 🔥 Railway (Base de datos)
-- ☁️ Vercel (Despliegue)
+- 🔥 Railway (Database)
+- ☁️ Vercel (Deploy)
+- 🔐 NextAuth.js
 
-## 🚀 Instalación y Uso
-
-1. Clona el repositorio:
+## 🚀 Instalación | Installation
 
 ```bash
+# Clone the repository
 git clone https://github.com/bcastilloarce/CotizacionesPWA.git
-```
 
-1. Instala las dependencias:
-
-```bash
+# Install dependencies
 cd CotizacionesPWA
 npm install
-```
 
-1. Inicia el servidor de desarrollo:
-
-```bash
+# Run development server
 npm run dev
 ```
 
-## 🔧 Variables de Entorno
-
-Crea un archivo `.env` en la raíz del proyecto con las siguientes variables:
-
+## 🔧 Variables de Entorno | Environment Variables
 ```env
-VITE_API_URL=tu_url_api
-VITE_DATABASE_URL=tu_url_database
+# Auth Configuration
+NEXTAUTH_URL=your_auth_url
+NEXTAUTH_SECRET=your_secret
+
+# Database Configuration
+DATABASE_URL=your_database_url
+
+# Upstash KV Configuration
+KV_URL=your_upstash_redis_url
+KV_REST_API_URL=your_upstash_api_url
+KV_REST_API_TOKEN=your_api_token
+KV_REST_API_READ_ONLY_TOKEN=your_read_only_token
+
+# Credentials
+AUTH_USERNAME=your_username
+AUTH_PASSWORD=your_password
 ```
 
-## 📱 PWA
-
-La aplicación es instalable como PWA en dispositivos móviles y escritorio, ofreciendo:
-
-- ⚡ Acceso rápido desde la pantalla de inicio
-- 📶 Funcionamiento offline
-- 🔄 Actualizaciones automáticas

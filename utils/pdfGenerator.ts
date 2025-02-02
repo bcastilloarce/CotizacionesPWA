@@ -24,8 +24,8 @@ interface QuoteData {
 }
 
 // Update image paths to be relative to project root
-const LOGO_PATH = path.join(process.cwd(), 'public', 'images', 'logo.png');
-const FIRMA_PATH = path.join(process.cwd(), 'public', 'images', 'firma.png');
+const LOGO_PATH = path.join(process.cwd(), 'public', 'assets', 'images', 'logo.png');
+const FIRMA_PATH = path.join(process.cwd(), 'public', 'assets', 'images', 'firma.png');
 
 const getBase64Image = (filePath: string): string => {
 	const imageBuffer = fs.readFileSync(filePath);
@@ -84,7 +84,7 @@ export const generatePDF = async (data: QuoteData): Promise<Buffer> => {
 		: data.duration;
 	addTableRow('Duración', durationText);
 
-	yPosition += 50; // 50 units spacing before products table
+	yPosition += 60; // 60 units spacing before products table
 
 	// Products Table
 	const columns = {
@@ -133,11 +133,11 @@ export const generatePDF = async (data: QuoteData): Promise<Buffer> => {
 			doc.rect(xPos, yPosition - 5, colWidth, 10, 'S');
 			xPos += colWidth;
 		});
-		yPosition += 10;
+		yPosition += 40;
 	});
 
 	// Total
-	yPosition += 10;
+	yPosition += 40;
 	doc.setFont('helvetica', 'bold');
 	doc.setFontSize(14);
 	const totalText = `Total con IVA: $${data.totalWithTax.toLocaleString('es-CL')}`;
@@ -151,11 +151,13 @@ export const generatePDF = async (data: QuoteData): Promise<Buffer> => {
 	}
 
 	// Add signature at the bottom
+	const signatureWidth = 200;
+	const signatureHeight = 60;
 	doc.addImage(firmaBase64, 'PNG',
-		(doc.internal.pageSize.width - 110)/2,
-		doc.internal.pageSize.height - 50,
-		110,
-		30
+		(doc.internal.pageSize.width - signatureWidth)/2,
+		doc.internal.pageSize.height - 80,
+		signatureWidth,
+		signatureHeight
 	);
 
 	// Add page number

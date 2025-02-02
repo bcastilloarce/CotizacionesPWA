@@ -20,6 +20,7 @@ export default function PDFPreview({ quote }: PDFPreviewProps) {
 					date: new Date().toISOString(),
 					client: quote.client,
 					year: quote.year?.toString(),
+					availability: quote.availability,
 					products: quote.products.map(p => ({
 						name: p.name,
 						quantity: p.quantity,

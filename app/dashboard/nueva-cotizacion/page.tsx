@@ -5,10 +5,10 @@ import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { quoteSchema, type QuoteFormData } from '@/lib/validations/quote';
-import ClienteForm from './components/ClienteForm';
-import VehiculoForm from './components/VehiculoForm';
-import ProductosForm from './components/ProductosForm';
-import PDFPreview from './components/PDFPreview';
+import ClienteForm from '../components/ClienteForm';
+import VehiculoForm from '../components/VehiculoForm';
+import ProductosForm from '../components/ProductosForm';
+import PDFPreview from '../components/PDFPreview';
 
 export default function NewQuotePage() {
   const router = useRouter();

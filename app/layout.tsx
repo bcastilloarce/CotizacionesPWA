@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import { Providers } from './providers';
-import { ThemeToggle } from '@/components/ui/theme-toggle';
+import { ThemeToggle } from '@/components/shared/theme-toggle'
 
 export const metadata: Metadata = {
   title: 'Cotizaciones PWA',
@@ -16,7 +16,6 @@ export const metadata: Metadata = {
       url: '/icons/icon.png',
     },
   },
-  themeColor: '#000000',
 };
 
 export const viewport: Viewport = {

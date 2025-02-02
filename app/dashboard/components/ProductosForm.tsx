@@ -158,7 +158,8 @@ const ProductModal: React.FC<ProductModalProps> = ({ product, index, onSave, onC
 
 export default function ProductosForm() {
     const { register, watch, setValue, formState: { errors } } = useFormContext<QuoteFormData>();
-    const products = watch('products') || [];
+    const watchProducts = watch('products');
+    const products = useMemo(() => watchProducts || [], [watchProducts]);
     const [modalProduct, setModalProduct] = useState<{ product?: ProductItem; index?: number } | null>(null);
 
     const formatCurrency = useCallback((amount: number): string => {

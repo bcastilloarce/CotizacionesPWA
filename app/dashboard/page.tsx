@@ -6,10 +6,10 @@ import { useRouter } from 'next/navigation';
 import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { quoteSchema, type QuoteFormData } from '@/lib/validations/quote';
-import ClienteForm from './nueva-cotizacion/components/ClienteForm';
-import VehiculoForm from './nueva-cotizacion/components/VehiculoForm';
-import ProductosForm from './nueva-cotizacion/components/ProductosForm';
-import PDFPreview from './nueva-cotizacion/components/PDFPreview';
+import ClienteForm from './components/ClienteForm';
+import VehiculoForm from './components/VehiculoForm';
+import ProductosForm from './components/ProductosForm';
+import PDFPreview from './components/PDFPreview';
 
 export default function Dashboard() {
 	const { data: session, status } = useSession();

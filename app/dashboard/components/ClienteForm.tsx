@@ -10,7 +10,7 @@ export default function ClienteForm() {
 		<div className="space-y-4">
 			<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 				<div className="space-y-2">
-					<label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
+					<label className="block text-sm font-medium text-white">
 						Cliente *
 					</label>
 					<input

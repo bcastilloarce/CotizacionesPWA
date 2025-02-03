@@ -121,6 +121,15 @@ export default function VehiculoForm() {
 				</select>
 			</div>
 
+			<div>
+				<label className="block mb-2 text-sm font-medium">Disponibilidad</label>
+				<input
+					{...register('availability')}
+					className="w-full p-2 border rounded-lg"
+					placeholder="Ej: Entrega inmediata"
+				/>
+			</div>
+
 			<div className="flex items-center space-x-4">
 				<label className="block text-sm font-medium">Hasta agotar stock</label>
 				<Controller

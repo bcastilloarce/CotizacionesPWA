@@ -55,47 +55,38 @@ export default function NewQuotePage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold mb-8">Nueva Cotización</h1>
+      {/* Logo will be handled in PDF generation */}
+      <h1 className="text-2xl font-bold text-center mb-8">Cotización</h1>
 
       <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(onSubmit)} className="space-y-8">
-        {/* Following the exact sequence from PDFCotizaciones.md */}
-        <div className="space-y-8">
-        {/* Logo is handled in PDF generation */}
-
-        {/* Client information section */}
-        <div className="space-y-6">
-          <ClienteForm />
+        {/* 3. Client and Vehicle Data Table */}
+        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm space-y-6">
+        <h2 className="text-xl font-semibold">Información del Cliente y Vehículo</h2>
+        <ClienteForm />
+        <VehiculoForm />
         </div>
 
-        {/* Vehicle information section */}
-        <div className="space-y-6">
-          <VehiculoForm />
-        </div>
+        {/* 4. Products Table */}
+        <ProductosForm />
 
-        {/* Products section with specified spacing */}
-        <div className="space-y-6">
-          <ProductosForm />
-        </div>
-
-        {/* Signature section with fixed dimensions */}
-        <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm">
-          <h3 className="text-lg font-medium mb-4">Firma</h3>
-          <div className="h-[110px] w-[110px] mx-auto border-2 border-dashed border-gray-300 rounded-lg">
+        {/* 7. Signature */}
+        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm">
+        <h3 className="text-lg font-medium mb-4">Firma</h3>
+        <div className="h-[110px] w-[110px] mx-auto border-2 border-dashed border-gray-300 rounded-lg">
           {/* Signature component will go here */}
-          </div>
+        </div>
         </div>
 
         {/* PDF Generation button */}
         <div className="flex justify-center pt-8">
-          <button
+        <button
           type="button"
           onClick={handlePreview}
           className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700"
-          >
+        >
           Generar PDF
-          </button>
-        </div>
+        </button>
         </div>
       </form>
       </FormProvider>
@@ -109,6 +100,7 @@ export default function NewQuotePage() {
       </div>
       )}
     </div>
+
   );
 }
 

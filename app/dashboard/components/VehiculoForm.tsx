@@ -35,12 +35,14 @@ export default function VehiculoForm() {
 	}, [selectedBrand, brands, setValue]);
 
 	return (
-		<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-			<div>
-				<label className="block mb-2">Marca *</label>
-				<select
-					{...register('brand')}
-					className="w-full p-2 border rounded"
+		<div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm">
+			<h2 className="text-xl font-semibold mb-4">Información del Vehículo</h2>
+			<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+				<div>
+					<label className="block mb-2 text-sm font-medium">Marca *</label>
+					<select
+						{...register('brand')}
+						className="w-full p-2 border rounded-lg"
 				>
 					<option value="">Seleccione una marca</option>
 					{brands.map(brand => (
@@ -55,10 +57,10 @@ export default function VehiculoForm() {
 			</div>
 
 			<div>
-				<label className="block mb-2">Modelo *</label>
+				<label className="block mb-2 text-sm font-medium">Modelo *</label>
 				<select
 					{...register('model')}
-					className="w-full p-2 border rounded"
+					className="w-full p-2 border rounded-lg"
 					disabled={!selectedBrand}
 				>
 					<option value="">Seleccione un modelo</option>
@@ -74,10 +76,10 @@ export default function VehiculoForm() {
 			</div>
 
 			<div>
-				<label className="block mb-2">Año</label>
+				<label className="block mb-2 text-sm font-medium">Año</label>
 				<select
 					{...register('year')}
-					className="w-full p-2 border rounded"
+					className="w-full p-2 border rounded-lg"
 				>
 					<option value="">Seleccione un año</option>
 					{years.map(year => (
@@ -89,13 +91,13 @@ export default function VehiculoForm() {
 			</div>
 
 			<div>
-				<label className="block mb-2">Patente</label>
+				<label className="block mb-2 text-sm font-medium">Patente</label>
 				<input
 					{...register('licensePlate', {
 						setValueAs: (value: string) => value.toUpperCase(),
 						pattern: /^[A-Z0-9]*$/
 					})}
-					className="w-full p-2 border rounded uppercase"
+					className="w-full p-2 border rounded-lg uppercase"
 					placeholder="Patente del vehículo"
 					onInput={(e) => {
 						const input = e.currentTarget;
@@ -105,10 +107,10 @@ export default function VehiculoForm() {
 			</div>
 
 			<div>
-				<label className="block mb-2">Duración</label>
+				<label className="block mb-2 text-sm font-medium">Duración</label>
 				<select
 					{...register('duration')}
-					className="w-full p-2 border rounded"
+					className="w-full p-2 border rounded-lg"
 					defaultValue="1 día"
 				>
 					{Array.from({ length: 30 }, (_, i) => i + 1).map(num => (
@@ -120,7 +122,7 @@ export default function VehiculoForm() {
 			</div>
 
 			<div className="flex items-center space-x-4">
-				<label className="block">Hasta agotar stock</label>
+				<label className="block text-sm font-medium">Hasta agotar stock</label>
 				<Controller
 					name="untilStockLasts"
 					control={control}
@@ -143,5 +145,6 @@ export default function VehiculoForm() {
 				/>
 			</div>
 		</div>
+	</div>
 	);
 }

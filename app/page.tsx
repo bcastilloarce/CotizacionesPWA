@@ -43,7 +43,7 @@ export default function Home() {
       <div className="w-full max-w-md p-6 space-y-6 bg-white dark:bg-[#2C2C2E] rounded-2xl shadow-lg">
         <div className="flex flex-col items-center">
           <Image
-            src="/images/logo.png"
+            src="/assets/images/logo.png"
             alt="Repuestos Oyarce Logo"
             width={180}
             height={54}
@@ -105,4 +105,3 @@ export default function Home() {
     </main>
   );
 }
-

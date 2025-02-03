@@ -13,7 +13,8 @@ const nextConfig = {
   output: 'standalone',
   compress: true,
   images: {
-    domains: ['localhost'],
+    remotePatterns: [],
+    unoptimized: true, // This will prevent optimization errors for local images
     formats: ['image/avif', 'image/webp'],
     minimumCacheTTL: 60,
   },

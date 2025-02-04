@@ -12,7 +12,7 @@ import ProductosForm from './components/ProductosForm';
 import PDFPreview from './components/PDFPreview';
 
 export default function Dashboard() {
-	const { data: session, status } = useSession();
+	const { status } = useSession();
 	const router = useRouter();
 	const [activeTab, setActiveTab] = useState('new');
 	const [isSubmitting, setIsSubmitting] = useState(false);
@@ -27,10 +27,12 @@ export default function Dashboard() {
 		},
 	});
 
-	// Handle unauthenticated users
-	if (status === 'unauthenticated') {
-		router.push('/api/auth/signin');
-		return null;
+	if (status === 'loading') {
+		return (
+			<div className="min-h-screen flex items-center justify-center bg-[#F2F2F7] dark:bg-[#1C1C1E]">
+				<div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-[#007AFF]"></div>
+			</div>
+		);
 	}
 
 	const onSubmit = async (data: QuoteFormData) => {
@@ -61,14 +63,6 @@ export default function Dashboard() {
 		const data = methods.getValues();
 		setPreviewQuote(data);
 	};
-
-	if (status === 'loading') {
-		return (
-			<div className="min-h-screen flex items-center justify-center bg-[#F2F2F7] dark:bg-[#1C1C1E]">
-				<div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-[#007AFF]"></div>
-			</div>
-		);
-	}
 
 	return (
 		<div className="min-h-screen bg-[#F2F2F7] dark:bg-[#1C1C1E]">

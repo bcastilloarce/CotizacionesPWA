@@ -1,11 +1,11 @@
 import { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
-import { SessionProvider } from 'next-auth/react';
 import './globals.css';
 import { ThemeProvider } from '@/components/providers/theme-provider';
 import Header from '@/app/components/shared/Header';
 import Footer from '@/app/components/shared/Footer';
 import { ThemeToggle } from '@/components/shared/theme-toggle';
+import { Providers } from './providers';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -28,25 +28,25 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es" suppressHydrationWarning>
-        <body>
-        <SessionProvider>
+      <body>
+        <Providers>
           <ThemeProvider
-          attribute="class"
-          defaultTheme="light"
-          enableSystem={false}
-          storageKey="theme"
+            attribute="class"
+            defaultTheme="light"
+            enableSystem={false}
+            storageKey="theme"
           >
-          <div className="flex flex-col min-h-screen">
-            <Header />
-            <main className="flex-grow">
-            {children}
-            </main>
-            <Footer />
-            <ThemeToggle />
-          </div>
+            <div className="flex flex-col min-h-screen">
+              <Header />
+              <main className="flex-grow">
+                {children}
+              </main>
+              <Footer />
+              <ThemeToggle />
+            </div>
           </ThemeProvider>
-        </SessionProvider>
-        </body>
+        </Providers>
+      </body>
     </html>
   );
 }

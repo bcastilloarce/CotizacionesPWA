@@ -2,7 +2,7 @@
 
 import { useFormContext, Controller } from 'react-hook-form';
 import { useEffect, useState } from 'react';
-import type { QuoteFormData } from '@/lib/validations/quote';
+import type { QuoteFormData } from '@/app/api/validations/quote';
 import { Switch } from '@headlessui/react';
 import { motion } from 'framer-motion';
 

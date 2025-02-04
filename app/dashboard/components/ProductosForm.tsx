@@ -4,7 +4,7 @@ import { useFormContext } from 'react-hook-form';
 import { motion, AnimatePresence } from 'framer-motion';
 import { PlusCircleIcon, XMarkIcon, PencilIcon, TrashIcon, MinusIcon, PlusIcon } from '@heroicons/react/24/outline';
 import { useState, useCallback, useMemo, useEffect } from 'react';
-import type { QuoteFormData } from '@/lib/validations/quote';
+import type { QuoteFormData } from '@/app/api/validations/quote';
 import { openDB } from 'idb';
 
 const initDB = async () => {

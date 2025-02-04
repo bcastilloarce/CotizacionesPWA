@@ -1,8 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { generatePDF } from '@/utils/pdfGenerator';
-import type { QuoteFormData } from '@/lib/validations/quote';
+import { generatePDF } from '@/app/api/pdf/pdfGenerator';
+import type { QuoteFormData } from '@/app/api/validations/quote';
 
 interface PDFPreviewProps {
 	quote: QuoteFormData;

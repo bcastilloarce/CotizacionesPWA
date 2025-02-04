@@ -3,12 +3,14 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Quote } from '@prisma/client';
+import { useRouter } from 'next/navigation';
 
 interface EnhancedQuote extends Quote {
 	formattedNumber?: string;
 }
 
 export default function HistorialPage() {
+	const router = useRouter();
 	const [quotes, setQuotes] = useState<EnhancedQuote[]>([]);
 	const [isLoading, setIsLoading] = useState(true);
 
@@ -38,10 +40,23 @@ export default function HistorialPage() {
 	return (
 		<div className="container mx-auto px-4 py-8">
 			<div className="space-y-6">
-				<h1 className="text-2xl font-bold">Historial de Cotizaciones</h1>
+				<div className="flex items-center justify-between">
+					<h1 className="text-2xl font-bold">Historial de Cotizaciones</h1>
+					<button
+						onClick={() => router.push('/dashboard')}
+						className="px-4 py-2 text-sm font-medium text-[#007AFF] hover:text-[#0051A8]"
+					>
+						Volver al Dashboard
+					</button>
+				</div>
 
 				<div className="bg-white shadow overflow-hidden sm:rounded-md">
-					<ul className="divide-y divide-gray-200">
+					{quotes.length === 0 ? (
+						<div className="p-6 text-center text-gray-500">
+							No hay cotizaciones disponibles
+						</div>
+					) : (
+						<ul className="divide-y divide-gray-200">
 						{quotes.map((quote) => (
 							<li key={quote.id}>
 								<Link

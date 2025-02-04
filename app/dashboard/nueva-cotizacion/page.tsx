@@ -5,7 +5,7 @@ import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { quoteSchema, type QuoteFormData } from '@/lib/validations/quote';
+import { quoteSchema, type QuoteFormData } from '@/app/api/validations/quote';
 import ClienteForm from '../components/ClienteForm';
 import VehiculoForm from '../components/VehiculoForm';
 import ProductosForm from '../components/ProductosForm';
@@ -65,7 +65,15 @@ export default function NewQuotePage() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-2xl">
+    <div className="container mx-auto px-4 py-4 max-w-2xl">
+      <div className="flex items-center justify-between mb-6">
+      <button
+        onClick={() => router.push('/dashboard')}
+        className="px-4 py-2 text-sm font-medium text-[#007AFF] hover:text-[#0051A8]"
+      >
+        Volver al Dashboard
+      </button>
+      </div>
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(onSubmit)} className="space-y-6">
           {/* Logo Preview */}
@@ -119,7 +127,7 @@ export default function NewQuotePage() {
 
           {/* Action Buttons */}
           <motion.div
-            className="sticky bottom-[calc(49px+env(safe-area-inset-bottom))] pt-4 pb-2 bg-gray-50 dark:bg-gray-900"
+            className="sticky bottom-0 pt-4 pb-2 bg-gray-50 dark:bg-gray-900"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3 }}

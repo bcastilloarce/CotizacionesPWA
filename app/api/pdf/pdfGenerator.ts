@@ -1,5 +1,5 @@
 import { jsPDF } from 'jspdf';
-import { getNextQuoteNumber } from '@/utils/quoteNumbering';
+import { getNextQuoteNumber } from '@/app/api/pdf/quoteNumbering';
 import fs from 'fs';
 import path from 'path';
 

@@ -2,7 +2,7 @@
 
 import { useFormContext } from 'react-hook-form';
 import { motion } from 'framer-motion';
-import type { QuoteFormData } from '@/lib/validations/quote';
+import type { QuoteFormData } from '@/app/api/validations/quote';
 
 export default function ClienteForm() {
   const { register, formState: { errors }, watch } = useFormContext<QuoteFormData>();

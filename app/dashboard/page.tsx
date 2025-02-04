@@ -12,13 +12,15 @@ import ProductosForm from './components/ProductosForm';
 import PDFPreview from './components/PDFPreview';
 
 export default function Dashboard() {
-	const { status } = useSession({
-		required: true,
-		onUnauthenticated() {
-			redirect('/api/auth/signin');
-		},
-	});
+	const { data: session, status } = useSession();
 	const router = useRouter();
+
+	// If not authenticated, redirect to sign in
+	if (status === 'unauthenticated') {
+		router.push('/api/auth/signin');
+		return null;
+	}
+
 	const [activeTab, setActiveTab] = useState('new');
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [previewQuote, setPreviewQuote] = useState<QuoteFormData | null>(null);

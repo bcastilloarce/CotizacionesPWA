@@ -28,23 +28,25 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es" suppressHydrationWarning>
-      <body>
-        <ThemeProvider
+        <body>
+        <SessionProvider>
+          <ThemeProvider
           attribute="class"
           defaultTheme="light"
           enableSystem={false}
           storageKey="theme"
-        >
+          >
           <div className="flex flex-col min-h-screen">
             <Header />
             <main className="flex-grow">
-              {children}
+            {children}
             </main>
             <Footer />
             <ThemeToggle />
           </div>
-        </ThemeProvider>
-      </body>
+          </ThemeProvider>
+        </SessionProvider>
+        </body>
     </html>
   );
 }

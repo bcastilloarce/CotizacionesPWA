@@ -1,4 +1,110 @@
-# CotizacionesPWA - Conversion Guide from iOS to Next.js Progressive Web App
+# CotizacionesPWA - PDF Quote Generator Web Application
+
+## Primary Objective
+
+This Progressive Web Application (PWA) is specifically designed to generate standardized PDF quotations for Repuestos Oyarce, following strict formatting specifications. The application transforms user input into professional automotive parts quotations that include client information, vehicle details, product listings, and commercial terms.
+
+## Project Structure Analysis
+
+### Core Functionality Folders
+
+- **/app/dashboard/nueva-cotizacion/**
+  - Main quotation form interface
+  - Implements all PDF requirements including client data, vehicle information, and product listing
+  - Handles real-time PDF preview
+  - Contains form validation for required fields
+
+- **/lib/pdf/**
+  - PDF generation logic
+  - Implements exact spacing specifications (40 units logo to title, etc.)
+  - Handles dynamic content adjustment
+  - Manages page breaks and headers
+  - Controls font specifications (Helvetica, CustomTitle, etc.)
+
+- **/components/quotation/**
+  - Reusable form components aligned with PDF requirements
+  - Client information section
+  - Vehicle details section
+  - Product table with automatic calculations
+  - Preview component showing real-time PDF generation
+
+### Supporting Structure
+
+- **/public/assets/**
+  - Corporate logo storage
+  - Signature images
+  - Required fonts
+
+- **/lib/validation/**
+  - Form validation rules ensuring PDF requirements are met
+  - Required field checks
+  - Format validation (Chilean peso, dates, etc.)
+
+- **/types/**
+  - TypeScript interfaces matching PDF data requirements
+  - Ensures data consistency throughout the application
+
+## Areas Needing Improvement
+
+1. **Form-PDF Alignment**
+   - Current form structure doesn't fully mirror PDF layout
+   - Need to add specific spacing controls matching PDF requirements
+   - Missing validation for optional fields behavior
+
+2. **Price Formatting**
+   - Inconsistent thousand separator implementation
+   - Chilean peso format needs standardization across components
+
+3. **Dynamic Content Handling**
+   - Current implementation doesn't fully address variable content length
+   - Need better handling of optional fields in PDF generation
+   - Page break logic needs refinement
+
+4. **PDF Preview Performance**
+   - Real-time preview generation may impact performance
+   - Consider implementing preview throttling
+
+## Required Enhancements
+
+1. **PDF Specifications Compliance**
+   - Implement exact spacing measurements from GenerarPDF.md
+   - Add proper font handling (CustomTitle, Helvetica-Bold, etc.)
+   - Ensure correct table column widths (40% for products, etc.)
+
+2. **Form Interface Improvements**
+   - Add clear visual separation between sections matching PDF layout
+   - Implement proper handling of optional fields
+   - Add preview toggle functionality
+
+3. **Data Validation**
+   - Enhance validation rules to match PDF requirements
+   - Add proper error messages aligned with PDF specifications
+   - Implement format validation for monetary values
+
+4. **File Naming System**
+   - Implement sequential numbering (N001_clientname.pdf)
+   - Add proper character sanitization for client names
+   - Ensure correct file storage structure
+
+## Development Priorities
+
+1. Ensure 100% compliance with PDF specifications
+2. Implement robust form validation
+3. Optimize PDF generation performance
+4. Add proper error handling
+5. Implement automated testing for PDF output
+
+## Quality Assurance Checklist
+
+- [ ] PDF output matches all specifications in GenerarPDF.md
+- [ ] Form captures all required data correctly
+- [ ] Proper handling of optional fields
+- [ ] Correct implementation of spacing requirements
+- [ ] Proper font usage throughout PDF
+- [ ] Correct monetary format implementation
+- [ ] Proper file naming and storage
+- [ ] Mobile responsiveness
+- [ ] Offline functionality
 
 ## Overview
 
@@ -159,296 +265,3 @@ export default function NewQuotePage() {
   );
 }
 ```
-
-### 4. State Management
-
-```typescript
-// lib/store/quote.ts
-import create from 'zustand';
-
-interface QuoteStore {
-  quotes: Quote[];
-  addQuote: (quote: Quote) => void;
-  removeQuote: (id: string) => void;
-}
-
-export const useQuoteStore = create<QuoteStore>((set) => ({
-  quotes: [],
-  addQuote: (quote) => set((state) => ({
-    quotes: [...state.quotes, quote]
-  })),
-  removeQuote: (id) => set((state) => ({
-    quotes: state.quotes.filter(q => q.id !== id)
-  })),
-}));
-```
-
-## API Routes
-
-### 1. Quote Management
-
-```typescript
-// app/api/cotizaciones/route.ts
-import { NextResponse } from 'next/server';
-import { prisma } from '@/lib/db';
-
-export async function POST(req: Request) {
-  try {
-    const data = await req.json();
-    const quote = await prisma.quote.create({
-      data: {
-        ...data,
-        products: {
-          create: data.products,
-        },
-      },
-    });
-    return NextResponse.json(quote);
-  } catch (error) {
-    return NextResponse.json(
-      { error: 'Failed to create quote' },
-      { status: 500 }
-    );
-  }
-}
-```
-
-### 2. PDF Generation
-
-```typescript
-// app/api/pdf/route.ts
-import { NextResponse } from 'next/server';
-import { generateQuotePDF } from '@/lib/pdf/generator';
-
-export async function POST(req: Request) {
-  try {
-    const quote = await req.json();
-    const pdf = await generateQuotePDF(quote);
-    return new NextResponse(pdf, {
-      headers: {
-        'Content-Type': 'application/pdf',
-      },
-    });
-  } catch (error) {
-    return NextResponse.json(
-      { error: 'Failed to generate PDF' },
-      { status: 500 }
-    );
-  }
-}
-```
-
-## Progressive Enhancement Features
-
-1. **Offline Support**
-   - Service Worker for caching
-   - IndexedDB for offline data storage
-   - Background sync for pending changes
-
-2. **Responsive Design**
-   - Mobile-first approach
-   - Adaptive UI components
-   - Touch-friendly interfaces
-
-3. **Performance Optimization**
-   - Image optimization
-   - Code splitting
-   - Route prefetching
-
-## Security Considerations
-
-1. **Authentication**
-   - JWT-based authentication
-   - Role-based access control
-   - Secure session management
-
-2. **Data Protection**
-   - Input validation
-   - XSS prevention
-   - CSRF protection
-
-## Deployment
-
-1. **Prerequisites**
-   - Node.js 18+
-   - PostgreSQL database
-   - Environment variables setup
-
-2. **Build Process**
-
-    ```bash
-    npm run build
-    ```
-
-3. **Deployment Platforms**
-
-   - Vercel (recommended)
-   - Railway
-   - AWS/GCP/Azure
-
-## Development Setup
-
-1. Clone the repository
-
-    ```bash
-    git clone https://github.com/your-org/cotizaciones-pwa.git
-    ```
-
-2. Install dependencies
-
-    ```bash
-    npm install
-    ```
-
-3. Set up environment variables
-
-    ```bash
-    cp .env.example .env.local
-    ```
-
-4. Run development server
-
-    ```bash
-    npm run dev
-    ```
-
-## Testing
-
-1. **Unit Tests**
-
-    ```bash
-    npm run test
-    ```
-
-2. **E2E Tests**
-
-    ```bash
-    npm run test:e2e
-    ```
-
-## Migration Steps
-
-1. **Data Migration**
-   - Export existing iOS data
-   - Transform to new schema
-   - Import to PostgreSQL
-
-2. **Feature Parity**
-   - Implement core features
-   - Add PWA capabilities
-   - Test cross-browser compatibility
-
-3. **User Migration**
-   - Create migration guide
-   - Set up user accounts
-   - Provide support documentation
-
-## Performance Metrics
-
-- First Contentful Paint (FCP) < 1.8s
-- Time to Interactive (TTI) < 3.8s
-- Cumulative Layout Shift (CLS) < 0.1
-- Lighthouse PWA score > 90
-
-## Browser Support
-
-- Chrome 80+
-- Firefox 75+
-- Safari 13+
-- Edge 80+
-- iOS Safari 13+
-- Chrome for Android 80+
-
-### Gestión de Productos
-
-#### Vista Principal de Productos
-
-La sección de productos debe mantener la elegancia y simplicidad de iOS mientras aprovecha las capacidades web:
-
-1. **Lista de Productos**
-   - Diseño de tarjetas con sombras suaves (shadow-sm)
-   - Animaciones fluidas en hover y transiciones
-   - Cada producto muestra:
-     - Nombre en typography-lg con peso semibold
-     - Cantidad y precio en typography-base con color secondary
-     - Subtotal alineado a la derecha
-   - Swipe actions en móvil / botones contextuales en desktop:
-     - Editar (azul primario)
-     - Eliminar (rojo destructivo)
-
-2. **Botón "Agregar Producto"**
-   - Botón flotante circular en móvil (fixed bottom-right)
-   - Botón standard en desktop dentro de la sección
-   - Icono plus-circle con texto "Agregar Producto"
-   - Hover state con scale transform suave
-
-#### Modal de Producto
-
-Dialog modal responsive con:
-
-1. **Campos del Formulario**
-   - Input nombre (autofocus)
-   - Stepper personalizado para cantidad:
-     - Botones - y + con hover states
-     - Input numérico central
-     - Rango: 1-999
-   - Input precio con:
-     - Formato automático de miles (.)
-     - Prefijo "$"
-     - Teclado numérico en móvil
-
-2. **Controles del Modal**
-   - Header con título dinámico ("Nuevo"/"Editar")
-   - Botón "Cancelar" (izquierda)
-   - Botón "Guardar" (derecha, primary)
-   - Backdrop con blur effect
-
-#### Visualización en PDF
-
-La sección de productos en el PDF generado incluirá:
-
-1. **Tabla de Productos**
-   - Header con fondo suave
-   - Columnas: Producto, Cantidad, Precio Unit., Subtotal
-   - Líneas separadoras sutiles
-   - Alineación:
-     - Producto: izquierda
-     - Valores numéricos: derecha
-
-2. **Totales**
-   - Separador visual
-   - Subtotal y Total con IVA
-   - Formato de moneda consistente
-   - Tipografía destacada para el total final
-
-#### Implementación TypeScript
-
-```typescript
-interface ProductFormData {
-  name: string;
-  quantity: number;
-  unitPrice: number;
-}
-
-interface ProductDisplayProps {
-  product: Product;
-  onEdit: (id: string) => void;
-  onDelete: (id: string) => void;
-}
-
-// Componente de producto individual
-const ProductCard: React.FC<ProductDisplayProps> = ({
-  product,
-  onEdit,
-  onDelete,
-}) => {
-  return (
-    <motion.div
-      className="product-card"
-      whileHover={{ scale: 1.02 }}
-      transition={{ type: "spring", stiffness: 300 }}
-    >
-      {/* Implementación del diseño de tarjeta */}
-    </motion.div>
-  );
-};

@@ -37,7 +37,7 @@ export default function NewQuotePage() {
       methods.setValue('quoteNumber', number);
     };
     generateQuoteNumber();
-  }, []);
+  }, [methods]);
 
   const onSubmit = async (data: QuoteFormData) => {
     try {

@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useSession } from 'next-auth/react';
-import { useRouter, redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { quoteSchema, type QuoteFormData } from '@/lib/validations/quote';
@@ -14,13 +14,6 @@ import PDFPreview from './components/PDFPreview';
 export default function Dashboard() {
 	const { data: session, status } = useSession();
 	const router = useRouter();
-
-	// If not authenticated, redirect to sign in
-	if (status === 'unauthenticated') {
-		router.push('/api/auth/signin');
-		return null;
-	}
-
 	const [activeTab, setActiveTab] = useState('new');
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [previewQuote, setPreviewQuote] = useState<QuoteFormData | null>(null);
@@ -33,6 +26,12 @@ export default function Dashboard() {
 			totalWithTax: 0,
 		},
 	});
+
+	// Handle unauthenticated users
+	if (status === 'unauthenticated') {
+		router.push('/api/auth/signin');
+		return null;
+	}
 
 	const onSubmit = async (data: QuoteFormData) => {
 		try {

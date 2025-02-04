@@ -18,7 +18,10 @@ export const quoteSchema = z.object({
 	untilStockLasts: z.boolean().default(true),
 	products: z.array(productSchema),
 	totalWithTax: z.number(),
-	availability: z.string().optional()
+	availability: z.string().optional(),
+	quoteNumber: z.string(),
+	logo: z.string(),
+	signature: z.string()
 });
 
 export type QuoteFormData = z.infer<typeof quoteSchema>;

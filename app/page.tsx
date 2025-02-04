@@ -39,8 +39,8 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center bg-[#F2F2F7] dark:bg-[#1C1C1E] px-4 py-8">
-      <div className="w-full max-w-md p-6 space-y-6 bg-white dark:bg-[#2C2C2E] rounded-2xl shadow-lg">
+    <div className="container mx-auto px-4 py-8">
+      <div className="w-full max-w-md mx-auto p-6 space-y-6 bg-white dark:bg-[#2C2C2E] rounded-2xl shadow-lg">
         <div className="flex flex-col items-center">
           <Image
             src="/assets/images/logo.png"
@@ -102,6 +102,6 @@ export default function Home() {
           </button>
         </form>
       </div>
-    </main>
+    </div>
   );
 }

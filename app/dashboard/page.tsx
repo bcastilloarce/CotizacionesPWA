@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import { useRouter, redirect } from 'next/navigation';
 import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { quoteSchema, type QuoteFormData } from '@/lib/validations/quote';
@@ -12,7 +12,12 @@ import ProductosForm from './components/ProductosForm';
 import PDFPreview from './components/PDFPreview';
 
 export default function Dashboard() {
-	const { data: session, status } = useSession();
+	const { status } = useSession({
+		required: true,
+		onUnauthenticated() {
+			redirect('/api/auth/signin');
+		},
+	});
 	const router = useRouter();
 	const [activeTab, setActiveTab] = useState('new');
 	const [isSubmitting, setIsSubmitting] = useState(false);
@@ -62,11 +67,6 @@ export default function Dashboard() {
 				<div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-[#007AFF]"></div>
 			</div>
 		);
-	}
-
-	if (status === 'unauthenticated') {
-		router.push('/');
-		return null;
 	}
 
 	return (
@@ -137,7 +137,10 @@ export default function Dashboard() {
 						{previewQuote && (
 							<div className="mt-8">
 								<h2 className="text-xl font-semibold mb-4">Vista Previa</h2>
-								<PDFPreview quote={previewQuote} />
+								<PDFPreview
+									quote={previewQuote}
+									onClose={() => setPreviewQuote(null)}
+								/>
 							</div>
 						)}
 					</div>

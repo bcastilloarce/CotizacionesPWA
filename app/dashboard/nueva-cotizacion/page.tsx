@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
@@ -10,6 +10,7 @@ import ClienteForm from '../components/ClienteForm';
 import VehiculoForm from '../components/VehiculoForm';
 import ProductosForm from '../components/ProductosForm';
 import PDFPreview from '../components/PDFPreview';
+import Image from 'next/image';
 
 export default function NewQuotePage() {
   const router = useRouter();
@@ -22,8 +23,21 @@ export default function NewQuotePage() {
       untilStockLasts: false,
       products: [],
       totalWithTax: 0,
+      logo: '/assets/images/logo.png',
+      signature: '/assets/images/firma.png',
+      quoteNumber: '',
+      date: new Date().toISOString().split('T')[0],
     },
   });
+
+  useEffect(() => {
+    const generateQuoteNumber = async () => {
+      const response = await fetch('/api/quotes/next-number');
+      const { number } = await response.json();
+      methods.setValue('quoteNumber', number);
+    };
+    generateQuoteNumber();
+  }, []);
 
   const onSubmit = async (data: QuoteFormData) => {
     try {
@@ -54,6 +68,23 @@ export default function NewQuotePage() {
     <div className="container mx-auto px-4 py-8 max-w-2xl">
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(onSubmit)} className="space-y-6">
+          {/* Logo Preview */}
+          <motion.section
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            <div className="w-full flex justify-center mb-10">
+              <Image
+                src="/assets/images/logo.png"
+                alt="Company Logo"
+                width={926}
+                height={272}
+                priority
+                className="w-full h-auto"
+              />
+            </div>
+          </motion.section>
+
           {/* Client Section */}
           <motion.section
             initial={{ opacity: 0, y: 20 }}
@@ -128,7 +159,10 @@ export default function NewQuotePage() {
         >
           <div className="fixed inset-0 overflow-y-auto">
             <div className="flex min-h-full items-center justify-center p-4">
-              <PDFPreview quote={previewQuote} />
+              <PDFPreview
+                quote={previewQuote}
+                onClose={() => setPreviewQuote(null)}
+              />
             </div>
           </div>
         </motion.div>

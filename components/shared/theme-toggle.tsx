@@ -62,7 +62,6 @@ export function ThemeToggle() {
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
 
-  // Avoid hydration mismatch
   useEffect(() => setMounted(true), []);
   if (!mounted) return null;
 
@@ -70,8 +69,8 @@ export function ThemeToggle() {
     <Button
       variant="ghost"
       size="icon"
-      onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-      className="fixed bottom-4 right-4 h-10 w-10 rounded-full"
+      onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+      className="fixed bottom-[calc(49px+env(safe-area-inset-bottom))] right-4 z-50 h-10 w-10 rounded-full bg-white dark:bg-gray-800 shadow-lg"
       aria-label="Toggle theme"
     >
       <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:rotate-90 dark:scale-0" />

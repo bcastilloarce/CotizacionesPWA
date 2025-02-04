@@ -21,19 +21,17 @@ export default function VehiculoForm() {
     return Array.from({ length: 31 }, (_, i) => currentYear - i);
   });
 
-  // Load brands from JSON
   useEffect(() => {
-    fetch('/MarcasJSON/marcasymodelos.json')
+    fetch('/assets/json/marcasymodelos.json')
       .then(res => res.json())
       .then(data => setBrands(data.marcasymodelos))
       .catch(err => console.error('Error loading brands:', err));
   }, []);
 
-  // Update models when brand changes
   useEffect(() => {
     const brandData = brands.find(b => b.marca === selectedBrand);
     setModels(brandData?.modelo || []);
-    setValue('model', ''); // Reset model when brand changes
+    setValue('model', '');
   }, [selectedBrand, brands, setValue]);
 
   // Haptic feedback function

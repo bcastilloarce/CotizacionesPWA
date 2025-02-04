@@ -79,15 +79,14 @@ const ProductModal: React.FC<ProductModalProps> = ({ product, index, onSave, onC
                             <div className="space-y-4">
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                        Nombre del producto *
+                                        Producto *
                                     </label>
                                     <input
                                         type="text"
                                         value={formData.name}
                                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                        className="mt-1 block w-full border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700"
-                                        placeholder="Ej: Pastillas de freno"
-                                        autoFocus
+                                        className="mt-1 block w-full rounded-lg"
+                                        placeholder="Nombre del producto"
                                     />
                                 </div>
 
@@ -125,15 +124,15 @@ const ProductModal: React.FC<ProductModalProps> = ({ product, index, onSave, onC
                                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                                         Precio unitario *
                                     </label>
-                                    <div className="mt-1 relative rounded-lg shadow-sm">
-                                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <div className="mt-1 relative rounded-lg">
+                                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center">
                                             <span className="text-gray-500 sm:text-sm">$</span>
                                         </div>
                                         <input
                                             type="text"
                                             value={formData.unitPrice.toLocaleString('es-CL')}
                                             onChange={(e) => handlePriceChange(e.target.value)}
-                                            className="block w-full pl-7 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700"
+                                            className="block w-full pl-7 rounded-lg"
                                             placeholder="0"
                                         />
                                     </div>

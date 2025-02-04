@@ -6,9 +6,10 @@ import type { QuoteFormData } from '@/lib/validations/quote';
 
 interface PDFPreviewProps {
 	quote: QuoteFormData;
+	onClose: () => void;
 }
 
-export default function PDFPreview({ quote }: PDFPreviewProps) {
+export default function PDFPreview({ quote, onClose }: PDFPreviewProps) {
 	const [pdfUrl, setPdfUrl] = useState<string | null>(null);
 
 	const generatePreview = async () => {

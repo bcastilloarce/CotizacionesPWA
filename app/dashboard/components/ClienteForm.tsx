@@ -3,10 +3,12 @@
 import { useFormContext } from 'react-hook-form';
 import { motion } from 'framer-motion';
 import type { QuoteFormData } from '@/app/api/validations/quote';
+import { Switch } from '@headlessui/react';
 
 export default function ClienteForm() {
-  const { register, formState: { errors }, watch } = useFormContext<QuoteFormData>();
+  const { register, formState: { errors }, watch, setValue } = useFormContext<QuoteFormData>();
   const date = watch('date');
+  const stockSwitch = watch('untilStockLasts', true); // Default enabled
 
   // Haptic feedback function
   const triggerHaptic = () => {
@@ -23,21 +25,8 @@ export default function ClienteForm() {
     >
       <div className="px-4 py-3 bg-white dark:bg-[#2C2C2E]">
         <div className="space-y-4">
-          {/* Quote Number - Read Only */}
-          <div>
-            <label className="block text-[17px] font-regular text-[#000000] dark:text-white">
-              Número de Cotización
-            </label>
-            <input
-              {...register('quoteNumber')}
-              readOnly
-              className="w-full h-[44px] px-4 text-[17px] bg-[#F2F2F7] dark:bg-[#3A3A3C]
-                       border border-[#C5C5C7] dark:border-[#3A3A3C] rounded-lg"
-            />
-          </div>
-
-          {/* Date */}
-          <div>
+            {/* Date */}
+            <div>
             <label className="block text-[17px] font-regular text-[#000000] dark:text-white">
               Fecha *
             </label>
@@ -45,8 +34,10 @@ export default function ClienteForm() {
               type="date"
               {...register('date', { required: 'Fecha es requerida' })}
               className="w-full h-[44px] px-4 text-[17px] bg-[#FFFFFF] dark:bg-[#3A3A3C]
-                       border border-[#C5C5C7] dark:border-[#3A3A3C] rounded-lg"
+                   border border-[#C5C5C7] dark:border-[#3A3A3C] rounded-lg whitespace-nowrap"
+              style={{ lineHeight: '44px' }}
             />
+
             {errors.date && (
               <p className="text-[15px] text-[#FF3B30]">{errors.date.message}</p>
             )}
@@ -74,9 +65,49 @@ export default function ClienteForm() {
                 {errors.client.message}
               </p>
             )}
+            </div>
+
+            {/* Duration */}
+            <div>
+            <label className="block text-[17px] font-regular text-[#000000] dark:text-white">
+              Duración *
+            </label>
+            <input
+              type="number"
+              {...register('duration', {
+              required: 'Duración es requerida',
+              min: { value: 1, message: 'Mínimo 1 día' }
+              })}
+              className="w-full h-[44px] px-4 text-[17px] bg-[#FFFFFF] dark:bg-[#3A3A3C]
+                   border border-[#C5C5C7] dark:border-[#3A3A3C] rounded-lg"
+              placeholder="Número de días"
+            />
+            {errors.duration && (
+              <p className="text-[15px] text-[#FF3B30]">{errors.duration.message}</p>
+            )}
+            </div>
+
+            {/* Stock Switch */}
+            <div className="flex items-center justify-between">
+            <span className="text-[17px] font-regular text-[#000000] dark:text-white">
+              Hasta agotar stock
+            </span>
+            <Switch
+              checked={stockSwitch}
+              onChange={(checked) => setValue('untilStockLasts', checked)}
+              className={`${
+              stockSwitch ? 'bg-[#007AFF]' : 'bg-gray-200'
+              } relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none`}
+            >
+              <span
+              className={`${
+                stockSwitch ? 'translate-x-6' : 'translate-x-1'
+              } inline-block h-4 w-4 transform rounded-full bg-white transition-transform`}
+              />
+            </Switch>
+            </div>
           </div>
-        </div>
-      </div>
-    </motion.div>
-  );
-}
+          </div>
+        </motion.div>
+        );
+      }

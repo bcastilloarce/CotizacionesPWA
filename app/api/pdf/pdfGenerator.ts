@@ -80,13 +80,21 @@ export const generatePDF = async (data: QuoteData): Promise<Buffer> => {
 	if (data.licensePlate) addTableRow('Patente', data.licensePlate);
 
 	const durationText = data.untilStockLasts
-		? `${data.duration} o hasta agotar stock`
-		: data.duration;
+		? `${data.duration} días o hasta agotar stock`
+		: `${data.duration} días`;
 	addTableRow('Duración', durationText);
 
 	yPosition += 60; // 60 units spacing before products table
 
-	// Products Table
+	// Products Table with consistent styling
+	const tableWidth = doc.internal.pageSize.width - 40;
+
+	// Table headers with consistent styling
+	doc.setFontSize(12);
+	doc.setFont('helvetica', 'bold');
+	doc.setFillColor(240, 240, 240);
+
+	let xPos = tableStart;
 	const columns = {
 		product: { header: 'Producto', width: 0.4 },
 		quantity: { header: 'Cantidad', width: 0.2 },
@@ -94,24 +102,21 @@ export const generatePDF = async (data: QuoteData): Promise<Buffer> => {
 		total: { header: 'Total', width: 0.2 }
 	};
 
-	// Table headers
-	doc.setFont('helvetica', 'bold');
-	doc.setFillColor(240, 240, 240);
-	let xPos = tableStart;
-	const tableWidth = doc.internal.pageSize.width - 40;
-
+	// Draw table headers with consistent styling
 	Object.entries(columns).forEach(([_, col]) => {
 		const colWidth = tableWidth * col.width;
-		doc.rect(xPos, yPosition - 5, colWidth, 10, 'F');
+		doc.rect(xPos, yPosition - 5, colWidth, 10, 'FD'); // Fill and draw borders
 		doc.text(col.header, xPos + 5, yPosition);
 		xPos += colWidth;
 	});
 	yPosition += 10;
 
-	// Table content
+	// Table content with consistent styling
 	doc.setFont('helvetica', 'normal');
 	data.products.forEach((product) => {
 		xPos = tableStart;
+		const rowHeight = 10;
+
 		Object.entries(columns).forEach(([key, col]) => {
 			const colWidth = tableWidth * col.width;
 			let value = '';
@@ -129,11 +134,11 @@ export const generatePDF = async (data: QuoteData): Promise<Buffer> => {
 					value = `$${(product.quantity * product.unitPrice).toLocaleString('es-CL')}`;
 					break;
 			}
+			doc.rect(xPos, yPosition - 5, colWidth, rowHeight, 'S');
 			doc.text(value, xPos + 5, yPosition);
-			doc.rect(xPos, yPosition - 5, colWidth, 10, 'S');
 			xPos += colWidth;
 		});
-		yPosition += 40;
+		yPosition += rowHeight;
 	});
 
 	// Total
@@ -150,12 +155,14 @@ export const generatePDF = async (data: QuoteData): Promise<Buffer> => {
 		doc.text(`Disponibilidad: ${data.availability}`, tableStart, yPosition);
 	}
 
-	// Add signature at the bottom
-	const signatureWidth = 200;
-	const signatureHeight = 60;
-	doc.addImage(firmaBase64, 'PNG',
+	// Add signature with fixed 100x100 dimensions
+	const signatureWidth = 100;
+	const signatureHeight = 100;
+	doc.addImage(
+		firmaBase64,
+		'PNG',
 		(doc.internal.pageSize.width - signatureWidth)/2,
-		doc.internal.pageSize.height - 80,
+		doc.internal.pageSize.height - signatureHeight - 20,
 		signatureWidth,
 		signatureHeight
 	);

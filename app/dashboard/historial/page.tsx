@@ -58,44 +58,44 @@ export default function HistorialPage() {
 					) : (
 						<ul className="divide-y divide-gray-200">
 							{quotes.map((quote) => (
-							<li key={quote.id}>
-								<Link
-									href={`/dashboard/cotizaciones/${quote.id}`}
-									className="block hover:bg-gray-50"
-								>
-									<div className="px-4 py-4 sm:px-6">
-										<div className="flex items-center justify-between">
-											<div className="flex flex-col">
-												<div className="flex items-center gap-2">
-													{quote.formattedNumber && (
-														<span className="text-sm font-medium text-gray-500">
-															{quote.formattedNumber}
-														</span>
-													)}
-													<p className="text-sm font-medium text-blue-600 truncate">
-														{quote.client}
+								<li key={quote.id}>
+									<Link
+										href={`/dashboard/cotizaciones/${quote.id}`}
+										className="block hover:bg-gray-50"
+									>
+										<div className="px-4 py-4 sm:px-6">
+											<div className="flex items-center justify-between">
+												<div className="flex flex-col">
+													<div className="flex items-center gap-2">
+														{quote.formattedNumber && (
+															<span className="text-sm font-medium text-gray-500">
+																{quote.formattedNumber}
+															</span>
+														)}
+														<p className="text-sm font-medium text-blue-600 truncate">
+															{quote.client}
+														</p>
+													</div>
+													<p className="mt-1 text-sm text-gray-500">
+														{quote.brand} {quote.model}
 													</p>
 												</div>
-												<p className="mt-1 text-sm text-gray-500">
-													{quote.brand} {quote.model}
-												</p>
-											</div>
-											<div className="flex flex-col items-end">
-												<p className="text-sm text-gray-900">
-													${quote.totalWithTax.toLocaleString('es-CL')}
-												</p>
-												<p className="mt-1 text-sm text-gray-500">
-													{new Date(quote.createdAt).toLocaleDateString('es-CL')}
-												</p>
+												<div className="flex flex-col items-end">
+													<p className="text-sm text-gray-900">
+														${quote.totalWithTax.toLocaleString('es-CL')}
+													</p>
+													<p className="mt-1 text-sm text-gray-500">
+														{new Date(quote.createdAt).toLocaleDateString('es-CL')}
+													</p>
+												</div>
 											</div>
 										</div>
-									</div>
-								</Link>
-							</li>
-						))}
-					</ul>
-				)}
-			</div>
+									</Link>
+								</li>
+							))}
+						</ul>
+					)}
+				</div>
 			</div>
 		</div>
 	);

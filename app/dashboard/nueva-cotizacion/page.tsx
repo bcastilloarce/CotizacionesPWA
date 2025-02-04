@@ -132,17 +132,7 @@ export default function NewQuotePage() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3 }}
           >
-            <div className="flex gap-4">
-              <button
-                type="button"
-                onClick={handlePreview}
-                disabled={isSubmitting}
-                className="flex-1 h-[50px] bg-[#007AFF] text-white rounded-lg font-medium
-                         disabled:opacity-50 disabled:cursor-not-allowed
-                         active:bg-[#0051A8] transition-colors"
-              >
-                Vista Previa
-              </button>
+            <div className="flex">
               <button
                 type="submit"
                 disabled={isSubmitting}

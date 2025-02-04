@@ -57,7 +57,7 @@ export default function HistorialPage() {
 						</div>
 					) : (
 						<ul className="divide-y divide-gray-200">
-						{quotes.map((quote) => (
+							{quotes.map((quote) => (
 							<li key={quote.id}>
 								<Link
 									href={`/dashboard/cotizaciones/${quote.id}`}
@@ -94,7 +94,8 @@ export default function HistorialPage() {
 							</li>
 						))}
 					</ul>
-				</div>
+				)}
+			</div>
 			</div>
 		</div>
 	);

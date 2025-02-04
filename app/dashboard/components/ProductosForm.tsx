@@ -3,8 +3,20 @@
 import { useFormContext } from 'react-hook-form';
 import { motion, AnimatePresence } from 'framer-motion';
 import { PlusCircleIcon, XMarkIcon, PencilIcon, TrashIcon, MinusIcon, PlusIcon } from '@heroicons/react/24/outline';
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo, useEffect } from 'react';
 import type { QuoteFormData } from '@/lib/validations/quote';
+import { openDB } from 'idb';
+
+const initDB = async () => {
+    const db = await openDB('cotizaciones-db', 1, {
+        upgrade(db) {
+            if (!db.objectStoreNames.contains('products')) {
+                db.createObjectStore('products', { keyPath: 'id', autoIncrement: true });
+            }
+        },
+    });
+    return db;
+};
 
 interface ProductItem {
     name: string;
@@ -190,6 +202,41 @@ export default function ProductosForm() {
     const total = useMemo(() => {
         return products.reduce((sum, product) => sum + (product.quantity * product.unitPrice), 0);
     }, [products]);
+
+    // Save products to IndexedDB when they change
+    useEffect(() => {
+        const saveProducts = async () => {
+            const db = await initDB();
+            await db.put('products', products);
+        };
+
+        if (products.length > 0) {
+            saveProducts();
+        }
+    }, [products]);
+
+    // Add offline sync functionality
+    useEffect(() => {
+        const syncProducts = async () => {
+            if (navigator.onLine) {
+                const db = await initDB();
+                const offlineProducts = await db.getAll('products');
+                // Sync with server
+                try {
+                    await fetch('/api/sync-products', {
+                        method: 'POST',
+                        body: JSON.stringify(offlineProducts),
+                    });
+                    await db.clear('products');
+                } catch (error) {
+                    console.error('Sync failed:', error);
+                }
+            }
+        };
+
+        window.addEventListener('online', syncProducts);
+        return () => window.removeEventListener('online', syncProducts);
+    }, []);
 
     return (
         <>

@@ -4,156 +4,235 @@ import { useFormContext, Controller } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import type { QuoteFormData } from '@/lib/validations/quote';
 import { Switch } from '@headlessui/react';
+import { motion } from 'framer-motion';
 
 interface CarBrand {
-	marca: string;
-	modelo: string[];
+  marca: string;
+  modelo: string[];
 }
 
 export default function VehiculoForm() {
-	const { register, control, watch, setValue, formState: { errors } } = useFormContext<QuoteFormData>();
-	const [brands, setBrands] = useState<CarBrand[]>([]);
-	const [models, setModels] = useState<string[]>([]);
-	const selectedBrand = watch('brand');
-	const [years] = useState(() => {
-		const currentYear = 2025;
-		return Array.from({ length: 31 }, (_, i) => currentYear - i);
-	});
+  const { register, control, watch, setValue, formState: { errors } } = useFormContext<QuoteFormData>();
+  const [brands, setBrands] = useState<CarBrand[]>([]);
+  const [models, setModels] = useState<string[]>([]);
+  const selectedBrand = watch('brand');
+  const [years] = useState(() => {
+    const currentYear = new Date().getFullYear() + 1; // Next year
+    return Array.from({ length: 31 }, (_, i) => currentYear - i);
+  });
 
-	useEffect(() => {
-		// Load brands and models from JSON
-		fetch('/MarcasJSON/marcasymodelos.json')
-			.then(res => res.json())
-			.then(data => setBrands(data.marcasymodelos));
-	}, []);
+  // Load brands from JSON
+  useEffect(() => {
+    fetch('/MarcasJSON/marcasymodelos.json')
+      .then(res => res.json())
+      .then(data => setBrands(data.marcasymodelos))
+      .catch(err => console.error('Error loading brands:', err));
+  }, []);
 
-	useEffect(() => {
-		// Update models when brand changes
-		const brandData = brands.find(b => b.marca === selectedBrand);
-		setModels(brandData?.modelo || []);
-		setValue('model', ''); // Reset model when brand changes
-	}, [selectedBrand, brands, setValue]);
+  // Update models when brand changes
+  useEffect(() => {
+    const brandData = brands.find(b => b.marca === selectedBrand);
+    setModels(brandData?.modelo || []);
+    setValue('model', ''); // Reset model when brand changes
+  }, [selectedBrand, brands, setValue]);
 
-	return (
-		<div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm">
-			<h2 className="text-xl font-semibold mb-4">Información del Vehículo</h2>
-			<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-				<div>
-					<label className="block mb-2 text-sm font-medium">Marca *</label>
-					<select
-						{...register('brand')}
-						className="w-full p-2 border rounded-lg"
-				>
-					<option value="">Seleccione una marca</option>
-					{brands.map(brand => (
-						<option key={brand.marca} value={brand.marca}>
-							{brand.marca}
-						</option>
-					))}
-				</select>
-				{errors.brand && (
-					<p className="text-red-500 text-sm mt-1">{errors.brand.message}</p>
-				)}
-			</div>
+  // Haptic feedback function
+  const triggerHaptic = () => {
+    if (window.navigator.vibrate) {
+      window.navigator.vibrate(50);
+    }
+  };
 
-			<div>
-				<label className="block mb-2 text-sm font-medium">Modelo *</label>
-				<select
-					{...register('model')}
-					className="w-full p-2 border rounded-lg"
-					disabled={!selectedBrand}
-				>
-					<option value="">Seleccione un modelo</option>
-					{models.map(model => (
-						<option key={model} value={model}>
-							{model}
-						</option>
-					))}
-				</select>
-				{errors.model && (
-					<p className="text-red-500 text-sm mt-1">{errors.model.message}</p>
-				)}
-			</div>
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="bg-[#F2F2F7] dark:bg-[#1C1C1E] rounded-lg overflow-hidden"
+    >
+      <div className="px-4 py-3 bg-white dark:bg-[#2C2C2E] space-y-6">
+        {/* Brand Select */}
+        <motion.div whileTap={{ scale: 0.98 }}>
+          <label className="block text-[17px] font-regular text-[#000000] dark:text-white mb-2">
+            Marca *
+          </label>
+          <select
+            {...register('brand', {
+              required: 'Marca es requerida',
+              onChange: () => triggerHaptic()
+            })}
+            className="w-full h-[44px] px-4 text-[17px] bg-[#FFFFFF] dark:bg-[#3A3A3C]
+                     border border-[#C5C5C7] dark:border-[#3A3A3C]
+                     rounded-lg focus:outline-none focus:ring-2 focus:ring-[#007AFF]
+                     text-[#000000] dark:text-white appearance-none"
+          >
+            <option value="">Seleccione una marca</option>
+            {brands.map(brand => (
+              <option key={brand.marca} value={brand.marca}>
+                {brand.marca}
+              </option>
+            ))}
+          </select>
+          {errors.brand && (
+            <p className="text-[15px] text-[#FF3B30] dark:text-[#FF453A] mt-1">
+              {errors.brand.message}
+            </p>
+          )}
+        </motion.div>
 
-			<div>
-				<label className="block mb-2 text-sm font-medium">Año</label>
-				<select
-					{...register('year')}
-					className="w-full p-2 border rounded-lg"
-				>
-					<option value="">Seleccione un año</option>
-					{years.map(year => (
-						<option key={year} value={year}>
-							{year}
-						</option>
-					))}
-				</select>
-			</div>
+        {/* Model Select */}
+        <motion.div whileTap={{ scale: 0.98 }}>
+          <label className="block text-[17px] font-regular text-[#000000] dark:text-white mb-2">
+            Modelo *
+          </label>
+          <select
+            {...register('model', {
+              required: 'Modelo es requerido',
+              onChange: () => triggerHaptic()
+            })}
+            className="w-full h-[44px] px-4 text-[17px] bg-[#FFFFFF] dark:bg-[#3A3A3C]
+                     border border-[#C5C5C7] dark:border-[#3A3A3C]
+                     rounded-lg focus:outline-none focus:ring-2 focus:ring-[#007AFF]
+                     text-[#000000] dark:text-white appearance-none"
+            disabled={!selectedBrand}
+          >
+            <option value="">Seleccione un modelo</option>
+            {models.map(model => (
+              <option key={model} value={model}>
+                {model}
+              </option>
+            ))}
+          </select>
+          {errors.model && (
+            <p className="text-[15px] text-[#FF3B30] dark:text-[#FF453A] mt-1">
+              {errors.model.message}
+            </p>
+          )}
+        </motion.div>
 
-			<div>
-				<label className="block mb-2 text-sm font-medium">Patente</label>
-				<input
-					{...register('licensePlate', {
-						setValueAs: (value: string) => value.toUpperCase(),
-						pattern: /^[A-Z0-9]*$/
-					})}
-					className="w-full p-2 border rounded-lg uppercase"
-					placeholder="Patente del vehículo"
-					onInput={(e) => {
-						const input = e.currentTarget;
-						input.value = input.value.replace(/[^A-Za-z0-9]/g, '').toUpperCase();
-					}}
-				/>
-			</div>
+        {/* Year Select */}
+        <motion.div whileTap={{ scale: 0.98 }}>
+          <label className="block text-[17px] font-regular text-[#000000] dark:text-white mb-2">
+            Año
+          </label>
+          <select
+            {...register('year', {
+              onChange: () => triggerHaptic()
+            })}
+            className="w-full h-[44px] px-4 text-[17px] bg-[#FFFFFF] dark:bg-[#3A3A3C]
+                     border border-[#C5C5C7] dark:border-[#3A3A3C]
+                     rounded-lg focus:outline-none focus:ring-2 focus:ring-[#007AFF]
+                     text-[#000000] dark:text-white appearance-none"
+          >
+            <option value="">Seleccione un año</option>
+            {years.map(year => (
+              <option key={year} value={year}>
+                {year}
+              </option>
+            ))}
+          </select>
+        </motion.div>
 
-			<div>
-				<label className="block mb-2 text-sm font-medium">Duración</label>
-				<select
-					{...register('duration')}
-					className="w-full p-2 border rounded-lg"
-					defaultValue="1 día"
-				>
-					{Array.from({ length: 30 }, (_, i) => i + 1).map(num => (
-						<option key={num} value={`${num} día${num > 1 ? 's' : ''}`}>
-							{num} día{num > 1 ? 's' : ''}
-						</option>
-					))}
-				</select>
-			</div>
+        {/* License Plate Input */}
+        <motion.div whileTap={{ scale: 0.98 }}>
+          <label className="block text-[17px] font-regular text-[#000000] dark:text-white mb-2">
+            Patente
+          </label>
+          <input
+            {...register('licensePlate', {
+              setValueAs: (value: string) => value.toUpperCase(),
+              pattern: {
+                value: /^[A-Z0-9]*$/,
+                message: 'Solo letras y números permitidos'
+              }
+            })}
+            className="w-full h-[44px] px-4 text-[17px] bg-[#FFFFFF] dark:bg-[#3A3A3C]
+                     border border-[#C5C5C7] dark:border-[#3A3A3C]
+                     rounded-lg focus:outline-none focus:ring-2 focus:ring-[#007AFF]
+                     text-[#000000] dark:text-white uppercase"
+            placeholder="Patente del vehículo"
+            maxLength={6}
+            onInput={(e) => {
+              const input = e.currentTarget;
+              input.value = input.value.replace(/[^A-Za-z0-9]/g, '').toUpperCase();
+            }}
+          />
+        </motion.div>
 
-			<div>
-				<label className="block mb-2 text-sm font-medium">Disponibilidad</label>
-				<input
-					{...register('availability')}
-					className="w-full p-2 border rounded-lg"
-					placeholder="Ej: Entrega inmediata"
-				/>
-			</div>
+        {/* Duration Select */}
+        <motion.div whileTap={{ scale: 0.98 }}>
+          <label className="block text-[17px] font-regular text-[#000000] dark:text-white mb-2">
+            Duración *
+          </label>
+          <select
+            {...register('duration', {
+              required: 'Duración es requerida',
+              onChange: () => triggerHaptic()
+            })}
+            className="w-full h-[44px] px-4 text-[17px] bg-[#FFFFFF] dark:bg-[#3A3A3C]
+                     border border-[#C5C5C7] dark:border-[#3A3A3C]
+                     rounded-lg focus:outline-none focus:ring-2 focus:ring-[#007AFF]
+                     text-[#000000] dark:text-white appearance-none"
+            defaultValue="1 día"
+          >
+            {Array.from({ length: 30 }, (_, i) => i + 1).map(num => (
+              <option key={num} value={`${num} día${num > 1 ? 's' : ''}`}>
+                {num} día{num > 1 ? 's' : ''}
+              </option>
+            ))}
+          </select>
+        </motion.div>
 
-			<div className="flex items-center space-x-4">
-				<label className="block text-sm font-medium">Hasta agotar stock</label>
-				<Controller
-					name="untilStockLasts"
-					control={control}
-					defaultValue={true}
-					render={({ field: { value, onChange } }) => (
-						<Switch
-							checked={value}
-							onChange={onChange}
-							className={`${
-								value ? 'bg-blue-600' : 'bg-gray-200'
-							} relative inline-flex h-6 w-11 items-center rounded-full transition-colors`}
-						>
-							<span
-								className={`${
-									value ? 'translate-x-6' : 'translate-x-1'
-								} inline-block h-4 w-4 transform rounded-full bg-white transition-transform`}
-							/>
-						</Switch>
-					)}
-				/>
-			</div>
-		</div>
-	</div>
-	);
+        {/* Stock Toggle */}
+        <motion.div
+          whileTap={{ scale: 0.98 }}
+          className="flex items-center justify-between py-2"
+        >
+          <label className="text-[17px] font-regular text-[#000000] dark:text-white">
+            Hasta agotar stock
+          </label>
+          <Controller
+            name="untilStockLasts"
+            control={control}
+            defaultValue={false}
+            render={({ field: { value, onChange } }) => (
+              <Switch
+                checked={value}
+                onChange={(checked) => {
+                  onChange(checked);
+                  triggerHaptic();
+                }}
+                className={`${value ? 'bg-[#34C759]' : 'bg-[#E5E5EA] dark:bg-[#636366]'}
+                           relative inline-flex h-[31px] w-[51px] shrink-0 cursor-pointer
+                           rounded-full border-2 border-transparent transition-colors
+                           duration-200 ease-in-out focus:outline-none focus-visible:ring-2
+                           focus-visible:ring-white focus-visible:ring-opacity-75`}
+              >
+                <span
+                  className={`${value ? 'translate-x-5' : 'translate-x-0'}
+                             pointer-events-none inline-block h-[27px] w-[27px]
+                             transform rounded-full bg-white shadow-lg ring-0
+                             transition duration-200 ease-in-out`}
+                />
+              </Switch>
+            )}
+          />
+        </motion.div>
+
+        {/* Availability Input */}
+        <motion.div whileTap={{ scale: 0.98 }}>
+          <label className="block text-[17px] font-regular text-[#000000] dark:text-white mb-2">
+            Disponibilidad
+          </label>
+          <input
+            {...register('availability')}
+            className="w-full h-[44px] px-4 text-[17px] bg-[#FFFFFF] dark:bg-[#3A3A3C]
+                     border border-[#C5C5C7] dark:border-[#3A3A3C]
+                     rounded-lg focus:outline-none focus:ring-2 focus:ring-[#007AFF]
+                     text-[#000000] dark:text-white"
+            placeholder="Ej: Entrega inmediata"
+          />
+        </motion.div>
+      </div>
+    </motion.div>
+  );
 }

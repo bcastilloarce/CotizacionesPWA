@@ -6,7 +6,7 @@ import { Redis } from '@upstash/redis';
 
 const prisma = new PrismaClient();
 const redis = new Redis({
-    url: process.env.KV_REST_API_URL!,
+    url: process.env.KV_URL!,
     token: process.env.KV_REST_API_TOKEN!
 });
 

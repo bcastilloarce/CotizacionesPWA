@@ -1,16 +1,31 @@
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/api/auth/[...nextauth]/auth';
-import { PrismaClient } from '@prisma/client';
-import { Redis } from '@upstash/redis';
-
-const prisma = new PrismaClient();
-const redis = new Redis({
-    url: process.env.KV_REST_API_URL!,
-    token: process.env.KV_REST_API_TOKEN!
-});
+import { redis } from '@/lib/redis';
 
 const QUOTE_NUMBER_KEY = 'quote_number_sequence';
+const QUOTES_KEY = 'quotes';
+
+interface Quote {
+    id: string;
+    client: string;
+    brand: string;
+    model: string;
+    year?: number;
+    licensePlate?: string;
+    duration: string;
+    untilStockLasts: boolean;
+    availability?: string;
+    products: Array<{
+        name: string;
+        quantity: number;
+        unitPrice: number;
+        subtotal: number;
+    }>;
+    totalWithTax: number;
+    userId: string;
+    createdAt: string;
+}
 
 export async function GET(req: Request) {
     try {
@@ -19,20 +34,8 @@ export async function GET(req: Request) {
             return new NextResponse('Unauthorized', { status: 401 });
         }
 
-        // Get quotes from both Prisma and Redis cache
-        const quotes = await prisma.quote.findMany({
-            where: {
-                userId: session.user.id
-            },
-            include: {
-                products: true
-            },
-            orderBy: {
-                createdAt: 'desc'
-            }
-        });
+        const quotes = await redis.get<Quote[]>(`${QUOTES_KEY}:${session.user.id}`) || [];
 
-        // Enhance quotes with their numbers from Redis
         const enhancedQuotes = await Promise.all(quotes.map(async (quote) => {
             const quoteNumber = await redis.get(`quote:${quote.id}:number`);
             return {
@@ -58,33 +61,20 @@ export async function POST(req: Request) {
         }
 
         const data = await req.json();
-
-        // Get the next quote number
         const quoteNumber = await redis.incr(QUOTE_NUMBER_KEY);
 
-        // Create the quote in the database
-        const quote = await prisma.quote.create({
-            data: {
-                client: data.client,
-                brand: data.brand,
-                model: data.model,
-                year: data.year,
-                licensePlate: data.licensePlate,
-                duration: data.duration,
-                untilStockLasts: data.untilStockLasts,
-                availability: data.availability,
-                totalWithTax: data.totalWithTax,
-                userId: session.user.id,
-                products: {
-                    create: data.products
-                }
-            },
-            include: {
-                products: true
-            }
-        });
+        const quote: Quote = {
+            id: crypto.randomUUID(),
+            ...data,
+            userId: session.user.id,
+            createdAt: new Date().toISOString()
+        };
 
-        // Store the quote number in Redis
+        // Obtener quotes existentes y agregar el nuevo
+        const existingQuotes = await redis.get<Quote[]>(`${QUOTES_KEY}:${session.user.id}`) || [];
+        await redis.set(`${QUOTES_KEY}:${session.user.id}`, [...existingQuotes, quote]);
+
+        // Almacenar el número de cotización
         await redis.set(`quote:${quote.id}:number`, quoteNumber);
 
         return NextResponse.json({

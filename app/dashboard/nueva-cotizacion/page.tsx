@@ -15,7 +15,8 @@ import Image from 'next/image';
 export default function NewQuotePage() {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [previewQuote, setPreviewQuote] = useState<QuoteFormData | null>(null);
+  const [showPDF, setShowPDF] = useState(false);
+  const [quoteData, setQuoteData] = useState<QuoteFormData | null>(null);
 
   const methods = useForm<QuoteFormData>({
     resolver: zodResolver(quoteSchema),
@@ -59,9 +60,10 @@ export default function NewQuotePage() {
     }
   };
 
-  const handlePreview = () => {
+  const handleGeneratePDF = () => {
     const data = methods.getValues();
-    setPreviewQuote(data);
+    setQuoteData(data);
+    setShowPDF(true);
   };
 
   return (
@@ -126,53 +128,39 @@ export default function NewQuotePage() {
           </motion.section>
 
           {/* Action Buttons */}
-          <motion.div
-            className="sticky bottom-0 pt-4 pb-2 bg-gray-50 dark:bg-gray-900"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.3 }}
-          >
-            <div className="flex gap-4">
+          {!showPDF && (
+            <motion.div
+              className="sticky bottom-0 pt-4 pb-2 bg-gray-50 dark:bg-gray-900"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.3 }}
+            >
               <button
                 type="button"
-                onClick={handlePreview}
+                onClick={handleGeneratePDF}
                 disabled={isSubmitting}
-                className="flex-1 h-[50px] bg-[#007AFF] text-white rounded-lg font-medium
+                className="w-full h-[50px] bg-[#007AFF] text-white rounded-lg font-medium
                          disabled:opacity-50 disabled:cursor-not-allowed
                          active:bg-[#0051A8] transition-colors"
               >
-                Vista Previa PDF
+                Generar PDF
               </button>
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="flex-1 h-[50px] bg-[#34C759] text-white rounded-lg font-medium
-                         disabled:opacity-50 disabled:cursor-not-allowed
-                         active:bg-[#248A3D] transition-colors"
-              >
-                Guardar Cotización
-              </button>
-            </div>
-          </motion.div>
+            </motion.div>
+          )}
         </form>
       </FormProvider>
 
-      {/* PDF Preview Modal */}
-      {previewQuote && (
+      {/* Reemplazar el modal por una sección integrada */}
+      {showPDF && quoteData && (
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 bg-black bg-opacity-50 backdrop-blur-sm"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mt-4"
         >
-          <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center p-4">
-              <PDFPreview
-                quote={previewQuote}
-                onClose={() => setPreviewQuote(null)}
-              />
-            </div>
-          </div>
+          <PDFPreview
+            quote={quoteData}
+            onClose={() => setShowPDF(false)}
+          />
         </motion.div>
       )}
     </div>

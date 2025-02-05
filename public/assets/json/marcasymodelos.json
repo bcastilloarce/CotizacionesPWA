@@ -1,15 +1,37 @@
 {
   "marcasymodelos": [
     {
+      "marca": "Abarth",
+      "modelo": [
+        "Varios",
+        "124 Spider",
+        "500",
+        "595",
+        "695",
+        "Punto"
+      ]
+    },
+    {
+      "marca": "Acadian",
+      "modelo": [
+        "Varios",
+        "Beaumont",
+        "Canso",
+        "Custom",
+        "Invader",
+        "Sport Deluxe"
+      ]
+    },
+    {
       "marca": "Acura",
       "modelo": [
         "Varios",
+        "2025 MDX",
         "ILX",
         "MDX",
         "NSX",
         "RDX",
-        "TLX",
-        "2025 MDX"
+        "TLX"
       ]
     },
     {
@@ -20,6 +42,17 @@
         "Giulia",
         "Giulietta",
         "Stelvio"
+      ]
+    },
+    {
+      "marca": "Asia",
+      "modelo": [
+        "Varios",
+        "Cosmos",
+        "Motors AM",
+        "Rocsta",
+        "Topic",
+        "Towner"
       ]
     },
     {
@@ -59,6 +92,28 @@
         "RS7",
         "S3",
         "e-tron"
+      ]
+    },
+    {
+      "marca": "Austin",
+      "modelo": [
+        "Varios",
+        "Allegro",
+        "Healey",
+        "Mini",
+        "Princess",
+        "Seven"
+      ]
+    },
+    {
+      "marca": "Autorrad",
+      "modelo": [
+        "Varios",
+        "A1",
+        "A2",
+        "A3",
+        "B1",
+        "Classic"
       ]
     },
     {
@@ -103,6 +158,7 @@
     {
       "marca": "BYD",
       "modelo": [
+        "Varios",
         "Dolphin",
         "E6",
         "Han",
@@ -131,6 +187,28 @@
         "Continental GT",
         "Flying Spur",
         "Mulsanne"
+      ]
+    },
+    {
+      "marca": "Boogie",
+      "modelo": [
+        "Varios",
+        "Beach",
+        "Buggy",
+        "Classic",
+        "Racer",
+        "Sport"
+      ]
+    },
+    {
+      "marca": "Borgward",
+      "modelo": [
+        "Varios",
+        "BX5",
+        "BX7",
+        "BXi7",
+        "Hansa",
+        "Isabella"
       ]
     },
     {
@@ -166,6 +244,7 @@
     {
       "marca": "Cadillac",
       "modelo": [
+        "Varios",
         "ATS",
         "CT4",
         "CT5",
@@ -176,8 +255,20 @@
       ]
     },
     {
+      "marca": "Can-Am",
+      "modelo": [
+        "Varios",
+        "Commander",
+        "Defender",
+        "Maverick",
+        "Outlander",
+        "Ryker"
+      ]
+    },
+    {
       "marca": "Changan",
       "modelo": [
+        "Varios",
         "CS35",
         "CS55",
         "CS75",
@@ -189,6 +280,17 @@
         "Raeton",
         "UNI-K",
         "UNI-T"
+      ]
+    },
+    {
+      "marca": "Changhe",
+      "modelo": [
+        "Varios",
+        "Freedom",
+        "Ideal",
+        "M50",
+        "M70",
+        "Q25"
       ]
     },
     {
@@ -253,6 +355,7 @@
     {
       "marca": "Citroen",
       "modelo": [
+        "Varios",
         "C3",
         "C4",
         "C4 Cactus",
@@ -287,6 +390,39 @@
       ]
     },
     {
+      "marca": "DFSK",
+      "modelo": [
+        "Varios",
+        "C31",
+        "C32",
+        "Glory 500",
+        "Glory 580",
+        "K01"
+      ]
+    },
+    {
+      "marca": "DKW",
+      "modelo": [
+        "Varios",
+        "F1",
+        "F89",
+        "F91",
+        "F93",
+        "Monza"
+      ]
+    },
+    {
+      "marca": "DS",
+      "modelo": [
+        "Varios",
+        "DS 3",
+        "DS 4",
+        "DS 5",
+        "DS 7",
+        "DS 9"
+      ]
+    },
+    {
       "marca": "Daewoo",
       "modelo": [
         "Varios",
@@ -299,6 +435,7 @@
     {
       "marca": "Daihatsu",
       "modelo": [
+        "Varios",
         "Charade",
         "Mira",
         "Rocky",
@@ -339,6 +476,7 @@
     {
       "marca": "Dongfeng",
       "modelo": [
+        "Varios",
         "D90",
         "Fengshen",
         "Fengshen AX7",
@@ -348,6 +486,17 @@
         "S50",
         "T5",
         "T7"
+      ]
+    },
+    {
+      "marca": "Exeed",
+      "modelo": [
+        "Varios",
+        "LX",
+        "RX",
+        "TX",
+        "TXL",
+        "VX"
       ]
     },
     {
@@ -459,8 +608,20 @@
       ]
     },
     {
+      "marca": "GAC Gonow",
+      "modelo": [
+        "Varios",
+        "GA3",
+        "GA4",
+        "GA5",
+        "GS3",
+        "GS4"
+      ]
+    },
+    {
       "marca": "GMC",
       "modelo": [
+        "Varios",
         "Acadia",
         "Canyon",
         "Hummer",
@@ -472,6 +633,7 @@
     {
       "marca": "Geely",
       "modelo": [
+        "Varios",
         "Coolray",
         "Emgrand",
         "Geometry A",
@@ -499,34 +661,21 @@
       "marca": "Great Wall",
       "modelo": [
         "Varios",
-        "C30",
-        "C50",
-        "Coolbear",
-        "Deer",
-        "H3",
-        "H5",
-        "H6",
-        "Hover",
-        "M4",
-        "Poer",
-        "Safe",
-        "Safe 2.2",
-        "Steed",
-        "Voleex",
-        "Wingle",
-        "Wingle 5",
-        "Wingle 6",
-        "Wingle 7"
-      ]
-    },
-    {
-      "marca": "Great Wall",
-      "modelo": [
-        "Varios",
         "Deer",
         "Haval H6",
         "Hover",
         "Wingle"
+      ]
+    },
+    {
+      "marca": "Hafei",
+      "modelo": [
+        "Varios",
+        "Lobo",
+        "Minyi",
+        "Ruiyi",
+        "Saibao",
+        "Zhongyi"
       ]
     },
     {
@@ -542,6 +691,7 @@
     {
       "marca": "Haval",
       "modelo": [
+        "Varios",
         "F7",
         "H2",
         "H4",
@@ -594,6 +744,28 @@
       ]
     },
     {
+      "marca": "Huanghai-SG",
+      "modelo": [
+        "Varios",
+        "Admiral",
+        "N1",
+        "N2",
+        "N3",
+        "Plutus"
+      ]
+    },
+    {
+      "marca": "Hudson",
+      "modelo": [
+        "Varios",
+        "Commodore",
+        "Hornet",
+        "Pacemaker",
+        "Super Six",
+        "Wasp"
+      ]
+    },
+    {
       "marca": "Hummer",
       "modelo": [
         "Varios",
@@ -643,8 +815,20 @@
       ]
     },
     {
+      "marca": "International",
+      "modelo": [
+        "Varios",
+        "CXT",
+        "Harvester",
+        "Loadstar",
+        "Scout",
+        "Travelall"
+      ]
+    },
+    {
       "marca": "Isuzu",
       "modelo": [
+        "Varios",
         "D-Max",
         "MU-X",
         "NKR",
@@ -668,6 +852,7 @@
     {
       "marca": "JAC",
       "modelo": [
+        "Varios",
         "E10X",
         "J3",
         "J4",
@@ -692,6 +877,17 @@
       ]
     },
     {
+      "marca": "Jaecoo",
+      "modelo": [
+        "Varios",
+        "J5",
+        "J6",
+        "J7",
+        "J8",
+        "J9"
+      ]
+    },
+    {
       "marca": "Jaguar",
       "modelo": [
         "Varios",
@@ -704,6 +900,7 @@
     {
       "marca": "Jeep",
       "modelo": [
+        "Varios",
         "Cherokee",
         "Compass",
         "Gladiator",
@@ -722,6 +919,83 @@
         "X70",
         "X90",
         "X95"
+      ]
+    },
+    {
+      "marca": "Jim",
+      "modelo": [
+        "Varios",
+        "J1",
+        "J2",
+        "J3",
+        "J4",
+        "J5"
+      ]
+    },
+    {
+      "marca": "Jinbei",
+      "modelo": [
+        "Varios",
+        "Granse",
+        "H2",
+        "Haise",
+        "S50",
+        "X30"
+      ]
+    },
+    {
+      "marca": "KYC",
+      "modelo": [
+        "Varios",
+        "A1",
+        "A2",
+        "B1",
+        "B2",
+        "C1"
+      ]
+    },
+    {
+      "marca": "Kaiyi",
+      "modelo": [
+        "Varios",
+        "E3",
+        "E5",
+        "X3",
+        "X5",
+        "X7"
+      ]
+    },
+    {
+      "marca": "Karry",
+      "modelo": [
+        "Varios",
+        "K30",
+        "K50",
+        "K60",
+        "Q22",
+        "Q25"
+      ]
+    },
+    {
+      "marca": "Kawasaki",
+      "modelo": [
+        "Varios",
+        "KLR650",
+        "Ninja",
+        "Versys",
+        "Vulcan",
+        "Z900"
+      ]
+    },
+    {
+      "marca": "Kenbo",
+      "modelo": [
+        "Varios",
+        "K1",
+        "K3",
+        "K5",
+        "K7",
+        "K9"
       ]
     },
     {
@@ -754,8 +1028,31 @@
       ]
     },
     {
+      "marca": "Lada",
+      "modelo": [
+        "Varios",
+        "Granta",
+        "Kalina",
+        "Niva",
+        "Priora",
+        "Vesta"
+      ]
+    },
+    {
+      "marca": "Lamborghini",
+      "modelo": [
+        "Varios",
+        "Aventador",
+        "Gallardo",
+        "Huracán",
+        "Revuelto",
+        "Urus"
+      ]
+    },
+    {
       "marca": "Land Rover",
       "modelo": [
+        "Varios",
         "Discovery",
         "Discovery Sport",
         "Evoque",
@@ -766,19 +1063,14 @@
       ]
     },
     {
-      "marca": "Lexus",
+      "marca": "Landking",
       "modelo": [
-        "CT",
-        "ES",
-        "GS",
-        "IS",
-        "LC",
-        "LS",
-        "LX",
-        "NX",
-        "RC",
-        "RX",
-        "UX"
+        "Varios",
+        "CK1",
+        "CK2",
+        "CK3",
+        "CK4",
+        "CK5"
       ]
     },
     {
@@ -799,6 +1091,28 @@
         "Smily",
         "Solano",
         "X60"
+      ]
+    },
+    {
+      "marca": "Lincoln",
+      "modelo": [
+        "Varios",
+        "Aviator",
+        "Continental",
+        "Corsair",
+        "Nautilus",
+        "Navigator"
+      ]
+    },
+    {
+      "marca": "Livan",
+      "modelo": [
+        "Varios",
+        "S1",
+        "S2",
+        "S3",
+        "S4",
+        "S5"
       ]
     },
     {
@@ -836,6 +1150,7 @@
     {
       "marca": "MINI",
       "modelo": [
+        "Varios",
         "Clubman",
         "Convertible",
         "Cooper",
@@ -853,41 +1168,20 @@
       "modelo": [
         "Varios",
         "Bolero",
-        "KUV100",
-        "Pik Up",
-        "Scorpio",
-        "Thar",
-        "XUV300",
-        "XUV500",
-        "XUV700"
-      ]
-    },
-    {
-      "marca": "Mahindra",
-      "modelo": [
-        "Varios",
-        "Bolero",
         "Scorpio",
         "Thar",
         "XUV500"
       ]
     },
     {
-      "marca": "Maruti",
+      "marca": "Maple",
       "modelo": [
-        "Alto",
-        "Baleno",
-        "Celerio",
-        "Ciaz",
-        "Dzire",
-        "Ertiga",
-        "Ignis",
-        "S-Cross",
-        "S-Presso",
-        "Swift",
-        "Vitara",
-        "Wagon R",
-        "XL6"
+        "Varios",
+        "30X",
+        "60S",
+        "70V",
+        "80V",
+        "90V"
       ]
     },
     {
@@ -908,6 +1202,34 @@
         "Levante",
         "MC20",
         "Quattroporte"
+      ]
+    },
+    {
+      "marca": "Maxus",
+      "modelo": [
+        "Varios",
+        "C35",
+        "D60",
+        "D90",
+        "Deliver 9 Cargo",
+        "Deliver 9 Escolar",
+        "Deliver 9 Pasajeros",
+        "ET-1825",
+        "ET-1849",
+        "ET-2325",
+        "ET-2549",
+        "ET-4849 8x4 tolva",
+        "ET-516",
+        "ET-916",
+        "G10 Cargo",
+        "G10 Minibús",
+        "G90",
+        "MIFA 9",
+        "T60",
+        "T90",
+        "T90 EV",
+        "eDeliver 3",
+        "eDeliver 9"
       ]
     },
     {
@@ -978,6 +1300,17 @@
       ]
     },
     {
+      "marca": "Mercury",
+      "modelo": [
+        "Varios",
+        "Grand Marquis",
+        "Mariner",
+        "Milan",
+        "Mountaineer",
+        "Sable"
+      ]
+    },
+    {
       "marca": "Mitsubishi",
       "modelo": [
         "Varios",
@@ -1003,6 +1336,17 @@
         "Pajero Sport",
         "Rosa",
         "i-MiEV"
+      ]
+    },
+    {
+      "marca": "Morgan",
+      "modelo": [
+        "Varios",
+        "3 Wheeler",
+        "Aero 8",
+        "Plus Four",
+        "Plus Six",
+        "Roadster"
       ]
     },
     {
@@ -1034,8 +1378,31 @@
       ]
     },
     {
+      "marca": "Oldsmobile",
+      "modelo": [
+        "Varios",
+        "Alero",
+        "Aurora",
+        "Bravada",
+        "Cutlass",
+        "Delta 88"
+      ]
+    },
+    {
+      "marca": "Omoda",
+      "modelo": [
+        "Varios",
+        "3",
+        "5",
+        "7",
+        "9",
+        "C5"
+      ]
+    },
+    {
       "marca": "Opel",
       "modelo": [
+        "Varios",
         "Astra",
         "Corsa",
         "Crossland",
@@ -1045,6 +1412,17 @@
         "Mokka",
         "Vectra",
         "Zafira"
+      ]
+    },
+    {
+      "marca": "Packard",
+      "modelo": [
+        "Varios",
+        "Caribbean",
+        "Clipper",
+        "Executive",
+        "Patrician",
+        "Super Eight"
       ]
     },
     {
@@ -1104,6 +1482,28 @@
       ]
     },
     {
+      "marca": "Plymouth",
+      "modelo": [
+        "Varios",
+        "Barracuda",
+        "Duster",
+        "Fury",
+        "GTX",
+        "Road Runner"
+      ]
+    },
+    {
+      "marca": "Polaris",
+      "modelo": [
+        "Varios",
+        "General",
+        "RZR",
+        "Ranger",
+        "Slingshot",
+        "Sportsman"
+      ]
+    },
+    {
       "marca": "Pontiac",
       "modelo": [
         "Varios",
@@ -1136,6 +1536,7 @@
     {
       "marca": "Ram",
       "modelo": [
+        "Varios",
         "1500",
         "2500",
         "3500",
@@ -1143,6 +1544,17 @@
         "ProMaster",
         "Rebel",
         "TRX"
+      ]
+    },
+    {
+      "marca": "Range Rover",
+      "modelo": [
+        "Varios",
+        "Autobiography",
+        "Evoque",
+        "Sport",
+        "Velar",
+        "Vogue"
       ]
     },
     {
@@ -1171,6 +1583,17 @@
       ]
     },
     {
+      "marca": "Riddara",
+      "modelo": [
+        "Varios",
+        "R1",
+        "R2",
+        "R3",
+        "R4",
+        "R5"
+      ]
+    },
+    {
       "marca": "Roewe",
       "modelo": [
         "Varios",
@@ -1191,14 +1614,48 @@
       ]
     },
     {
+      "marca": "Rover",
+      "modelo": [
+        "Varios",
+        "200",
+        "25",
+        "45",
+        "75",
+        "SD1"
+      ]
+    },
+    {
       "marca": "SEAT",
       "modelo": [
+        "Varios",
         "Arona",
         "Ateca",
         "Ibiza",
         "Leon",
         "Tarraco",
         "Toledo"
+      ]
+    },
+    {
+      "marca": "SWM",
+      "modelo": [
+        "Varios",
+        "G01",
+        "G05",
+        "G07",
+        "X3",
+        "X7"
+      ]
+    },
+    {
+      "marca": "Saab",
+      "modelo": [
+        "Varios",
+        "9-3",
+        "9-5",
+        "900",
+        "9000",
+        "99"
       ]
     },
     {
@@ -1209,6 +1666,28 @@
         "MG6",
         "Roewe RX5",
         "Roewe i5"
+      ]
+    },
+    {
+      "marca": "Samsung",
+      "modelo": [
+        "Varios",
+        "QM6",
+        "SM3",
+        "SM5",
+        "SM6",
+        "SM7"
+      ]
+    },
+    {
+      "marca": "Saturn",
+      "modelo": [
+        "Varios",
+        "Aura",
+        "Ion",
+        "Outlook",
+        "Sky",
+        "Vue"
       ]
     },
     {
@@ -1232,8 +1711,31 @@
       ]
     },
     {
+      "marca": "Shineray",
+      "modelo": [
+        "Varios",
+        "A7",
+        "A9",
+        "T20",
+        "T30",
+        "X30"
+      ]
+    },
+    {
+      "marca": "Simca",
+      "modelo": [
+        "Varios",
+        "1000",
+        "1100",
+        "1300",
+        "1500",
+        "Aronde"
+      ]
+    },
+    {
       "marca": "Skoda",
       "modelo": [
+        "Varios",
         "Fabia",
         "Kamiq",
         "Karoq",
@@ -1316,6 +1818,28 @@
       ]
     },
     {
+      "marca": "Tesla",
+      "modelo": [
+        "Varios",
+        "Cybertruck",
+        "Model 3",
+        "Model S",
+        "Model X",
+        "Model Y"
+      ]
+    },
+    {
+      "marca": "The London Taxi",
+      "modelo": [
+        "Varios",
+        "TX1",
+        "TX2",
+        "TX4",
+        "TX5",
+        "TXII"
+      ]
+    },
+    {
       "marca": "Togg",
       "modelo": [
         "Varios",
@@ -1351,6 +1875,17 @@
         "Mirai",
         "Prius",
         "RAV4"
+      ]
+    },
+    {
+      "marca": "Triumph",
+      "modelo": [
+        "Varios",
+        "GT6",
+        "Herald",
+        "Spitfire",
+        "Stag",
+        "TR6"
       ]
     },
     {
@@ -1398,8 +1933,20 @@
       ]
     },
     {
+      "marca": "Voltera",
+      "modelo": [
+        "Varios",
+        "V1",
+        "V2",
+        "V3",
+        "V4",
+        "V5"
+      ]
+    },
+    {
       "marca": "Volvo",
       "modelo": [
+        "Varios",
         "C30",
         "C40",
         "C60",
@@ -1441,6 +1988,28 @@
       ]
     },
     {
+      "marca": "Willys",
+      "modelo": [
+        "Varios",
+        "Aero",
+        "Americar",
+        "Jeep",
+        "Knight",
+        "Overland"
+      ]
+    },
+    {
+      "marca": "Yamaha",
+      "modelo": [
+        "Varios",
+        "MT-07",
+        "MT-09",
+        "R1",
+        "R6",
+        "TMAX"
+      ]
+    },
+    {
       "marca": "ZNA",
       "modelo": [
         "Varios",
@@ -1448,6 +2017,17 @@
         "Grand Tiger",
         "Rich",
         "Tunland"
+      ]
+    },
+    {
+      "marca": "ZXAuto",
+      "modelo": [
+        "Varios",
+        "Admiral",
+        "Grand Tiger",
+        "Grandtiger",
+        "Landmark",
+        "Terralord"
       ]
     },
     {

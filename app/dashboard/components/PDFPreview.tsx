@@ -87,60 +87,54 @@ export default function PDFPreview({ quote, onClose }: PDFPreviewProps) {
 		}
 	};
 
-	return (
-		<div className="relative bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-3xl w-full mx-4">
-			{/* Close button */}
-			<button
-				onClick={onClose}
-				className="absolute right-4 top-4 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300"
-			>
-				<XMarkIcon className="h-6 w-6" />
-			</button>
+  return (
+    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full">
+      <div className="p-6">
+        <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
+          Vista Previa de Cotización
+        </h2>
 
-			<div className="p-6">
-				<h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">Vista Previa de Cotización</h2>
-
-				{isLoading ? (
-					<div className="flex flex-col items-center justify-center py-12">
-						<div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
-						<p className="mt-4 text-gray-600 dark:text-gray-300">Generando PDF...</p>
-					</div>
-				) : error ? (
-					<div className="flex flex-col items-center justify-center py-12">
-						<p className="text-red-500 text-center mb-4">{error}</p>
-						<button
-							onClick={generatePreview}
-							className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors"
-						>
-							Reintentar
-						</button>
-					</div>
-				) : pdfUrl ? (
-					<>
-						<div className="w-full h-[600px] border rounded-lg overflow-hidden bg-gray-50 dark:bg-gray-700">
-							<iframe
-								src={`${pdfUrl}#view=FitH`}
-								className="w-full h-full"
-								title="Vista previa del PDF"
-							/>
-						</div>
-						<div className="flex justify-end gap-4 mt-4">
-							<button
-								onClick={handleDownload}
-								className="bg-[#34C759] text-white px-6 py-2 rounded-lg hover:bg-[#248A3D] transition-colors"
-							>
-								Guardar PDF
-						</button>
-							<button
-								onClick={handleShare}
-								className="bg-[#007AFF] text-white px-6 py-2 rounded-lg hover:bg-[#0051A8] transition-colors"
-							>
-								Compartir PDF
-							</button>
-						</div>
-					</>
-				) : null}
-			</div>
-		</div>
-	);
+        {isLoading ? (
+          <div className="flex flex-col items-center justify-center py-12">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+            <p className="mt-4 text-gray-600 dark:text-gray-300">Generando PDF...</p>
+          </div>
+        ) : error ? (
+          <div className="flex flex-col items-center justify-center py-12">
+            <p className="text-red-500 text-center mb-4">{error}</p>
+            <button
+              onClick={generatePreview}
+              className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors"
+            >
+              Reintentar
+            </button>
+          </div>
+        ) : pdfUrl ? (
+          <>
+            <div className="w-full h-[600px] border rounded-lg overflow-hidden bg-gray-50 dark:bg-gray-700">
+              <iframe
+                src={`${pdfUrl}#view=FitH`}
+                className="w-full h-full"
+                title="Vista previa del PDF"
+              />
+            </div>
+            <div className="flex justify-center gap-4 mt-4">
+              <button
+                onClick={handleDownload}
+                className="bg-[#34C759] text-white px-6 py-2 rounded-lg hover:bg-[#248A3D] transition-colors flex items-center gap-2"
+              >
+                <span>💾</span> Guardar PDF
+              </button>
+              <button
+                onClick={handleShare}
+                className="bg-[#007AFF] text-white px-6 py-2 rounded-lg hover:bg-[#0051A8] transition-colors flex items-center gap-2"
+              >
+                <span>📤</span> Compartir PDF
+              </button>
+            </div>
+          </>
+        ) : null}
+      </div>
+    </div>
+  );
 }

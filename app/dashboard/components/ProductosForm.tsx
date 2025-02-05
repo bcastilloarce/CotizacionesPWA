@@ -121,7 +121,7 @@ export default function ProductosForm() {
                             </label>
                             <input
                                 value={newProduct.name}
-                                onChange={(e) => setNewProduct({...newProduct, name: e.target.value})}
+                                onChange={(e) => setNewProduct({ ...newProduct, name: e.target.value })}
                                 className="w-full h-[44px] px-4 text-[17px] bg-[#FFFFFF] dark:bg-[#3A3A3C]
                                          border border-[#C5C5C7] dark:border-[#3A3A3C] rounded-lg"
                                 placeholder="Nombre del producto"
@@ -140,7 +140,7 @@ export default function ProductosForm() {
                                     const value = e.target.value.replace(/[^0-9]/g, '');
                                     const numValue = value ? parseInt(value) : 1;
                                     if (numValue > 0) {
-                                        setNewProduct({...newProduct, quantity: numValue});
+                                        setNewProduct({ ...newProduct, quantity: numValue });
                                     }
                                 }}
                                 className="w-full h-[44px] px-4 text-[17px] bg-[#FFFFFF] dark:bg-[#3A3A3C]
@@ -161,7 +161,7 @@ export default function ProductosForm() {
                                 onChange={(e) => {
                                     const value = e.target.value.replace(/[^0-9]/g, '');
                                     const numValue = value ? parseInt(value) : 0;
-                                    setNewProduct({...newProduct, unitPrice: numValue});
+                                    setNewProduct({ ...newProduct, unitPrice: numValue });
                                 }}
                                 className="w-full h-[44px] px-4 text-[17px] bg-[#FFFFFF] dark:bg-[#3A3A3C]
                                          border border-[#C5C5C7] dark:border-[#3A3A3C] rounded-lg"
@@ -182,43 +182,6 @@ export default function ProductosForm() {
                             Agregar Producto
                         </button>
                     </div>
-
-                    {/* Products Table */}
-                    {products.length > 0 && (
-                        <div className="mt-4 overflow-hidden rounded-lg border border-[#C5C5C7] dark:border-[#3A3A3C]">
-                            <div className="overflow-x-auto">
-                                <table className="min-w-full divide-y divide-[#C5C5C7] dark:divide-[#3A3A3C]">
-                                    <thead className="bg-[#F2F2F7] dark:bg-[#1C1C1E]">
-                                        <tr>
-                                            <th className="px-3 md:px-6 py-3 text-left text-[13px] md:text-[15px] font-medium text-gray-500">Producto</th>
-                                            <th className="px-3 md:px-6 py-3 text-left text-[13px] md:text-[15px] font-medium text-gray-500">Cant.</th>
-                                            <th className="px-3 md:px-6 py-3 text-left text-[13px] md:text-[15px] font-medium text-gray-500">Precio</th>
-                                            <th className="px-3 md:px-6 py-3 text-left text-[13px] md:text-[15px] font-medium text-gray-500">Total</th>
-                                            <th className="px-3 md:px-6 py-3 text-right text-[13px] md:text-[15px] font-medium text-gray-500"></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody className="bg-white dark:bg-[#2C2C2E] divide-y divide-[#C5C5C7] dark:divide-[#3A3A3C]">
-                                        {products.map((product, index) => (
-                                            <tr key={index}>
-                                                <td className="px-3 md:px-6 py-4 text-[15px] md:text-[17px] text-gray-900 dark:text-white">{product.name}</td>
-                                                <td className="px-3 md:px-6 py-4 text-[15px] md:text-[17px] text-gray-900 dark:text-white">{product.quantity}</td>
-                                                <td className="px-3 md:px-6 py-4 text-[15px] md:text-[17px] text-gray-900 dark:text-white">{formatCurrency(product.unitPrice)}</td>
-                                                <td className="px-3 md:px-6 py-4 text-[15px] md:text-[17px] text-gray-900 dark:text-white">{formatCurrency(product.subtotal)}</td>
-                                                <td className="px-3 md:px-6 py-4 text-right">
-                                                <button
-                                                    onClick={() => handleRemoveProduct(index)}
-                                                    className="text-red-600 hover:text-red-900"
-                                                >
-                                                    <TrashIcon className="h-5 w-5" />
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    )}
                 </div>
             </div>
         </motion.div>

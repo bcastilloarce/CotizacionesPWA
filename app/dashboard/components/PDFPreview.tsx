@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import { generatePDF } from '@/app/api/pdf/pdfGenerator';
 import type { QuoteFormData } from '@/app/api/validations/quote';
@@ -15,17 +15,7 @@ export default function PDFPreview({ quote, onClose }: PDFPreviewProps) {
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
 
-	useEffect(() => {
-		generatePreview();
-		return () => {
-			// Cleanup URL when component unmounts
-			if (pdfUrl) {
-				window.URL.revokeObjectURL(pdfUrl);
-			}
-		};
-	}, []);
-
-	const generatePreview = async () => {
+	const generatePreview = useCallback(async () => {
 		setIsLoading(true);
 		setError(null);
 		try {
@@ -39,28 +29,32 @@ export default function PDFPreview({ quote, onClose }: PDFPreviewProps) {
 					date: new Date().toISOString(),
 					client: quote.client,
 					year: quote.year?.toString(),
-					availability: quote.availability,
-					products: quote.products.map(p => ({
-						name: p.name,
-						quantity: p.quantity,
-						unitPrice: p.unitPrice
-					})),
-					totalWithTax: quote.totalWithTax
-				})
+				}),
 			});
 
-			if (!response.ok) throw new Error('Failed to generate PDF');
+			if (!response.ok) {
+				throw new Error('Failed to generate PDF');
+			}
 
 			const blob = await response.blob();
 			const url = window.URL.createObjectURL(blob);
 			setPdfUrl(url);
-		} catch (error) {
-			console.error('Error generating PDF:', error);
-			setError('Error al generar el PDF. Por favor, intente nuevamente.');
+		} catch (err) {
+			setError(err instanceof Error ? err.message : 'An error occurred');
 		} finally {
 			setIsLoading(false);
 		}
-	};
+	}, [quote]);
+
+	useEffect(() => {
+		generatePreview();
+		return () => {
+			// Cleanup URL when component unmounts
+			if (pdfUrl) {
+				window.URL.revokeObjectURL(pdfUrl);
+			}
+		};
+	}, [generatePreview, pdfUrl]);
 
 	const handleDownload = () => {
 		if (!pdfUrl) return;
@@ -105,7 +99,7 @@ export default function PDFPreview({ quote, onClose }: PDFPreviewProps) {
 
 			<div className="p-6">
 				<h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">Vista Previa de Cotización</h2>
-				
+
 				{isLoading ? (
 					<div className="flex flex-col items-center justify-center py-12">
 						<div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>

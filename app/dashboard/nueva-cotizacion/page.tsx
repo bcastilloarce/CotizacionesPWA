@@ -17,6 +17,7 @@ export default function NewQuotePage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showPDF, setShowPDF] = useState(false);
   const [quoteData, setQuoteData] = useState<QuoteFormData | null>(null);
+  const [pdfBlob, setPdfBlob] = useState<Blob | null>(null);
 
   const methods = useForm<QuoteFormData>({
     resolver: zodResolver(quoteSchema),
@@ -60,10 +61,27 @@ export default function NewQuotePage() {
     }
   };
 
-  const handleGeneratePDF = () => {
+  const handleGeneratePDF = async () => {
     const data = methods.getValues();
     setQuoteData(data);
-    setShowPDF(true);
+
+    try {
+      const response = await fetch('/api/pdf/generate', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) throw new Error('Error generando PDF');
+
+      const blob = await response.blob();
+      setPdfBlob(blob);
+      setShowPDF(true);
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
   return (
@@ -160,6 +178,7 @@ export default function NewQuotePage() {
           <PDFPreview
             quote={quoteData}
             onClose={() => setShowPDF(false)}
+            pdfBlob={pdfBlob}
           />
         </motion.div>
       )}

@@ -179,13 +179,13 @@ export const generatePDF = async (data: QuoteData): Promise<Buffer> => {
 	const totalText = `Total con IVA: $${data.totalWithTax.toLocaleString('es-CL')}`;
 	const totalWidth = doc.getTextWidth(totalText) + 10; // 5px padding on each side
 	const totalBoxX = doc.internal.pageSize.width - 20 - totalWidth;
-	
+
 	// Draw total box with light gray background
 	doc.setFillColor(245, 245, 245);
 	doc.rect(totalBoxX, yPosition - 8, totalWidth, 12, 'F');
 	doc.setDrawColor(200, 200, 200);
 	doc.rect(totalBoxX, yPosition - 8, totalWidth, 12, 'S');
-	
+
 	// Draw total text
 	doc.text(totalText, doc.internal.pageSize.width - 20, yPosition, { align: 'right' });
 

@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { generatePDF } from '@/app/api/pdf/pdfGenerator';
+import { generatePDF } from '../pdfGenerator';
 
 export async function POST(req: Request) {
     try {

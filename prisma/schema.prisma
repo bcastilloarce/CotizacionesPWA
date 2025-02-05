@@ -6,8 +6,8 @@ generator client {
 }
 
 datasource db {
-  provider = "redis"
-  url      = env("KV_URL")
+  provider = "postgresql" // Cambiado de "redis" a "postgresql"
+  url      = env("DATABASE_URL") // Cambiado de KV_URL a DATABASE_URL
 }
 
 model User {

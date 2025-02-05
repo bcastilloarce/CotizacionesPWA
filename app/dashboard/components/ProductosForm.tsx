@@ -3,7 +3,7 @@
 import { useFormContext } from 'react-hook-form';
 import { motion } from 'framer-motion';
 import { PlusCircleIcon, TrashIcon } from '@heroicons/react/24/outline';
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import type { QuoteFormData } from '@/app/api/validations/quote';
 
 interface ProductItem {
@@ -46,14 +46,18 @@ export default function ProductosForm() {
         setValue('products', updatedProducts);
     };
 
-    const formatCurrency = (amount: number): string => {
+    const formatCurrency = useCallback((amount: number): string => {
         return new Intl.NumberFormat('es-CL', {
             style: 'currency',
             currency: 'CLP',
             minimumFractionDigits: 0,
             maximumFractionDigits: 0
         }).format(amount);
-    };
+    }, []);
+
+    const calculateTotal = useCallback((): number => {
+        return products.reduce((acc, product) => acc + (product.quantity * product.unitPrice), 0);
+    }, [products]);
 
     return (
         <motion.div
@@ -63,6 +67,52 @@ export default function ProductosForm() {
         >
             <div className="px-4 py-3 bg-white dark:bg-[#2C2C2E]">
                 <div className="space-y-4">
+                    {/* Products Table */}
+                    <div className="overflow-x-auto -mx-4 sm:-mx-6 lg:-mx-8">
+                        <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+                            <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 rounded-lg">
+                                <table className="min-w-full divide-y divide-gray-300 dark:divide-gray-600">
+                                    <thead className="bg-gray-50 dark:bg-gray-700">
+                                        <tr>
+                                            <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 dark:text-white sm:pl-6">Producto</th>
+                                            <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">Cantidad</th>
+                                            <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">Precio</th>
+                                            <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">Subtotal</th>
+                                            <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
+                                                <span className="sr-only">Acciones</span>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="divide-y divide-gray-200 dark:divide-gray-600 bg-white dark:bg-gray-800">
+                                        {products.map((product, index) => (
+                                            <tr key={index}>
+                                                <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 dark:text-white sm:pl-6">{product.name}</td>
+                                                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-300">{product.quantity}</td>
+                                                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-300">{formatCurrency(product.unitPrice)}</td>
+                                                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-300">{formatCurrency(product.quantity * product.unitPrice)}</td>
+                                                <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => handleRemoveProduct(index)}
+                                                        className="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300"
+                                                    >
+                                                        <TrashIcon className="h-5 w-5" />
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                        {products.length > 0 && (
+                                            <tr className="bg-gray-50 dark:bg-gray-700">
+                                                <td colSpan={3} className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-semibold text-gray-900 dark:text-white sm:pl-6 text-right">Total con IVA:</td>
+                                                <td className="whitespace-nowrap px-3 py-4 text-sm font-semibold text-gray-900 dark:text-white">{formatCurrency(calculateTotal())}</td>
+                                                <td></td>
+                                            </tr>
+                                        )}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                     {/* Product Input Fields */}
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div>
@@ -82,12 +132,21 @@ export default function ProductosForm() {
                                 Cantidad *
                             </label>
                             <input
-                                type="number"
-                                value={newProduct.quantity}
-                                onChange={(e) => setNewProduct({...newProduct, quantity: parseInt(e.target.value) || 0})}
+                                inputMode="numeric"
+                                type="text"
+                                pattern="[0-9]*"
+                                value={newProduct.quantity === 1 ? '' : newProduct.quantity}
+                                onChange={(e) => {
+                                    const value = e.target.value.replace(/[^0-9]/g, '');
+                                    const numValue = value ? parseInt(value) : 1;
+                                    if (numValue > 0) {
+                                        setNewProduct({...newProduct, quantity: numValue});
+                                    }
+                                }}
                                 className="w-full h-[44px] px-4 text-[17px] bg-[#FFFFFF] dark:bg-[#3A3A3C]
                                          border border-[#C5C5C7] dark:border-[#3A3A3C] rounded-lg"
                                 min="1"
+                                placeholder="Cantidad"
                             />
                         </div>
                         <div>
@@ -95,12 +154,19 @@ export default function ProductosForm() {
                                 Precio *
                             </label>
                             <input
-                                type="number"
-                                value={newProduct.unitPrice}
-                                onChange={(e) => setNewProduct({...newProduct, unitPrice: parseInt(e.target.value) || 0})}
+                                inputMode="numeric"
+                                pattern="[0-9]*"
+                                type="text"
+                                value={newProduct.unitPrice === 0 ? '' : newProduct.unitPrice.toLocaleString('es-CL').replace(/,/g, '.')}
+                                onChange={(e) => {
+                                    const value = e.target.value.replace(/[^0-9]/g, '');
+                                    const numValue = value ? parseInt(value) : 0;
+                                    setNewProduct({...newProduct, unitPrice: numValue});
+                                }}
                                 className="w-full h-[44px] px-4 text-[17px] bg-[#FFFFFF] dark:bg-[#3A3A3C]
                                          border border-[#C5C5C7] dark:border-[#3A3A3C] rounded-lg"
                                 min="0"
+                                placeholder="Precio en CLP"
                             />
                         </div>
                     </div>
@@ -120,24 +186,25 @@ export default function ProductosForm() {
                     {/* Products Table */}
                     {products.length > 0 && (
                         <div className="mt-4 overflow-hidden rounded-lg border border-[#C5C5C7] dark:border-[#3A3A3C]">
-                            <table className="min-w-full divide-y divide-[#C5C5C7] dark:divide-[#3A3A3C]">
-                                <thead className="bg-[#F2F2F7] dark:bg-[#1C1C1E]">
-                                    <tr>
-                                        <th className="px-6 py-3 text-left text-[15px] font-medium text-gray-500">Producto</th>
-                                        <th className="px-6 py-3 text-left text-[15px] font-medium text-gray-500">Cantidad</th>
-                                        <th className="px-6 py-3 text-left text-[15px] font-medium text-gray-500">Precio</th>
-                                        <th className="px-6 py-3 text-left text-[15px] font-medium text-gray-500">Subtotal</th>
-                                        <th className="px-6 py-3 text-right text-[15px] font-medium text-gray-500">Acciones</th>
-                                    </tr>
-                                </thead>
-                                <tbody className="bg-white dark:bg-[#2C2C2E] divide-y divide-[#C5C5C7] dark:divide-[#3A3A3C]">
-                                    {products.map((product, index) => (
-                                        <tr key={index}>
-                                            <td className="px-6 py-4 text-[17px] text-gray-900 dark:text-white">{product.name}</td>
-                                            <td className="px-6 py-4 text-[17px] text-gray-900 dark:text-white">{product.quantity}</td>
-                                            <td className="px-6 py-4 text-[17px] text-gray-900 dark:text-white">{formatCurrency(product.unitPrice)}</td>
-                                            <td className="px-6 py-4 text-[17px] text-gray-900 dark:text-white">{formatCurrency(product.subtotal)}</td>
-                                            <td className="px-6 py-4 text-right">
+                            <div className="overflow-x-auto">
+                                <table className="min-w-full divide-y divide-[#C5C5C7] dark:divide-[#3A3A3C]">
+                                    <thead className="bg-[#F2F2F7] dark:bg-[#1C1C1E]">
+                                        <tr>
+                                            <th className="px-3 md:px-6 py-3 text-left text-[13px] md:text-[15px] font-medium text-gray-500">Producto</th>
+                                            <th className="px-3 md:px-6 py-3 text-left text-[13px] md:text-[15px] font-medium text-gray-500">Cant.</th>
+                                            <th className="px-3 md:px-6 py-3 text-left text-[13px] md:text-[15px] font-medium text-gray-500">Precio</th>
+                                            <th className="px-3 md:px-6 py-3 text-left text-[13px] md:text-[15px] font-medium text-gray-500">Total</th>
+                                            <th className="px-3 md:px-6 py-3 text-right text-[13px] md:text-[15px] font-medium text-gray-500"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="bg-white dark:bg-[#2C2C2E] divide-y divide-[#C5C5C7] dark:divide-[#3A3A3C]">
+                                        {products.map((product, index) => (
+                                            <tr key={index}>
+                                                <td className="px-3 md:px-6 py-4 text-[15px] md:text-[17px] text-gray-900 dark:text-white">{product.name}</td>
+                                                <td className="px-3 md:px-6 py-4 text-[15px] md:text-[17px] text-gray-900 dark:text-white">{product.quantity}</td>
+                                                <td className="px-3 md:px-6 py-4 text-[15px] md:text-[17px] text-gray-900 dark:text-white">{formatCurrency(product.unitPrice)}</td>
+                                                <td className="px-3 md:px-6 py-4 text-[15px] md:text-[17px] text-gray-900 dark:text-white">{formatCurrency(product.subtotal)}</td>
+                                                <td className="px-3 md:px-6 py-4 text-right">
                                                 <button
                                                     onClick={() => handleRemoveProduct(index)}
                                                     className="text-red-600 hover:text-red-900"
@@ -150,6 +217,7 @@ export default function ProductosForm() {
                                 </tbody>
                             </table>
                         </div>
+                    </div>
                     )}
                 </div>
             </div>

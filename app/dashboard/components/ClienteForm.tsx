@@ -67,45 +67,7 @@ export default function ClienteForm() {
             )}
             </div>
 
-            {/* Duration */}
-            <div>
-            <label className="block text-[17px] font-regular text-[#000000] dark:text-white">
-              Duración *
-            </label>
-            <input
-              type="number"
-              {...register('duration', {
-              required: 'Duración es requerida',
-              min: { value: 1, message: 'Mínimo 1 día' }
-              })}
-              className="w-full h-[44px] px-4 text-[17px] bg-[#FFFFFF] dark:bg-[#3A3A3C]
-                   border border-[#C5C5C7] dark:border-[#3A3A3C] rounded-lg"
-              placeholder="Número de días"
-            />
-            {errors.duration && (
-              <p className="text-[15px] text-[#FF3B30]">{errors.duration.message}</p>
-            )}
-            </div>
 
-            {/* Stock Switch */}
-            <div className="flex items-center justify-between">
-            <span className="text-[17px] font-regular text-[#000000] dark:text-white">
-              Hasta agotar stock
-            </span>
-            <Switch
-              checked={stockSwitch}
-              onChange={(checked) => setValue('untilStockLasts', checked)}
-              className={`${
-              stockSwitch ? 'bg-[#007AFF]' : 'bg-gray-200'
-              } relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none`}
-            >
-              <span
-              className={`${
-                stockSwitch ? 'translate-x-6' : 'translate-x-1'
-              } inline-block h-4 w-4 transform rounded-full bg-white transition-transform`}
-              />
-            </Switch>
-            </div>
           </div>
           </div>
         </motion.div>

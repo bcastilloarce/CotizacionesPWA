@@ -33,8 +33,16 @@ const getBase64Image = (filePath: string): string => {
 };
 
 export const generatePDF = async (data: QuoteData): Promise<Buffer> => {
-	const doc = new jsPDF();
+	const doc = new jsPDF({
+		orientation: 'portrait',
+		unit: 'mm',
+		format: 'a4',
+		compress: true
+	});
 	let yPosition = 20; // Starting position
+
+	// Add custom font for better Spanish character support
+	doc.setFont('helvetica');
 
 	// Load and add images using base64
 	const logoBase64 = getBase64Image(LOGO_PATH);
@@ -67,9 +75,17 @@ export const generatePDF = async (data: QuoteData): Promise<Buffer> => {
 		doc.text(label, tableStart + 5, yPosition);
 
 		doc.setFont('helvetica', 'normal');
-		doc.text(value, tableStart + labelWidth + 5, yPosition);
-		doc.rect(tableStart, yPosition - 5, labelWidth + valueWidth, 10, 'S');
-		yPosition += 10;
+		// Handle long text by splitting into multiple lines if needed
+		const maxWidth = valueWidth - 10; // 5px padding on each side
+		const lines = splitText(value, maxWidth, doc);
+		lines.forEach((line, index) => {
+			doc.text(line, tableStart + labelWidth + 5, yPosition + (index * 5));
+		});
+
+		// Adjust row height based on number of lines
+		const rowHeight = Math.max(10, lines.length * 5 + 5);
+		doc.rect(tableStart, yPosition - 5, labelWidth + valueWidth, rowHeight, 'S');
+		yPosition += rowHeight;
 	};
 
 	addTableRow('Cliente', data.client);
@@ -115,37 +131,62 @@ export const generatePDF = async (data: QuoteData): Promise<Buffer> => {
 	doc.setFont('helvetica', 'normal');
 	data.products.forEach((product) => {
 		xPos = tableStart;
-		const rowHeight = 10;
+		let rowHeight = 10;
+		let maxRowHeight = rowHeight;
 
+		// First pass: calculate max row height based on product name wrapping
+		const productLines = splitText(product.name, tableWidth * columns.product.width - 10, doc);
+		maxRowHeight = Math.max(maxRowHeight, productLines.length * 5 + 5);
+
+		// Second pass: draw cells with proper height
 		Object.entries(columns).forEach(([key, col]) => {
 			const colWidth = tableWidth * col.width;
 			let value = '';
+
+			// Draw cell background and border
+			doc.setFillColor(255, 255, 255);
+			doc.rect(xPos, yPosition - 5, colWidth, maxRowHeight, 'FD');
+
 			switch(key) {
 				case 'product':
-					value = product.name;
+					// Handle multiline product names
+					productLines.forEach((line, index) => {
+						doc.text(line, xPos + 5, yPosition + (index * 5));
+					});
 					break;
 				case 'quantity':
 					value = product.quantity.toString();
+					doc.text(value, xPos + colWidth - 5 - doc.getTextWidth(value), yPosition);
 					break;
 				case 'price':
 					value = `$${product.unitPrice.toLocaleString('es-CL')}`;
+					doc.text(value, xPos + colWidth - 5 - doc.getTextWidth(value), yPosition);
 					break;
 				case 'total':
 					value = `$${(product.quantity * product.unitPrice).toLocaleString('es-CL')}`;
+					doc.text(value, xPos + colWidth - 5 - doc.getTextWidth(value), yPosition);
 					break;
 			}
-			doc.rect(xPos, yPosition - 5, colWidth, rowHeight, 'S');
-			doc.text(value, xPos + 5, yPosition);
 			xPos += colWidth;
 		});
-		yPosition += rowHeight;
+		yPosition += maxRowHeight;
 	});
 
-	// Total
-	yPosition += 40;
+	// Total with box
+	yPosition += 20;
 	doc.setFont('helvetica', 'bold');
 	doc.setFontSize(14);
 	const totalText = `Total con IVA: $${data.totalWithTax.toLocaleString('es-CL')}`;
+	const totalWidth = doc.getTextWidth(totalText) + 10; // 5px padding on each side
+	const totalBoxX = doc.internal.pageSize.width - 20 - totalWidth;
+	
+	// Draw total box with light gray background
+	doc.setFillColor(245, 245, 245);
+	doc.rect(totalBoxX, yPosition - 8, totalWidth, 12, 'F');
+	doc.setDrawColor(200, 200, 200);
+	doc.rect(totalBoxX, yPosition - 8, totalWidth, 12, 'S');
+	
+	// Draw total text
 	doc.text(totalText, doc.internal.pageSize.width - 20, yPosition, { align: 'right' });
 
 	// Availability if present

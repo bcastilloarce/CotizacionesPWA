@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import type { QuoteFormData } from '@/app/api/validations/quote';
 
@@ -11,23 +11,13 @@ interface PDFPreviewProps {
 }
 
 export default function PDFPreview({ quote, onClose, pdfBlob }: PDFPreviewProps) {
-	const [pdfUrl, setPdfUrl] = useState<string | null>(null);
-	const [isLoading, setIsLoading] = useState(false);
-	const [error, setError] = useState<string | null>(null);
+    const [pdfUrl, setPdfUrl] = useState<string | null>(null);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
 
-	useEffect(() => {
-		if (pdfBlob) {
-			const url = URL.createObjectURL(pdfBlob);
-			setPdfUrl(url);
-			return () => {
-				if (url) URL.revokeObjectURL(url);
-			};
-		} else {
-			generatePreview();
-		}
-	}, [pdfBlob]);
 
-	const generatePreview = async () => {
+
+	const generatePreview = useCallback(async () => {
 		setIsLoading(true);
 		setError(null);
 		try {
@@ -49,7 +39,19 @@ export default function PDFPreview({ quote, onClose, pdfBlob }: PDFPreviewProps)
 		} finally {
 			setIsLoading(false);
 		}
-	};
+    }, [quote]);
+
+	useEffect(() => {
+		if (pdfBlob) {
+			const url = URL.createObjectURL(pdfBlob);
+			setPdfUrl(url);
+			return () => {
+				if (url) URL.revokeObjectURL(url);
+			};
+		} else {
+			generatePreview();
+		}
+	}, [pdfBlob, generatePreview]);
 
 	const handleDownload = () => {
 		if (!pdfUrl) return;

@@ -3,18 +3,29 @@ import { getNextQuoteNumber } from '@/app/api/pdf/quoteNumbering';
 import fs from 'fs';
 import path from 'path';
 
-// Spacing constants
+// Update spacing constants for finer control
 const SPACING = {
   LOGO: 10,
-  TITLE: 15,
-  TABLE: 10, // Reducido de 20 a 10
-  SECTION: 8  // Reducido de 12 a 8
-};
-// # Bloque 2: Ajuste de dimensiones de firma ✍️
+  TITLE: 10,        // Reduced from 12
+  TABLE: 8,
+  SECTION: 6,
+  FIELD: 4,
+  BOTTOM_MARGIN: 20 // New constant for bottom spacing
+} as const;
+
+// Update signature dimensions
 const SIGNATURE_DIMENSIONS = {
-  width: 50,  // Reducido 50%
-  height: 50, // Reducido 50%
+  width: 50,        // 50% of original size
+  height: 50,       // 50% of original size
   bottomMargin: 20
+} as const;
+
+// Update table column configuration
+const TABLE_COLUMNS = {
+  product: { header: 'Producto', width: 0.45 },    // Increased width
+  quantity: { header: 'Cantidad', width: 0.15 },   // Adjusted width
+  price: { header: 'Precio', width: 0.20 },        // Consistent width
+  total: { header: 'Total', width: 0.20 }         // Consistent width
 } as const;
 
 // Table styles
@@ -22,16 +33,18 @@ type RGB = [number, number, number];
 
 const TABLE_STYLES = {
   header: {
-    fillColor: [220, 220, 220] as RGB, // Gris más claro
-    textColor: [0, 0, 0] as RGB,
-    fontSize: 12
+    fillColor: [245, 245, 245] as RGB,
+    textColor: [50, 50, 50] as RGB,
+    fontSize: 11,
+    lineHeight: 7
   },
   cell: {
     fillColor: [255, 255, 255] as RGB,
-    textColor: [0, 0, 0] as RGB,
-    fontSize: 11
+    textColor: [50, 50, 50] as RGB,
+    fontSize: 10,
+    lineHeight: 6
   }
-};
+} as const;
 
 interface PDFProduct {
 	name: string;
@@ -69,24 +82,31 @@ const addProductsTable = (doc: jsPDF, products: PDFProduct[], startY: number) =>
   const tableWidth = doc.internal.pageSize.width - 40;
   const tableStart = 20;
 
-  // Table headers
   const addTableHeaders = (y: number) => {
     doc.setFontSize(TABLE_STYLES.header.fontSize);
     doc.setFont('helvetica', 'bold');
-    doc.setFillColor(TABLE_STYLES.header.fillColor[0], TABLE_STYLES.header.fillColor[1], TABLE_STYLES.header.fillColor[2]);
+    doc.setFillColor(...TABLE_STYLES.header.fillColor);
+    doc.setTextColor(...TABLE_STYLES.header.textColor);
 
     let xPos = tableStart;
-    const columns = {
-      product: { header: 'Producto', width: 0.4 },
-      quantity: { header: 'Cantidad', width: 0.2 },
-      price: { header: 'Precio', width: 0.2 },
-      total: { header: 'Total', width: 0.2 }
-    };
 
-    Object.entries(columns).forEach(([_, col]) => {
+    Object.entries(TABLE_COLUMNS).forEach(([key, col]) => {
       const colWidth = tableWidth * col.width;
+      // Add subtle column separator
+      doc.setDrawColor(200, 200, 200);
+      doc.setLineWidth(0.1);
+      doc.line(xPos, y - 5, xPos, y + 5);
+
       doc.rect(xPos, y - 5, colWidth, 10, 'FD');
-      doc.text(col.header, xPos + 5, y);
+      const textX = key === 'product' ?
+        xPos + 5 :
+        xPos + colWidth - 5;
+      doc.text(
+        col.header,
+        textX,
+        y,
+        { align: key === 'product' ? 'left' : 'right' }
+      );
       xPos += colWidth;
     });
     return y + 10;
@@ -101,22 +121,22 @@ const addProductsTable = (doc: jsPDF, products: PDFProduct[], startY: number) =>
     }
 
     let xPos = tableStart;
-    const columns = {
-      product: { width: 0.4 },
-      quantity: { width: 0.2 },
-      price: { width: 0.2 },
-      total: { width: 0.2 }
-    };
 
     doc.setFontSize(TABLE_STYLES.cell.fontSize);
     doc.setFont('helvetica', 'normal');
 
-    Object.entries(columns).forEach(([key, col]) => {
+    Object.entries(TABLE_COLUMNS).forEach(([key, col]) => {
       const colWidth = tableWidth * col.width;
       doc.setFillColor(TABLE_STYLES.cell.fillColor[0], TABLE_STYLES.cell.fillColor[1], TABLE_STYLES.cell.fillColor[2]);
       doc.rect(xPos, currentY - 5, colWidth, rowHeight, 'FD');
 
       let value = '';
+      const formatCurrency = (amount: number) =>
+        `$${amount.toLocaleString('es-CL', {
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 0
+        })}`;
+
       switch(key) {
         case 'product':
           value = product.name;
@@ -124,14 +144,15 @@ const addProductsTable = (doc: jsPDF, products: PDFProduct[], startY: number) =>
           break;
         case 'quantity':
           value = product.quantity.toString();
-          doc.text(value, xPos + colWidth - 5 - doc.getTextWidth(value), currentY);
+          const textX = xPos + (colWidth / 2); // Center align
+          doc.text(value, textX - doc.getTextWidth(value) / 2, currentY);
           break;
         case 'price':
-          value = `$${product.unitPrice.toLocaleString('es-CL')}`;
+          value = formatCurrency(product.unitPrice);
           doc.text(value, xPos + colWidth - 5 - doc.getTextWidth(value), currentY);
           break;
         case 'total':
-          value = `$${(product.quantity * product.unitPrice).toLocaleString('es-CL')}`;
+          value = formatCurrency(product.quantity * product.unitPrice);
           doc.text(value, xPos + colWidth - 5 - doc.getTextWidth(value), currentY);
           break;
       }
@@ -146,27 +167,26 @@ const addProductsTable = (doc: jsPDF, products: PDFProduct[], startY: number) =>
 
 const addTotal = (doc: jsPDF, total: number, yPosition: number) => {
   doc.setFont('helvetica', 'bold');
-  doc.setFontSize(14);
-  const totalText = `Total con IVA: $${total.toLocaleString('es-CL')}`;
+  doc.setFontSize(12);
+  const totalText = `Total con IVA: ${total.toLocaleString('es-CL', {
+    style: 'currency',
+    currency: 'CLP',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0
+  })}`;
 
-  const padding = 8;
-  const totalWidth = doc.getTextWidth(totalText) + (padding * 2);
-  const totalBoxX = doc.internal.pageSize.width - 20 - totalWidth;
-
-  doc.setFillColor(248, 249, 250);
-  doc.setDrawColor(222, 226, 230);
-  doc.roundedRect(totalBoxX, yPosition - 6, totalWidth, 12, 2, 2, 'FD');
-
-  doc.setTextColor(33, 37, 41);
   doc.text(totalText, doc.internal.pageSize.width - 20, yPosition, { align: 'right' });
 };
 
 const addSignature = (doc: jsPDF, firmaBase64: string) => {
+  const pageHeight = doc.internal.pageSize.height;
+  const signatureY = pageHeight - SIGNATURE_DIMENSIONS.height - SIGNATURE_DIMENSIONS.bottomMargin;
+
   doc.addImage(
     firmaBase64,
     'PNG',
     (doc.internal.pageSize.width - SIGNATURE_DIMENSIONS.width)/2,
-    doc.internal.pageSize.height - SIGNATURE_DIMENSIONS.height - SIGNATURE_DIMENSIONS.bottomMargin,
+    signatureY,
     SIGNATURE_DIMENSIONS.width,
     SIGNATURE_DIMENSIONS.height
   );
@@ -197,7 +217,7 @@ export const generatePDF = async (data: QuoteData): Promise<Buffer> => {
   yPosition += (272/6) + SPACING.TITLE;
 
   doc.setFont('helvetica', 'bold');
-  doc.setFontSize(24);
+  doc.setFontSize(20);
   doc.text('Cotización', doc.internal.pageSize.width/2, yPosition, { align: 'center' });
   doc.setLineWidth(0.5);
   const titleWidth = doc.getTextWidth('Cotización');
@@ -207,71 +227,63 @@ export const generatePDF = async (data: QuoteData): Promise<Buffer> => {
     (doc.internal.pageSize.width + titleWidth)/2,
     yPosition + 2
   );
-  yPosition += SPACING.TITLE;
+  yPosition += SPACING.TITLE * 0.8; // Reduced spacing after title
 
-  doc.setFontSize(12);
-  const tableStart = 20;
-  const labelWidth = (doc.internal.pageSize.width - 40) * 0.2;
-  const valueWidth = (doc.internal.pageSize.width - 40) * 0.8;
+  doc.setFontSize(11);
+  const fieldWidth = doc.internal.pageSize.width - 40;
+  const startX = 20;
 
-  const addTableRow = (label: string, value: string) => {
+  const addField = (label: string, value: string) => {
     doc.setFont('helvetica', 'bold');
-    doc.setFillColor(240, 240, 240);
-    doc.rect(tableStart, yPosition - 5, labelWidth, 10, 'F');
-    doc.text(label, tableStart + 5, yPosition);
-
+    doc.text(`${label}:`, startX, yPosition);
     doc.setFont('helvetica', 'normal');
-    const maxWidth = valueWidth - 10;
-    const lines = splitText(value, maxWidth, doc);
-    lines.forEach((line, index) => {
-      doc.text(line, tableStart + labelWidth + 5, yPosition + (index * 5));
-    });
-
-    const rowHeight = Math.max(10, lines.length * 5 + 5);
-    doc.rect(tableStart, yPosition - 5, labelWidth + valueWidth, rowHeight, 'S');
-    yPosition += rowHeight;
+    doc.text(value, startX + doc.getTextWidth(`${label}: `), yPosition);
+    yPosition += SPACING.FIELD;
   };
 
-  addTableRow('Cliente', data.client);
-  addTableRow('Fecha', new Date(data.date).toLocaleDateString('es-CL'));
-  addTableRow('Marca', data.brand);
-  addTableRow('Modelo', data.model);
-  if (data.year) addTableRow('Año', data.year);
-  if (data.licensePlate) addTableRow('Patente', data.licensePlate);
+  // Format date properly
+  const formattedDate = new Date(data.date).toLocaleDateString('es-CL', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric'
+  });
 
-  const durationText = data.untilStockLasts
-    ? `${data.duration} o hasta agotar stock`
-    : `${data.duration}`;
-  addTableRow('Duración', durationText);
+  addField('Cliente', data.client);
+  addField('Fecha', formattedDate);
+  addField('Marca', data.brand);
+  addField('Modelo', data.model);
+  if (data.year) addField('Año', data.year);
+  if (data.licensePlate) addField('Patente', data.licensePlate);
 
-  yPosition += 60;
+  // Update duration field formatting
+  const formatDuration = (duration: string, untilStockLasts: boolean): string => {
+    return untilStockLasts ?
+      `${duration} o hasta agotar stock` :
+      duration;
+  };
 
-  yPosition += SPACING.TABLE;
-
-  yPosition = addProductsTable(doc, data.products, yPosition);
-
+  addField('Duración', formatDuration(data.duration, data.untilStockLasts));
   yPosition += SPACING.SECTION;
+  const newYPosition = addProductsTable(doc, data.products, yPosition);
+  yPosition = newYPosition + SPACING.SECTION;
   addTotal(doc, data.totalWithTax, yPosition);
 
   if (data.availability) {
     yPosition += SPACING.SECTION;
-    doc.setFontSize(12);
-    doc.text(`Disponibilidad: ${data.availability}`, 20, yPosition);
+    doc.setFontSize(11);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Disponibilidad:', 20, yPosition);
+    doc.setFont('helvetica', 'normal');
+    doc.text(data.availability, 20 + doc.getTextWidth('Disponibilidad: '), yPosition);
   }
 
-  yPosition += SPACING.SECTION * 2;
+  // Add signature at the bottom with proper spacing
+  yPosition = doc.internal.pageSize.height - SIGNATURE_DIMENSIONS.height - SIGNATURE_DIMENSIONS.bottomMargin;
   addSignature(doc, firmaBase64);
-
-  doc.setFontSize(10);
-  doc.text(
-    `${doc.getCurrentPageInfo().pageNumber} / ${doc.getNumberOfPages()}`,
-    doc.internal.pageSize.width - 20,
-    doc.internal.pageSize.height - 10,
-    { align: 'right' }
-  );
 
   return Buffer.from(doc.output('arraybuffer'));
 };
+
 const splitText = (text: string, maxWidth: number, doc: jsPDF): string[] => {
 	const words = text.split(' ');
 	const lines: string[] = [];

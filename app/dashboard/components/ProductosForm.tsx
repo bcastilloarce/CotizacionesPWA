@@ -135,11 +135,11 @@ export default function ProductosForm() {
                                 inputMode="numeric"
                                 type="text"
                                 pattern="[0-9]*"
-                                value={newProduct.quantity === 1 ? '' : newProduct.quantity}
+                                value={newProduct.quantity.toString()}  // Modificado para mostrar siempre el valor
                                 onChange={(e) => {
                                     const value = e.target.value.replace(/[^0-9]/g, '');
                                     const numValue = value ? parseInt(value) : 1;
-                                    if (numValue > 0) {
+                                    if (numValue >= 1) {
                                         setNewProduct({ ...newProduct, quantity: numValue });
                                     }
                                 }}

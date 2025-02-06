@@ -7,16 +7,22 @@ import path from 'path';
 const SPACING = {
   LOGO: 10,
   TITLE: 15,
-  TABLE: 20,
-  SECTION: 12
+  TABLE: 10, // Reducido de 20 a 10
+  SECTION: 8  // Reducido de 12 a 8
 };
+// # Bloque 2: Ajuste de dimensiones de firma ✍️
+const SIGNATURE_DIMENSIONS = {
+  width: 50,  // Reducido 50%
+  height: 50, // Reducido 50%
+  bottomMargin: 20
+} as const;
 
 // Table styles
 type RGB = [number, number, number];
 
 const TABLE_STYLES = {
   header: {
-    fillColor: [240, 240, 240] as RGB,
+    fillColor: [220, 220, 220] as RGB, // Gris más claro
     textColor: [0, 0, 0] as RGB,
     fontSize: 12
   },
@@ -134,7 +140,7 @@ const addProductsTable = (doc: jsPDF, products: PDFProduct[], startY: number) =>
 
     currentY += rowHeight;
   });
-
+  currentY = Math.min(currentY, doc.internal.pageSize.height - 100); // Asegura espacio para firma
   return currentY;
 };
 
@@ -154,14 +160,6 @@ const addTotal = (doc: jsPDF, total: number, yPosition: number) => {
   doc.setTextColor(33, 37, 41);
   doc.text(totalText, doc.internal.pageSize.width - 20, yPosition, { align: 'right' });
 };
-
-const SIGNATURE_DIMENSIONS = {
-  width: 100,
-  height: 100,
-  bottomMargin: 30
-} as const;
-
-
 
 const addSignature = (doc: jsPDF, firmaBase64: string) => {
   doc.addImage(

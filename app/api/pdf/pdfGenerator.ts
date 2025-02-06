@@ -240,8 +240,8 @@ export const generatePDF = async (data: QuoteData): Promise<Buffer> => {
   if (data.licensePlate) addTableRow('Patente', data.licensePlate);
 
   const durationText = data.untilStockLasts
-    ? `${data.duration} días o hasta agotar stock`
-    : `${data.duration} días`;
+    ? `${data.duration} o hasta agotar stock`
+    : `${data.duration}`;
   addTableRow('Duración', durationText);
 
   yPosition += 60;
@@ -259,6 +259,7 @@ export const generatePDF = async (data: QuoteData): Promise<Buffer> => {
     doc.text(`Disponibilidad: ${data.availability}`, 20, yPosition);
   }
 
+  yPosition += SPACING.SECTION * 2;
   addSignature(doc, firmaBase64);
 
   doc.setFontSize(10);

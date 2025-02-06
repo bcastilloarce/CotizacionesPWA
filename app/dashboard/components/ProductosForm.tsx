@@ -25,10 +25,12 @@ export default function ProductosForm() {
     const products = useMemo(() => watchProducts || [], [watchProducts]);
 
     const handleAddProduct = () => {
-        if (newProduct.name && newProduct.quantity > 0 && newProduct.unitPrice > 0) {
+        const quantity = parseInt(newProduct.quantity.toString());
+        if (newProduct.name && quantity > 0 && newProduct.unitPrice > 0) {
             const updatedProducts = [...products, {
                 ...newProduct,
-                subtotal: newProduct.quantity * newProduct.unitPrice
+                quantity: quantity,
+                subtotal: quantity * newProduct.unitPrice
             }];
             setValue('products', updatedProducts);
             // Clear form
@@ -135,17 +137,14 @@ export default function ProductosForm() {
                                 inputMode="numeric"
                                 type="text"
                                 pattern="[0-9]*"
-                                value={newProduct.quantity.toString()}  // Modificado para mostrar siempre el valor
+                                value={newProduct.quantity === 1 && newProduct.name === '' ? '' : newProduct.quantity}
                                 onChange={(e) => {
                                     const value = e.target.value.replace(/[^0-9]/g, '');
-                                    const numValue = value ? parseInt(value) : 1;
-                                    if (numValue >= 1) {
-                                        setNewProduct({ ...newProduct, quantity: numValue });
-                                    }
+                                    const numValue = value ? parseInt(value) : 0;
+                                    setNewProduct({ ...newProduct, quantity: numValue });
                                 }}
                                 className="w-full h-[44px] px-4 text-[17px] bg-[#FFFFFF] dark:bg-[#3A3A3C]
                                          border border-[#C5C5C7] dark:border-[#3A3A3C] rounded-lg"
-                                min="1"
                                 placeholder="Cantidad"
                             />
                         </div>

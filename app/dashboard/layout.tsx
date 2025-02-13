@@ -3,7 +3,7 @@
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { ThemeToggle } from './components/theme-toggle';
-import Header from './components/shared/Header';
+import Header from '@/app/components/shared/Header';
 import { DocumentTextIcon, ClockIcon } from '@heroicons/react/24/outline';
 
 export default function Layout({ children }: { children: React.ReactNode }) {

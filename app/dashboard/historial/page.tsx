@@ -50,51 +50,36 @@ export default function HistorialPage() {
 					</button>
 				</div>
 
-				<div className="bg-white shadow overflow-hidden sm:rounded-md">
-					{quotes.length === 0 ? (
-						<div className="p-6 text-center text-gray-500">
-							No hay cotizaciones disponibles
-						</div>
-					) : (
-						<ul className="divide-y divide-gray-200">
-							{quotes.map((quote) => (
-								<li key={quote.id}>
-									<Link
-										href={`/dashboard/cotizaciones/${quote.id}`}
-										className="block hover:bg-gray-50"
-									>
-										<div className="px-4 py-4 sm:px-6">
-											<div className="flex items-center justify-between">
-												<div className="flex flex-col">
-													<div className="flex items-center gap-2">
-														{quote.formattedNumber && (
-															<span className="text-sm font-medium text-gray-500">
-																{quote.formattedNumber}
-															</span>
-														)}
-														<p className="text-sm font-medium text-blue-600 truncate">
-															{quote.client}
-														</p>
-													</div>
-													<p className="mt-1 text-sm text-gray-500">
-														{quote.brand} {quote.model}
-													</p>
-												</div>
-												<div className="flex flex-col items-end">
-													<p className="text-sm text-gray-900">
-														${quote.totalWithTax.toLocaleString('es-CL')}
-													</p>
-													<p className="mt-1 text-sm text-gray-500">
-														{new Date(quote.createdAt).toLocaleDateString('es-CL')}
-													</p>
-												</div>
-											</div>
-										</div>
-									</Link>
-								</li>
-							))}
-						</ul>
-					)}
+				<div className="divide-y divide-gray-200 dark:divide-gray-700 bg-white dark:bg-gray-800 rounded-lg overflow-hidden">
+					{quotes.map((quote) => (
+						<Link
+							key={quote.id}
+							href={`/dashboard/cotizaciones/${quote.id}`}
+							className="ios-list-item group"
+						>
+							<div className="flex-1">
+								<div className="flex items-center gap-2">
+									<span className="text-[#007AFF] dark:text-[#0A84FF] text-sm">
+										{quote.formattedNumber}
+									</span>
+									<span className="text-gray-900 dark:text-white">
+										{quote.client}
+									</span>
+								</div>
+								<p className="text-sm text-gray-500">
+									{quote.brand} {quote.model}
+								</p>
+							</div>
+							<div className="text-right">
+								<p className="text-[#007AFF] dark:text-[#0A84FF]">
+									${quote.totalWithTax.toLocaleString('es-CL')}
+								</p>
+								<p className="text-xs text-gray-500">
+									{new Date(quote.createdAt).toLocaleDateString('es-CL')}
+								</p>
+							</div>
+						</Link>
+					))}
 				</div>
 			</div>
 		</div>

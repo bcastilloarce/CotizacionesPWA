@@ -54,10 +54,7 @@ export default function ClienteForm() {
                 minLength: { value: 2, message: 'Mínimo 2 caracteres' },
                 onChange: () => triggerHaptic()
               })}
-              className="w-full h-[44px] px-4 text-[17px] bg-[#FFFFFF] dark:bg-[#3A3A3C]
-                       border border-[#C5C5C7] dark:border-[#3A3A3C] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#007AFF]
-                       placeholder-[#8E8E93] text-[#000000] dark:text-white
-                       transition-colors"
+              className="ios-input"
               placeholder="Nombre del cliente"
             />
             {errors.client && (

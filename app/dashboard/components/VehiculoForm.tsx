@@ -36,8 +36,8 @@ export default function VehiculoForm() {
 
   // Haptic feedback function
   const triggerHaptic = () => {
-    if (window.navigator.vibrate) {
-      window.navigator.vibrate(50);
+    if ('vibrate' in navigator) {
+      navigator.vibrate(50);
     }
   };
 
@@ -61,7 +61,7 @@ export default function VehiculoForm() {
             className="w-full h-[44px] px-4 text-[17px] bg-[#FFFFFF] dark:bg-[#3A3A3C]
                      border border-[#C5C5C7] dark:border-[#3A3A3C]
                      rounded-lg focus:outline-none focus:ring-2 focus:ring-[#007AFF]
-                     text-[#000000] dark:text-white appearance-none"
+                     text-[#000000] dark:text-white appearance-none ios-input"
           >
             <option value="">Seleccione una marca</option>
             {brands.map(brand => (
@@ -90,7 +90,7 @@ export default function VehiculoForm() {
             className="w-full h-[44px] px-4 text-[17px] bg-[#FFFFFF] dark:bg-[#3A3A3C]
                      border border-[#C5C5C7] dark:border-[#3A3A3C]
                      rounded-lg focus:outline-none focus:ring-2 focus:ring-[#007AFF]
-                     text-[#000000] dark:text-white appearance-none"
+                     text-[#000000] dark:text-white appearance-none ios-input"
             disabled={!selectedBrand}
           >
             <option value="">Seleccione un modelo</option>
@@ -119,7 +119,7 @@ export default function VehiculoForm() {
             className="w-full h-[44px] px-4 text-[17px] bg-[#FFFFFF] dark:bg-[#3A3A3C]
                      border border-[#C5C5C7] dark:border-[#3A3A3C]
                      rounded-lg focus:outline-none focus:ring-2 focus:ring-[#007AFF]
-                     text-[#000000] dark:text-white appearance-none"
+                     text-[#000000] dark:text-white appearance-none ios-input"
           >
             <option value="">Seleccione un año</option>
             {years.map(year => (
@@ -146,7 +146,7 @@ export default function VehiculoForm() {
             className="w-full h-[44px] px-4 text-[17px] bg-[#FFFFFF] dark:bg-[#3A3A3C]
                      border border-[#C5C5C7] dark:border-[#3A3A3C]
                      rounded-lg focus:outline-none focus:ring-2 focus:ring-[#007AFF]
-                     text-[#000000] dark:text-white uppercase"
+                     text-[#000000] dark:text-white uppercase ios-input"
             placeholder="Patente del vehículo"
             maxLength={6}
             onInput={(e) => {
@@ -169,7 +169,7 @@ export default function VehiculoForm() {
             className="w-full h-[44px] px-4 text-[17px] bg-[#FFFFFF] dark:bg-[#3A3A3C]
                      border border-[#C5C5C7] dark:border-[#3A3A3C]
                      rounded-lg focus:outline-none focus:ring-2 focus:ring-[#007AFF]
-                     text-[#000000] dark:text-white appearance-none"
+                     text-[#000000] dark:text-white appearance-none ios-input"
             defaultValue="1 día"
           >
             {Array.from({ length: 30 }, (_, i) => i + 1).map(num => (
@@ -226,7 +226,7 @@ export default function VehiculoForm() {
             className="w-full h-[44px] px-4 text-[17px] bg-[#FFFFFF] dark:bg-[#3A3A3C]
                      border border-[#C5C5C7] dark:border-[#3A3A3C]
                      rounded-lg focus:outline-none focus:ring-2 focus:ring-[#007AFF]
-                     text-[#000000] dark:text-white"
+                     text-[#000000] dark:text-white ios-input"
             placeholder="Ej: Entrega inmediata"
           />
         </motion.div>

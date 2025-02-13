@@ -3,14 +3,14 @@ import { getNextQuoteNumber } from '@/app/api/pdf/quoteNumbering';
 import fs from 'fs';
 import path from 'path';
 
-// Update spacing constants for finer control
+// Update spacing constants to match specifications
 const SPACING = {
-  LOGO: 10,
-  TITLE: 10,        // Reduced from 12
-  TABLE: 8,
-  SECTION: 6,
-  FIELD: 4,
-  BOTTOM_MARGIN: 20 // New constant for bottom spacing
+  LOGO_TO_TITLE: 40,
+  TITLE_TO_CLIENT: 30,
+  CLIENT_TO_PRODUCTS: 60,
+  PRODUCT_ROWS: 40,
+  PRODUCTS_TO_TOTAL: 40,
+  BOTTOM_MARGIN: 20
 } as const;
 
 // Update signature dimensions
@@ -192,6 +192,15 @@ const addSignature = (doc: jsPDF, firmaBase64: string) => {
   );
 };
 
+// Add font size constants
+const FONT_SIZES = {
+  TITLE: 24,
+  LABELS: 12,
+  VALUES: 12,
+  TABLE_HEADER: 12,
+  TABLE_CONTENT: 12
+} as const;
+
 export const generatePDF = async (data: QuoteData): Promise<Buffer> => {
   const doc = new jsPDF({
     orientation: 'portrait',
@@ -200,7 +209,7 @@ export const generatePDF = async (data: QuoteData): Promise<Buffer> => {
     compress: true
   });
 
-  let yPosition = SPACING.LOGO;
+  let yPosition = SPACING.LOGO_TO_TITLE;
 
   doc.setFont('helvetica');
 
@@ -214,10 +223,9 @@ export const generatePDF = async (data: QuoteData): Promise<Buffer> => {
     272/6
   );
 
-  yPosition += (272/6) + SPACING.TITLE;
+  yPosition += (272/6) + SPACING.LOGO_TO_TITLE;
 
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(20);
+  doc.setFontSize(FONT_SIZES.TITLE);
   doc.text('Cotización', doc.internal.pageSize.width/2, yPosition, { align: 'center' });
   doc.setLineWidth(0.5);
   const titleWidth = doc.getTextWidth('Cotización');
@@ -227,18 +235,20 @@ export const generatePDF = async (data: QuoteData): Promise<Buffer> => {
     (doc.internal.pageSize.width + titleWidth)/2,
     yPosition + 2
   );
-  yPosition += SPACING.TITLE * 0.8; // Reduced spacing after title
+  yPosition += SPACING.TITLE_TO_CLIENT;
 
   doc.setFontSize(11);
   const fieldWidth = doc.internal.pageSize.width - 40;
   const startX = 20;
 
   const addField = (label: string, value: string) => {
+    doc.setFontSize(FONT_SIZES.LABELS);
     doc.setFont('helvetica', 'bold');
     doc.text(`${label}:`, startX, yPosition);
+    doc.setFontSize(FONT_SIZES.VALUES);
     doc.setFont('helvetica', 'normal');
     doc.text(value, startX + doc.getTextWidth(`${label}: `), yPosition);
-    yPosition += SPACING.FIELD;
+    yPosition += 20; // Fixed SPACING.FIELD error by using hardcoded value
   };
 
   // Format date properly
@@ -263,13 +273,13 @@ export const generatePDF = async (data: QuoteData): Promise<Buffer> => {
   };
 
   addField('Duración', formatDuration(data.duration, data.untilStockLasts));
-  yPosition += SPACING.SECTION;
+  yPosition += SPACING.CLIENT_TO_PRODUCTS;
   const newYPosition = addProductsTable(doc, data.products, yPosition);
-  yPosition = newYPosition + SPACING.SECTION;
+  yPosition = newYPosition + SPACING.PRODUCT_ROWS;
   addTotal(doc, data.totalWithTax, yPosition);
 
   if (data.availability) {
-    yPosition += SPACING.SECTION;
+    yPosition += SPACING.PRODUCTS_TO_TOTAL;
     doc.setFontSize(11);
     doc.setFont('helvetica', 'bold');
     doc.text('Disponibilidad:', 20, yPosition);
@@ -310,7 +320,6 @@ const generateFileName = async (clientName: string): Promise<string> => {
 		.replace(/[^a-z0-9]/g, '_')
 		.replace(/_+/g, '_');
 
-	// Get next sequence number
 	const nextNum = await getNextQuoteNumber();
 	return `N${nextNum.toString().padStart(3, '0')}_${sanitizedName}.pdf`;
 }

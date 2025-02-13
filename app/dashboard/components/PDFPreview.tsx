@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import type { QuoteFormData } from '@/app/api/validations/quote';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface PDFPreviewProps {
     quote: QuoteFormData;
@@ -14,8 +15,7 @@ export default function PDFPreview({ quote, onClose, pdfBlob }: PDFPreviewProps)
     const [pdfUrl, setPdfUrl] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
-
-
+    const [showPDF, setShowPDF] = useState(false);
 
 	const generatePreview = useCallback(async () => {
 		setIsLoading(true);
@@ -85,53 +85,66 @@ export default function PDFPreview({ quote, onClose, pdfBlob }: PDFPreviewProps)
 	};
 
 	return (
-		<div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full">
-			<div className="p-6">
-				<h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
-					Vista Previa de Cotización
-				</h2>
+		<AnimatePresence>
+			{showPDF && (
+				<motion.div
+					initial={{ y: "100%" }}
+					animate={{ y: 0 }}
+					exit={{ y: "100%" }}
+					transition={{ type: "spring", damping: 25 }}
+					className="ios-sheet"
+				>
+					<div className="ios-sheet-handle" />
+					<div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full">
+						<div className="p-6">
+							<h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
+								Vista Previa de Cotización
+							</h2>
 
-				{isLoading ? (
-					<div className="flex flex-col items-center justify-center py-12">
-						<div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
-						<p className="mt-4 text-gray-600 dark:text-gray-300">Generando PDF...</p>
-					</div>
-				) : error ? (
-					<div className="flex flex-col items-center justify-center py-12">
-						<p className="text-red-500 text-center mb-4">{error}</p>
-						<button
-							onClick={generatePreview}
-							className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors"
-						>
-							Reintentar
-						</button>
-					</div>
-				) : pdfUrl ? (
-					<>
-						<div className="w-full h-[600px] border rounded-lg overflow-hidden bg-gray-50 dark:bg-gray-700">
-							<iframe
-								src={`${pdfUrl}#view=FitH`}
-								className="w-full h-full"
-								title="Vista previa del PDF"
-							/>
+							{isLoading ? (
+								<div className="flex flex-col items-center justify-center py-12">
+									<div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+									<p className="mt-4 text-gray-600 dark:text-gray-300">Generando PDF...</p>
+								</div>
+							) : error ? (
+								<div className="flex flex-col items-center justify-center py-12">
+									<p className="text-red-500 text-center mb-4">{error}</p>
+									<button
+										onClick={generatePreview}
+										className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors"
+									>
+										Reintentar
+									</button>
+								</div>
+							) : pdfUrl ? (
+								<>
+									<div className="w-full h-[600px] border rounded-lg overflow-hidden bg-gray-50 dark:bg-gray-700">
+										<iframe
+											src={`${pdfUrl}#view=FitH`}
+											className="w-full h-full"
+											title="Vista previa del PDF"
+										/>
+									</div>
+									<div className="flex justify-center gap-4 mt-4">
+										<button
+											onClick={handleDownload}
+											className="bg-[#34C759] text-white px-6 py-2 rounded-lg hover:bg-[#248A3D] transition-colors flex items-center gap-2"
+										>
+											<span>💾</span> Guardar PDF
+										</button>
+										<button
+											onClick={handleShare}
+											className="bg-[#007AFF] text-white px-6 py-2 rounded-lg hover:bg-[#0051A8] transition-colors flex items-center gap-2"
+										>
+											<span>📤</span> Compartir PDF
+										</button>
+									</div>
+								</>
+							) : null}
 						</div>
-						<div className="flex justify-center gap-4 mt-4">
-							<button
-								onClick={handleDownload}
-								className="bg-[#34C759] text-white px-6 py-2 rounded-lg hover:bg-[#248A3D] transition-colors flex items-center gap-2"
-							>
-								<span>💾</span> Guardar PDF
-							</button>
-							<button
-								onClick={handleShare}
-								className="bg-[#007AFF] text-white px-6 py-2 rounded-lg hover:bg-[#0051A8] transition-colors flex items-center gap-2"
-							>
-								<span>📤</span> Compartir PDF
-							</button>
-						</div>
-					</>
-				) : null}
-			</div>
-		</div>
+					</div>
+				</motion.div>
+			)}
+		</AnimatePresence>
 	);
 }

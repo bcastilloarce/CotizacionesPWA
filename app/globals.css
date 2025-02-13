@@ -6,6 +6,12 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
+  --primary-color: #007AFF;
+  --secondary-color: #5856D6;
+  --success-color: #34C759;
+  --danger-color: #FF3B30;
+  --warning-color: #FF9500;
+  --background-light: #FFFFFF;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -71,6 +77,28 @@ body {
     --input: 217.2 32.6% 17.5%;
     --ring: 224.3 76.3% 48%;
   }
+
+  /* Prevent pull-to-refresh but keep smooth scrolling */
+  html {
+    height: -webkit-fill-available;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Ensure proper height on mobile */
+  body {
+    min-height: -webkit-fill-available;
+    @apply bg-[#F2F2F7] dark:bg-[#000000];
+  }
+
+  /* Safe area insets */
+  .safe-top {
+    padding-top: env(safe-area-inset-top);
+  }
+
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
 }
 
 @layer utilities {
@@ -101,6 +129,34 @@ body {
     @apply text-gray-400;
   }
 
+  /* iOS-style inputs */
+  .ios-input {
+    @apply w-full h-[44px] px-4 text-[17px]
+           bg-[#FFFFFF] dark:bg-[#3A3A3C]
+           border border-[#C5C5C7] dark:border-[#3A3A3C]
+           rounded-lg focus:outline-none focus:ring-2
+           focus:ring-[#007AFF];
+  }
+
+  /* iOS-style buttons */
+  .ios-button {
+    @apply h-[44px] px-4 rounded-lg font-medium
+           transition-colors duration-200
+           disabled:opacity-50;
+  }
+
+  .ios-button-primary {
+    @apply bg-[#007AFF] text-white
+           hover:bg-[#0051A8]
+           active:bg-[#0051A8];
+  }
+
+  /* iOS-style list items */
+  .ios-list-item {
+    @apply flex items-center px-4 h-[44px]
+           bg-white dark:bg-[#2C2C2E]
+           border-b border-[#C5C5C7] dark:border-[#3A3A3C];
+  }
 
   @media (max-width: 768px) {
     .product-grid {
@@ -113,5 +169,30 @@ body {
       width: 100%;
       margin-bottom: 0.5rem;
     }
+  }
+
+  /* iOS-style sheet modal */
+  .ios-sheet {
+    @apply fixed bottom-0 left-0 right-0
+           bg-white dark:bg-[#1C1C1E]
+           rounded-t-xl shadow-xl
+           transform transition-transform duration-300
+           pb-[env(safe-area-inset-bottom)];
+  }
+
+  .ios-sheet-handle {
+    @apply w-12 h-1 bg-gray-300 dark:bg-gray-600
+           rounded-full mx-auto mt-3 mb-4;
+  }
+
+  /* iOS-style form groups */
+  .ios-form-group {
+    @apply bg-white dark:bg-[#1C1C1E]
+           rounded-xl overflow-hidden
+           divide-y divide-gray-200 dark:divide-gray-800;
+  }
+
+  .ios-form-row {
+    @apply px-4 py-3 flex items-center justify-between;
   }
 }

@@ -157,11 +157,9 @@ export default function NewQuotePage() {
                 type="button"
                 onClick={handleGeneratePDF}
                 disabled={isSubmitting}
-                className="w-full h-[50px] bg-[#007AFF] text-white rounded-lg font-medium
-                         disabled:opacity-50 disabled:cursor-not-allowed
-                         active:bg-[#0051A8] transition-colors"
+                className="ios-button ios-button-primary fixed bottom-[calc(49px+env(safe-area-inset-bottom))] left-4 right-4 z-40"
               >
-                Generar PDF
+                {isSubmitting ? 'Generando...' : 'Generar PDF'}
               </button>
             </motion.div>
           )}

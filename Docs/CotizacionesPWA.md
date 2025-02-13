@@ -1,267 +1,189 @@
-# CotizacionesPWA - PDF Quote Generator Web Application
+# Guía de Conversión: CotizacionesiOS a Progressive Web App
 
-## Primary Objective
+## Índice
 
-This Progressive Web Application (PWA) is specifically designed to generate standardized PDF quotations for Repuestos Oyarce, following strict formatting specifications. The application transforms user input into professional automotive parts quotations that include client information, vehicle details, product listings, and commercial terms.
+1. [Estructura del Proyecto](#estructura-del-proyecto)
+2. [Pantalla Principal](#pantalla-principal)
+3. [Nueva Cotización](#nueva-cotización)
+4. [Historial](#historial)
+5. [Generación de PDF](#generación-de-pdf)
+6. [Servicios y Utilidades](#servicios-y-utilidades)
 
-## Project Structure Analysis
+## Estructura del Proyecto
 
-### Core Functionality Folders
-
-- **/app/dashboard/nueva-cotizacion/**
-  - Main quotation form interface
-  - Implements all PDF requirements including client data, vehicle information, and product listing
-  - Handles real-time PDF preview
-  - Contains form validation for required fields
-
-- **/lib/pdf/**
-  - PDF generation logic
-  - Implements exact spacing specifications (40 units logo to title, etc.)
-  - Handles dynamic content adjustment
-  - Manages page breaks and headers
-  - Controls font specifications (Helvetica, CustomTitle, etc.)
-
-- **/components/quotation/**
-  - Reusable form components aligned with PDF requirements
-  - Client information section
-  - Vehicle details section
-  - Product table with automatic calculations
-  - Preview component showing real-time PDF generation
-
-### Supporting Structure
-
-- **/public/assets/**
-  - Corporate logo storage
-  - Signature images
-  - Required fonts
-
-- **/lib/validation/**
-  - Form validation rules ensuring PDF requirements are met
-  - Required field checks
-  - Format validation (Chilean peso, dates, etc.)
-
-- **/types/**
-  - TypeScript interfaces matching PDF data requirements
-  - Ensures data consistency throughout the application
-
-## Areas Needing Improvement
-
-1. **Form-PDF Alignment**
-   - Current form structure doesn't fully mirror PDF layout
-   - Need to add specific spacing controls matching PDF requirements
-   - Missing validation for optional fields behavior
-
-2. **Price Formatting**
-   - Inconsistent thousand separator implementation
-   - Chilean peso format needs standardization across components
-
-3. **Dynamic Content Handling**
-   - Current implementation doesn't fully address variable content length
-   - Need better handling of optional fields in PDF generation
-   - Page break logic needs refinement
-
-4. **PDF Preview Performance**
-   - Real-time preview generation may impact performance
-   - Consider implementing preview throttling
-
-## Required Enhancements
-
-1. **PDF Specifications Compliance**
-   - Implement exact spacing measurements from GenerarPDF.md
-   - Add proper font handling (CustomTitle, Helvetica-Bold, etc.)
-   - Ensure correct table column widths (40% for products, etc.)
-
-2. **Form Interface Improvements**
-   - Add clear visual separation between sections matching PDF layout
-   - Implement proper handling of optional fields
-   - Add preview toggle functionality
-
-3. **Data Validation**
-   - Enhance validation rules to match PDF requirements
-   - Add proper error messages aligned with PDF specifications
-   - Implement format validation for monetary values
-
-4. **File Naming System**
-   - Implement sequential numbering (N001_clientname.pdf)
-   - Add proper character sanitization for client names
-   - Ensure correct file storage structure
-
-## Development Priorities
-
-1. Ensure 100% compliance with PDF specifications
-2. Implement robust form validation
-3. Optimize PDF generation performance
-4. Add proper error handling
-5. Implement automated testing for PDF output
-
-## Quality Assurance Checklist
-
-- [ ] PDF output matches all specifications in GenerarPDF.md
-- [ ] Form captures all required data correctly
-- [ ] Proper handling of optional fields
-- [ ] Correct implementation of spacing requirements
-- [ ] Proper font usage throughout PDF
-- [ ] Correct monetary format implementation
-- [ ] Proper file naming and storage
-- [ ] Mobile responsiveness
-- [ ] Offline functionality
-
-## Overview
-
-This document outlines the conversion of CotizacionesiOS from a native iOS Swift application to a Progressive Web App (PWA) using Next.js, TypeScript, and modern web technologies.
-
-## Tech Stack
-
-- **Framework**: Next.js 14+ with App Router
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS
-- **State Management**: React Context + Zustand
-- **Database**: Prisma + PostgreSQL
-- **Authentication**: NextAuth.js
-- **PDF Generation**: react-pdf
-- **Form Handling**: React Hook Form + Zod
-- **UI Components**: shadcn/ui
-
-## Project Structure
+### Organización de Archivos (Basada en ContentView.swift)
 
 ```txt
-cotizaciones-pwa/
+CotizacionesPWA/
 ├── app/
-│   ├── (auth)/
-│   │   ├── login/
-│   │   └── register/
-│   ├── dashboard/
-│   │   ├── nueva-cotizacion/
-│   │   │   ├── page.tsx
-│   │   │   └── components/
-│   │   │       ├── ClienteForm.tsx
-│   │   │       ├── VehiculoForm.tsx
-│   │   │       ├── ProductosForm.tsx
-│   │   │       └── PDFPreview.tsx
-│   │   └── historial/
-│   │       └── page.tsx
-│   ├── api/
-│   │   ├── auth/
-│   │   ├── cotizaciones/
-│   │   └── pdf/
-│   ├── layout.tsx
-│   └── page.tsx
-├── components/
-│   ├── ui/
-│   └── shared/
-├── lib/
-│   ├── db/
-│   ├── pdf/
-│   └── utils/
-├── public/
-│   ├── icons/
-│   └── images/
-├── styles/
-│   └── globals.css
-└── types/
+│   ├── api/                    # Endpoints y lógica del servidor
+│   ├── components/             # Componentes reutilizables
+│   ├── dashboard/              # Vistas principales
+│   └── providers/              # Proveedores de contexto
+├── public/                     # Archivos estáticos
+│   ├── assets/
+│   │   ├── Logo.png           # Logo empresa
+│   │   ├── Firma.png          # Imagen firma
+│   │   └── LaunchImage.png    # Imagen inicio
+└── types/                      # Definiciones de tipos
 ```
 
-## Data Models
+## Pantalla Principal
 
-### Product Type
+### Layout Principal (`app/dashboard/layout.tsx`)
 
-```typescript
-interface Product {
-  id: string;
-  name: string;
-  quantity: number;
-  unitPrice: number;
-  subtotal: number;
+Basado en `ContentView.swift`:
+
+- NavigationStack con título "Cotizaciones Repuestos Oyarce"
+- TabView con dos pestañas:
+  - "Cotización" (systemImage: "doc.text.fill")
+  - "Historial" (systemImage: "clock.fill")
+
+## Nueva Cotización
+
+### Formulario de Cotización (`app/dashboard/components/CotizacionView.tsx`)
+
+Basado en los modelos existentes:
+
+#### Sección Cliente
+
+- Campo Cliente (obligatorio)
+- Campo Fecha (automático, fecha actual)
+- Selector Duración
+  - Opciones predefinidas según `Constants.GUI.duracionOptions`:
+
+    ```txt
+    ["1 día", "2 días", "3 días", "4 días", "5 días",
+     "6 días", "7 días", "10 días", "14 días", "21 días",
+     "28 días", "30 días", "60 días"]
+    ```
+
+#### Sección Vehículo
+
+- Selector Marca (datos desde `marcasymodelos.json`)
+- Selector Modelo (dependiente de marca seleccionada)
+- Selector Año (opcional)
+- Campo Patente (opcional)
+- Campo Disponibilidad (opcional)
+
+#### Sección Productos
+
+Basado en `CotizacionHistorial.swift`:
+
+- Tabla de productos con:
+  - Nombre producto
+  - Cantidad
+  - Precio unitario
+  - Total calculado automáticamente
+- Botón para agregar productos
+- Cálculo automático del total con IVA
+
+## Historial
+
+### Vista Historial (`app/dashboard/historial/page.tsx`)
+
+Basado en `HistorialService.swift`:
+
+- Lista de cotizaciones ordenadas por fecha
+  - Fecha
+  - Cliente
+  - Total con IVA
+- Acciones por cotización:
+  - Ver PDF
+  - Editar cotización
+  - Eliminar cotización
+
+## Generación de PDF
+
+### Servicio PDF (`app/api/pdf/pdfGenerator.ts`)
+
+Basado en `PDFCotizaciones.md`:
+
+#### Estructura del Documento
+
+1. Logo corporativo (926x272)
+2. Título "Cotización"
+3. Información:
+   - Cliente
+   - Fecha
+   - Marca y Modelo
+   - Duración
+   - Campos opcionales (si tienen valor):
+     - Año
+     - Patente
+     - Disponibilidad
+4. Tabla de productos
+5. Total con IVA
+6. Firma (110x110)
+
+## Servicios y Utilidades
+
+### Almacenamiento (`app/api/storage/quotes.ts`)
+
+Basado en `HistorialService.swift`:
+
+- Persistencia de cotizaciones
+- Caché local
+- Sincronización
+
+### Estilos Globales (`app/globals.css`)
+
+Basado en `Constants.swift`:
+
+```css
+:root {
+  --primary-color: #007AFF;
+  --secondary-color: #5856D6;
+  --success-color: #34C759;
+  --danger-color: #FF3B30;
+  --warning-color: #FF9500;
+  --background-light: #FFFFFF;
 }
 ```
 
-### Quote Type
+### Manifest PWA (`public/manifest.json`)
 
-```typescript
-interface Quote {
-  id: string;
-  client: string;
-  brand: string;
-  model: string;
-  year: number;
-  licensePlate?: string;
-  date: Date;
-  duration: string;
-  untilStockLasts: boolean;
-  availability?: string;
-  products: Product[];
-  totalWithTax: number;
-  createdAt: Date;
-  updatedAt: Date;
-}
-```
-
-## Key Features Implementation
-
-### 1. Progressive Web App Setup
-
-```typescript
-// next.config.js
-const withPWA = require('next-pwa')({
-  dest: 'public',
-  register: true,
-  skipWaiting: true,
-});
-
-module.exports = withPWA({
-  // other Next.js config
-});
-```
-
-### 2. PDF Generation Service
-
-```typescript
-// lib/pdf/generator.ts
-import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
-
-export const generateQuotePDF = async (quote: Quote) => {
-  const styles = StyleSheet.create({
-    // PDF styles
-  });
-
-  const QuoteDocument = () => (
-    <Document>
-      <Page size="A4" style={styles.page}>
-        {/* PDF content */}
-      </Page>
-    </Document>
-  );
-
-  return QuoteDocument;
-};
-```
-
-### 3. Quote Form Implementation
-
-```typescript
-// app/dashboard/nueva-cotizacion/page.tsx
-'use client';
-
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { QuoteSchema } from '@/lib/validations';
-
-export default function NewQuotePage() {
-  const form = useForm<Quote>({
-    resolver: zodResolver(QuoteSchema),
-    defaultValues: {
-      date: new Date(),
-      duration: '1 día',
-      untilStockLasts: true,
+```json
+{
+  "name": "Cotizaciones Repuestos Oyarce",
+  "short_name": "Cotizaciones",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FFFFFF",
+  "theme_color": "#007AFF",
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
     },
-  });
-
-  const onSubmit = async (data: Quote) => {
-    // Handle form submission
-  };
-
-  return (
-    // Form implementation
-  );
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
 }
 ```
+
+## Consideraciones de Implementación
+
+### Responsive Design
+
+- Adaptación del diseño iOS a web
+- Mantenimiento de la experiencia de usuario
+- Soporte para interacciones táctiles
+
+### Offline Functionality
+
+- Service Worker para caché
+- Persistencia local de datos
+- Sincronización cuando hay conexión
+
+### Seguridad
+
+- Protección de rutas
+- Validación de datos
+- Manejo seguro de PDFs
+
+Esta estructura refleja fielmente la funcionalidad de la aplicación iOS original, manteniendo sus características específicas mientras aprovecha las capacidades web modernas.

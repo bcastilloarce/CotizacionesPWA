@@ -175,7 +175,6 @@ export default function NewQuotePage() {
         >
           <PDFPreview
             quote={quoteData}
-            onClose={() => setShowPDF(false)}
             pdfBlob={pdfBlob}
           />
         </motion.div>

@@ -186,4 +186,60 @@ Basado en `Constants.swift`:
 - Validación de datos
 - Manejo seguro de PDFs
 
+## Ajustes de Implementación
+
+### Simplificación de Interfaz
+
+1. Eliminación de Dashboard:
+   - Remover `/dashboard` de las rutas
+   - Redirigir directamente a `/nueva-cotizacion` tras login
+   - Actualizar `app/page.tsx` para el redireccionamiento post-login
+
+2. Limpieza de Layouts:
+   - Migrar `app/dashboard/layout.tsx` a `app/layout.tsx`
+   - Conservar solo la navegación esencial (Nueva Cotización/Historial)
+   - Mantener ThemeToggle y Header como componentes globales
+
+3. Optimización de Vista PDF:
+   - Modificar `PDFPreview.tsx` para abrir en nueva pestaña
+   - Implementar vista responsiva para móviles
+   - Agregar botón de retorno a la vista principal
+
+### Actualizaciones Específicas
+
+#### 1. Estructura de Archivos
+
+```txt
+app/
+├── (auth)/
+│   └── login/
+├── nueva-cotizacion/
+├── historial/
+└── components/
+```
+
+#### 2. Modificaciones en Componentes
+
+- Actualizar Header para mostrar solo logo y navegación esencial
+- Simplificar ThemeToggle como componente flotante
+- Rediseñar PDFPreview para vista completa
+
+#### 3. Ajustes de Navegación
+
+- Implementar gestos táctiles para navegación en móviles
+- Optimizar transiciones entre vistas
+- Mejorar experiencia de usuario en vista previa PDF
+
+#### 4. Mejoras de UX
+
+- Añadir indicadores de carga durante generación PDF
+- Implementar notificaciones de éxito/error
+- Optimizar formularios para entrada táctil
+
+#### 5. Actualizaciones de Diseño
+
+- Mantener consistencia con especificaciones de GenerarPDF.md
+- Adaptar interfaz para mejor visualización en dispositivos móviles
+- Implementar diseño más compacto y eficiente
+
 Esta estructura refleja fielmente la funcionalidad de la aplicación iOS original, manteniendo sus características específicas mientras aprovecha las capacidades web modernas.

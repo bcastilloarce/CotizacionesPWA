@@ -53,7 +53,7 @@ export default function NewQuotePage() {
       if (!response.ok) throw new Error('Error al crear la cotización');
 
       const quote = await response.json();
-      router.push(`/dashboard/cotizaciones/${quote.id}`);
+      router.push(`/historial`);
     } catch (error) {
       console.error('Error:', error);
     } finally {
@@ -88,10 +88,10 @@ export default function NewQuotePage() {
     <div className="container mx-auto px-4 py-4 max-w-2xl">
       <div className="flex items-center justify-between mb-6">
       <button
-        onClick={() => router.push('/dashboard')}
+        onClick={() => router.push('/')}
         className="px-4 py-2 text-sm font-medium text-[#007AFF] hover:text-[#0051A8]"
       >
-        Volver al Dashboard
+        Volver
       </button>
       </div>
       <FormProvider {...methods}>

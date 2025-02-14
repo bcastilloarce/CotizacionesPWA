@@ -31,7 +31,7 @@ export default function Home() {
       if (result?.error) {
         setError('Credenciales inválidas');
       } else if (result?.ok) {
-        router.push('/dashboard/nueva-cotizacion');
+        router.push('/nueva-cotizacion');
       }
     } catch (error) {
       setError('Error al iniciar sesión');

@@ -3,7 +3,6 @@ import { NextResponse } from 'next/server';
 
 export default withAuth(
   function middleware(req) {
-    // Add any custom middleware logic here
     return NextResponse.next();
   },
   {
@@ -17,5 +16,5 @@ export default withAuth(
 );
 
 export const config = {
-  matcher: ['/dashboard/:path*'],
+  matcher: ['/nueva-cotizacion/:path*', '/historial/:path*'],
 };

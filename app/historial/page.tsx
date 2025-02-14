@@ -43,7 +43,7 @@ export default function HistorialPage() {
 				<div className="flex items-center justify-between">
 					<h1 className="text-2xl font-bold">Historial de Cotizaciones</h1>
 					<button
-						onClick={() => router.push('/dashboard')}
+						onClick={() => router.push('/')}
 						className="px-4 py-2 text-sm font-medium text-[#007AFF] hover:text-[#0051A8]"
 					>
 						Volver al Dashboard
@@ -54,7 +54,7 @@ export default function HistorialPage() {
 					{quotes.map((quote) => (
 						<Link
 							key={quote.id}
-							href={`/dashboard/cotizaciones/${quote.id}`}
+							href={`/historial/${quote.id}`}
 							className="ios-list-item group"
 						>
 							<div className="flex-1">

@@ -10,24 +10,24 @@ export default function Header() {
 
   const getTitle = () => {
     switch (pathname) {
-      case '/dashboard':
+      case '/':
         return 'Cotizaciones Repuestos Oyarce';
-      case '/dashboard/nueva-cotizacion':
+      case '/nueva-cotizacion':
         return 'Nueva Cotización';
-      case '/dashboard/historial':
+      case '/historial':
         return 'Historial';
       default:
         return 'Cotizaciones';
     }
   };
 
-  const showBackButton = pathname !== '/dashboard';
+  const showBackButton = pathname !== '/';
 
   return (
     <header className="sticky top-0 z-50 bg-white dark:bg-black backdrop-blur-lg bg-opacity-80 dark:bg-opacity-80">
       <div className="h-[44px] px-4 flex items-center justify-between">
         {showBackButton ? (
-          <Link href="/dashboard" className="p-2 -ml-2">
+          <Link href="/" className="p-2 -ml-2">
             <ChevronLeftIcon className="h-5 w-5 text-[#007AFF]" />
           </Link>
         ) : (
